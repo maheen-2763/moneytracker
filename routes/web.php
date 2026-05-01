@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\BudgetController;
+use App\Http\Controllers\NotificationController;
 
 
 Route::get('/', function () {
@@ -25,6 +27,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/expenses/export/excel', [ExportController::class, 'excel'])->name('expenses.export.excel');
     Route::get('/expenses/export/pdf',   [ExportController::class, 'pdf'])->name('expenses.export.pdf');
+
+    Route::resource('budgets', BudgetController::class)
+        ->only(['index', 'store', 'update', 'destroy']);
+
+    // Notifications
+    Route::get('/notifications',              [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/{id}/read',    [NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::get('/notifications/read-all',     [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
 
     Route::resource('expenses', ExpenseController::class);
 

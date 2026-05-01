@@ -12,7 +12,7 @@
 
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
             <p class="text-sm text-gray-500 dark:text-gray-400">Total Spent (All Time)</p>
-            <p class="text-3xl font-bold text-gray-900 dark:text-white mt-1">
+            <p class="text-3xl font-bold text-blue-600 mt-1">
                 ₹ {{ number_format($totalAll, 2) }}
             </p>
         </div>
@@ -44,7 +44,7 @@
 
         {{-- ── Spending by Category ──────────────────────── --}}
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+            <h2 class="text-lg font-semibold text-gray-800  dark:text-gray-400 mb-4">
                 Spending by Category
             </h2>
 

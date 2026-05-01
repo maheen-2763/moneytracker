@@ -18,6 +18,16 @@
         rel="stylesheet">
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark-loading');
+        }
+    </script>
+    <style>
+        .dark-loading * {
+            transition: none !important;
+        }
+    </style>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -80,7 +90,30 @@
             document.querySelectorAll('[data-bs-toggle="tooltip"]')
                 .forEach(el => new bootstrap.Tooltip(el));
         });
+        // ── Dark Mode ──────────────────────────
+        const darkToggle = document.getElementById('darkToggle');
+        const darkIcon = document.getElementById('darkIcon');
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark');
+                darkIcon?.classList.replace('bi-moon-stars', 'bi-sun');
+            } else {
+                document.body.classList.remove('dark');
+                darkIcon?.classList.replace('bi-sun', 'bi-moon-stars');
+            }
+        }
+
+        // Apply saved theme on load
+        applyTheme(localStorage.getItem('theme') || 'light');
+
+        darkToggle?.addEventListener('click', () => {
+            const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+            localStorage.setItem('theme', next);
+            applyTheme(next);
+        });
     </script>
+
 </body>
 
 </html>

@@ -22,12 +22,20 @@
                 <i class="bi bi-receipt"></i> Expenses
             </a>
         </li>
+
+        <li class="nav-item">
+            <a href="{{ route('budgets.index') }}"
+                class="nav-link {{ request()->routeIs('budgets.*') ? 'active' : '' }}">
+                <i class="bi bi-piggy-bank"></i> Budgets
+            </a>
+        </li>
         <li class="nav-item">
             <a href="{{ route('reports.index') }}"
                 class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}">
                 <i class="bi bi-bar-chart-line"></i> Reports
             </a>
         </li>
+
 
         <li class="nav-section">Account</li>
         <li class="nav-item">

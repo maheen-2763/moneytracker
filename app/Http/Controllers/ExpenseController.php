@@ -9,14 +9,17 @@ use App\Services\ExpenseService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\{RedirectResponse, Request};
 use Illuminate\View\View;
+use App\Models\Budget;
+use App\Notifications\BudgetExceeded;
+use Illuminate\Support\Facades\Auth;
+
 
 class ExpenseController extends Controller
 {
     use AuthorizesRequests;
-    
-   
-    public function __construct(private ExpenseService $service)
-    {}
+
+
+    public function __construct(private ExpenseService $service) {}
 
     public function index(Request $request): View
     {
@@ -35,15 +38,21 @@ class ExpenseController extends Controller
 
     public function store(StoreExpenseRequest $request): RedirectResponse
     {
+        $data = $request->validated();
+
         $this->service->create(
             $request->user()->id,
-            $request->validated(),
+            $data,
             $request->file('receipt')
         );
+
+        $this->checkBudget($data['category']);
 
         return redirect()->route('expenses.index')
             ->with('success', 'Expense added successfully.');
     }
+
+
 
     public function show(Expense $expense): View
     {
@@ -63,11 +72,15 @@ class ExpenseController extends Controller
     {
         $this->authorize('update', $expense);
 
+        $data = $request->validated();
+
         $this->service->update(
             $expense,
-            $request->validated(),
+            $data,
             $request->file('receipt')
         );
+
+        $this->checkBudget($data['category']);
 
         return redirect()->route('expenses.index')
             ->with('success', 'Expense updated.');
@@ -81,5 +94,31 @@ class ExpenseController extends Controller
 
         return redirect()->route('expenses.index')
             ->with('success', 'Expense deleted.');
+    }
+
+
+    private function checkBudget(string $category): void
+    {
+        $budget = Budget::forUser(Auth::id())
+            ->where('category', $category)
+            ->first();
+
+        if (!$budget) return;
+
+        $spent = $budget->spentThisMonth();
+
+        if ($spent >= $budget->amount) {
+
+            // ← Filter in PHP instead of SQL (works on all DB drivers)
+            $alreadyNotified = Auth::user()
+                ->unreadNotifications
+                ->where('type', \App\Notifications\BudgetExceeded::class)
+                ->filter(fn($n) => ($n->data['category'] ?? '') === $category)
+                ->isNotEmpty();
+
+            if (!$alreadyNotified) {
+                Auth::user()->notify(new BudgetExceeded($budget, $spent));
+            }
+        }
     }
 }

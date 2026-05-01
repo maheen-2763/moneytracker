@@ -7,11 +7,24 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Storage;
+
+/**
+ * @property-read DatabaseNotificationCollection<DatabaseNotification> $notifications
+ * @property-read DatabaseNotificationCollection<DatabaseNotification> $unreadNotifications
+ * @property-read DatabaseNotificationCollection<DatabaseNotification> $readNotifications
+ * @method MorphMany notifications()
+ * @method MorphMany unreadNotifications()
+ * @method MorphMany readNotifications()
+ * @method void notify(mixed $notification)
+ * @method void notifyNow(mixed $notification)
+ */
 
 #[Fillable(['name', 'email', 'password', 'avatar', 'phone', 'bio'])]
 #[Hidden(['password', 'remember_token'])]
@@ -36,6 +49,11 @@ class User extends Authenticatable
     public function expenses(): HasMany
     {
         return $this->hasMany(Expense::class);
+    }
+
+     public function budgets(): HasMany
+    {
+        return $this->hasMany(Budget::class);
     }
 
     // Returns uploaded avatar OR auto-generated letter avatar
