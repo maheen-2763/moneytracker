@@ -347,7 +347,7 @@
                     <div class="input-icon-wrap">
                         <i class="bi bi-person"></i>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                            value="{{ old('name') }}" placeholder="Mohammed Maheen" autofocus required>
+                            value="{{ old('name') }}" placeholder="Enter your name" autofocus required>
                     </div>
                     @error('name')
                         <div class="invalid-feedback d-block">{{ $message }}</div>

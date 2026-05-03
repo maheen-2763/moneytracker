@@ -9,9 +9,11 @@ use App\Models\Expense;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;  // ← add
 
 class Budget extends Model
 {
+    use HasFactory;
     protected $fillable = ['user_id', 'category', 'amount'];
 
     protected $casts = [

@@ -134,13 +134,15 @@
         const tooltipText = isDark ? '#e2e8f0' : '#0f172a';
 
         // ── Category colors ───────────────────────────────
-        const catColors = {
-            food: '#facc15',
-            travel: '#60a5fa',
-            office: '#a78bfa',
-            health: '#34d399',
-            other: '#94a3b8',
-        };
+        @php
+            $catColors = [
+                'food' => '#facc15',
+                'travel' => '#60a5fa',
+                'office' => '#a78bfa',
+                'health' => '#34d399',
+                'other' => '#94a3b8',
+            ];
+        @endphp
 
         // ── Donut Chart ───────────────────────────────────
         @if ($byCategory->count() > 0)
@@ -191,8 +193,7 @@
                     data: @json($monthlySpending->pluck('total')),
                     borderColor: '#6366f1',
                     backgroundColor: isDark ?
-                        'rgba(99,102,241,0.15)' :
-                        'rgba(99,102,241,0.08)',
+                        'rgba(99,102,241,0.15)' : 'rgba(99,102,241,0.08)',
                     borderWidth: 2.5,
                     pointBackgroundColor: '#6366f1',
                     pointRadius: 4,

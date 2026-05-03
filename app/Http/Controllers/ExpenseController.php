@@ -49,7 +49,7 @@ class ExpenseController extends Controller
         $this->checkBudget($data['category']);
 
         return redirect()->route('expenses.index')
-            ->with('success', 'Expense added successfully.');
+            ->with('toast_success', 'Expense added successfully!');
     }
 
 
@@ -83,7 +83,7 @@ class ExpenseController extends Controller
         $this->checkBudget($data['category']);
 
         return redirect()->route('expenses.index')
-            ->with('success', 'Expense updated.');
+            ->with('toast_success', 'Expense updated successfully!');
     }
 
     public function destroy(Expense $expense): RedirectResponse
@@ -93,7 +93,7 @@ class ExpenseController extends Controller
         $this->service->delete($expense);
 
         return redirect()->route('expenses.index')
-            ->with('success', 'Expense deleted.');
+            ->with('toast_success', 'Expense deleted.');
     }
 
 
@@ -109,12 +109,13 @@ class ExpenseController extends Controller
 
         if ($spent >= $budget->amount) {
 
-            // ← Filter in PHP instead of SQL (works on all DB drivers)
+            // ← Query DB directly instead of collection filter
             $alreadyNotified = Auth::user()
-                ->unreadNotifications
-                ->where('type', \App\Notifications\BudgetExceeded::class)
-                ->filter(fn($n) => ($n->data['category'] ?? '') === $category)
-                ->isNotEmpty();
+                ->notifications()
+                ->where('type', BudgetExceeded::class)
+                ->whereNull('read_at')
+                ->whereJsonContains('data->category', $category)
+                ->exists();
 
             if (!$alreadyNotified) {
                 Auth::user()->notify(new BudgetExceeded($budget, $spent));

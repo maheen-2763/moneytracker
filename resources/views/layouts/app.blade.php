@@ -14,7 +14,8 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     @vite(['resources/css/app.css'])
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
         rel="stylesheet">
@@ -113,6 +114,66 @@
             const next = document.body.classList.contains('dark') ? 'light' : 'dark';
             localStorage.setItem('theme', next);
             applyTheme(next);
+        });
+    </script>
+
+    {{-- ── Toast Notifications ── --}}
+    <div id="toast-container" aria-live="polite"></div>
+
+    @if (session('toast_success'))
+        <div class="d-none" id="flash-success">{{ session('toast_success') }}</div>
+    @endif
+    @if (session('toast_error'))
+        <div class="d-none" id="flash-error">{{ session('toast_error') }}</div>
+    @endif
+    @if (session('toast_warning'))
+        <div class="d-none" id="flash-warning">{{ session('toast_warning') }}</div>
+    @endif
+    <script>
+        /* ── Toast System ── */
+        const TOAST_ICONS = {
+            success: 'bi-check-lg',
+            error: 'bi-x-lg',
+            warning: 'bi-exclamation-lg',
+        };
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+
+            const toast = document.createElement('div');
+            toast.className = `toast-item toast-${type}`;
+            toast.innerHTML = `
+        <div class="toast-icon">
+            <i class="bi ${TOAST_ICONS[type]}"></i>
+        </div>
+        <span>${message}</span>
+        <button class="toast-close" onclick="dismissToast(this.parentElement)">
+            <i class="bi bi-x"></i>
+        </button>
+        <div class="toast-progress"></div>
+    `;
+
+            container.appendChild(toast);
+
+            // Auto dismiss after 3.5s
+            setTimeout(() => dismissToast(toast), 3500);
+        }
+
+        function dismissToast(toast) {
+            if (!toast || toast.classList.contains('hiding')) return;
+            toast.classList.add('hiding');
+            setTimeout(() => toast.remove(), 300);
+        }
+
+        // ── Fire flash messages on page load ──
+        document.addEventListener('DOMContentLoaded', () => {
+            const success = document.getElementById('flash-success');
+            const error = document.getElementById('flash-error');
+            const warning = document.getElementById('flash-warning');
+
+            if (success) showToast(success.textContent.trim(), 'success');
+            if (error) showToast(error.textContent.trim(), 'error');
+            if (warning) showToast(warning.textContent.trim(), 'warning');
         });
     </script>
 
