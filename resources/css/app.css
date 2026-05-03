@@ -44,7 +44,11 @@ body {
     flex-direction: column;
 }
 #sidebar .sidebar-brand {
-    padding: 1.4rem 1.5rem;
+    height: 58px; /* ← matches #topnav height exactly */
+    padding: 0 1.5rem; /* ← removes the extra vertical padding */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     font-size: 1.1rem;
     font-weight: 700;
     color: #fff;
@@ -171,7 +175,7 @@ body {
     border-collapse: collapse;
 }
 .table-card thead th {
-    background: #1c1e21;
+    background: #f8fafc; /* ← light grey in light mode */
     color: var(--text-muted);
     font-size: 0.7rem;
     font-weight: 700;
@@ -245,7 +249,7 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--text-muted);
+    color: #94a3b8;
 }
 .filter-card .form-control,
 .filter-card .form-select {
@@ -513,6 +517,24 @@ body {
         padding: 1rem;
     }
 
+    body.dark .bg-white {
+        background-color: #1e293b !important;
+        color: #e2e8f0;
+    }
+
+    body.dark .text-gray-500,
+    body.dark .text-gray-800 {
+        color: #94a3b8 !important;
+    }
+
+    body.dark .divide-gray-200 > * {
+        border-color: #334155 !important;
+    }
+
+    body.dark .hover\:bg-gray-50:hover {
+        background-color: #263348 !important;
+    }
+
     /* Stack dashboard cards 2 per row */
     .stat-card .value {
         font-size: 1.3rem;
@@ -574,6 +596,13 @@ body {
 /* ══════════════════════════════════════
    DARK MODE OVERRIDES
 ══════════════════════════════════════ */
+body.dark .page-heading h4 {
+    color: #e2e8f0; /* ← was inheriting #0f172a (black) in dark mode */
+}
+
+body.dark .page-heading small {
+    color: #94a3b8;
+}
 body.dark {
     --page-bg: #0f172a;
     --card-bg: #1e293b;
@@ -607,7 +636,7 @@ body.dark .expense-mobile-card {
 
 /* Table */
 body.dark .table-card thead th {
-    background: #0f172a;
+    background: #0f172a; /* ← keeps dark look in dark mode */
     color: #64748b;
     border-color: #334155;
 }
@@ -966,4 +995,43 @@ body.dark .notif-item-full {
 body.dark .notif-footer {
     border-color: #334155;
     background: #1e293b;
+}
+
+/* ── Add to :root ── */
+:root {
+    /* existing vars... */
+    --purple: #9333ea;
+}
+
+.text-purple {
+    color: var(--purple) !important;
+}
+
+body.dark .text-purple {
+    color: #c084fc !important;
+}
+
+/* ── Chart legend dots ── */
+.category-dot[data-cat="food"] {
+    color: #facc15;
+}
+.category-dot[data-cat="travel"] {
+    color: #60a5fa;
+}
+.category-dot[data-cat="office"] {
+    color: #a78bfa;
+}
+.category-dot[data-cat="health"] {
+    color: #34d399;
+}
+.category-dot[data-cat="other"] {
+    color: #94a3b8;
+}
+
+/* ── Purple stat value ── */
+.text-purple {
+    color: #9333ea !important;
+}
+body.dark .text-purple {
+    color: #c084fc !important;
 }

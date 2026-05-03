@@ -1,173 +1,120 @@
 @extends('layouts.app')
-
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 
-    <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Dashboard</h1>
+    {{-- ── Page Heading ── --}}
+    <div class="page-heading">
+        <h4>Dashboard</h4>
+    </div>
 
-    {{-- ── Summary Cards ─────────────────────────────────── --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    {{-- ── Summary Cards ── --}}
+    <div class="row g-4 mb-4">
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="label">Total Spent (All Time)</div>
+                <div class="value text-primary">₹{{ number_format($totalAll, 2) }}</div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="label">This Month</div>
+                <div class="value text-primary">₹{{ number_format($totalThisMonth, 2) }}</div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="label">This Week</div>
+                <div class="value text-success">₹{{ number_format($totalThisWeek, 2) }}</div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="label">Total Expenses</div>
+                <div class="value text-purple">{{ $totalExpenses }}</div>
+            </div>
+        </div>
+    </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <p class="text-sm text-gray-500 dark:text-gray-400">Total Spent (All Time)</p>
-            <p class="text-3xl font-bold text-blue-600 mt-1">
-                ₹ {{ number_format($totalAll, 2) }}
-            </p>
+    {{-- ── Charts Row ── --}}
+    <div class="row g-4 mb-4">
+
+        {{-- Donut Chart — Spending by Category --}}
+        <div class="col-12 col-lg-6">
+            <div class="stat-card h-100">
+                <div class="label mb-3">Spending by Category</div>
+                @if ($byCategory->count() > 0)
+                    <div class="d-flex align-items-center justify-content-center" style="height:220px">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                    {{-- Legend --}}
+                    <div class="mt-3 d-flex flex-wrap gap-2 justify-content-center">
+                        @foreach ($byCategory as $item)
+                            <span style="font-size:0.78rem;color:var(--text-muted)">
+                                <span class="category-dot" data-cat="{{ $item->category }}">●</span>
+                                {{ ucfirst($item->category) }} (₹{{ number_format($item->total, 2) }})
+                            </span>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="d-flex align-items-center justify-content-center" style="height:220px">
+                        <p style="color:var(--text-muted)">No expenses yet.</p>
+                    </div>
+                @endif
+            </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <p class="text-sm text-gray-500 dark:text-gray-400">This Month</p>
-            <p class="text-3xl font-bold text-blue-600 mt-1">
-                ₹ {{ number_format($totalThisMonth, 2) }}
-            </p>
-        </div>
-
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <p class="text-sm text-gray-500 dark:text-gray-400">This Week</p>
-            <p class="text-3xl font-bold text-green-600 mt-1">
-                ₹ {{ number_format($totalThisWeek, 2) }}
-            </p>
-        </div>
-
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <p class="text-sm text-gray-500 dark:text-gray-400">Total Expenses</p>
-            <p class="text-3xl font-bold text-purple-600 mt-1">
-                {{ $totalExpenses }}
-            </p>
+        {{-- Line Chart — Last 6 Months --}}
+        <div class="col-12 col-lg-6">
+            <div class="stat-card h-100">
+                <div class="label mb-3">Last 6 Months</div>
+                @if ($monthlySpending->count() > 0)
+                    <div style="height:250px">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                @else
+                    <div class="d-flex align-items-center justify-content-center" style="height:250px">
+                        <p style="color:var(--text-muted)">No data yet.</p>
+                    </div>
+                @endif
+            </div>
         </div>
 
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-
-        {{-- ── Spending by Category ──────────────────────── --}}
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h2 class="text-lg font-semibold text-gray-800  dark:text-gray-400 mb-4">
-                Spending by Category
-            </h2>
-
-            @forelse($byCategory as $item)
-                @php
-                    $percentage = $totalAll > 0
-                        ? round(($item->total / $totalAll) * 100)
-                        : 0;
-
-                    $colors = [
-                        'food'    => 'bg-yellow-400',
-                        'travel'  => 'bg-blue-400',
-                        'office'  => 'bg-purple-400',
-                        'health'  => 'bg-green-400',
-                        'other'   => 'bg-gray-400',
-                    ];
-                    $color = $colors[$item->category] ?? 'bg-gray-400';
-                @endphp
-
-                <div class="mb-4">
-                    <div class="flex justify-between text-sm mb-1">
-                        <span class="font-medium text-gray-700 dark:text-gray-300">
-                            {{ ucfirst($item->category) }}
-                            <span class="text-gray-400">({{ $item->count }})</span>
-                        </span>
-                        <span class="text-gray-900 dark:text-white font-semibold">
-                            ₹ {{ number_format($item->total, 2) }}
-                            <span class="text-gray-400 text-xs">({{ $percentage }}%)</span>
-                        </span>
-                    </div>
-                    {{-- Progress Bar --}}
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="{{ $color }} h-2 rounded-full"
-                             style="width: {{ $percentage }}%">
-                        </div>
-                    </div>
-                </div>
-
-            @empty
-                <p class="text-gray-500">No expenses yet.</p>
-            @endforelse
+    {{-- ── Recent Expenses ── --}}
+    <div class="table-card">
+        <div class="d-flex justify-content-between align-items-center px-3 pt-3 pb-2">
+            <span style="font-weight:700;font-size:0.9rem;color:var(--text-main)">Recent Expenses</span>
+            <a href="{{ route('expenses.index') }}" class="text-primary" style="font-size:0.82rem">View All →</a>
         </div>
-
-        {{-- ── Monthly Spending ──────────────────────────── --}}
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-                Last 6 Months
-            </h2>
-
-            @forelse($monthlySpending as $month)
-                @php
-                    $max = $monthlySpending->max('total');
-                    $percentage = $max > 0 ? round(($month['total'] / $max) * 100) : 0;
-                @endphp
-
-                <div class="mb-4">
-                    <div class="flex justify-between text-sm mb-1">
-                        <span class="text-gray-700 dark:text-gray-300">{{ $month['label'] }}</span>
-                        <span class="font-semibold text-gray-900 dark:text-white">
-                            ₹ {{ number_format($month['total'], 2) }}
-                        </span>
-                    </div>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-blue-500 h-2 rounded-full"
-                             style="width: {{ $percentage }}%">
-                        </div>
-                    </div>
-                </div>
-
-            @empty
-                <p class="text-gray-500">No data yet.</p>
-            @endforelse
-        </div>
-
-    </div>
-
-    {{-- ── Recent Expenses ───────────────────────────────── --}}
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold text-gray-800 dark:text-white">
-                Recent Expenses
-            </h2>
-            <a href="{{ route('expenses.index') }}"
-               class="text-blue-600 hover:underline text-sm">
-                View All →
-            </a>
-        </div>
-
-        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <table>
             <thead>
                 <tr>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                    <th>Title</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Date</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody>
                 @forelse($recentExpenses as $expense)
-                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <td class="px-4 py-3 text-gray-900 dark:text-white">
-                            <a href="{{ route('expenses.show', $expense) }}"
-                               class="hover:text-blue-600">
+                    <tr>
+                        <td>
+                            <a href="{{ route('expenses.show', $expense) }}" class="text-decoration-none"
+                                style="color:var(--text-main)">
                                 {{ $expense->title }}
                             </a>
                         </td>
-                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">
-                            ₹{{ number_format($expense->amount, 2) }}
-                        </td>
-                        <td class="px-4 py-3">
-                            <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                                {{ ucfirst($expense->category) }}
-                            </span>
-                        </td>
-                        <td class="px-4 py-3 text-gray-500">
-                            {{ $expense->expense_date->format('d M Y') }}
-                        </td>
+                        <td><span class="amount-text">₹{{ number_format($expense->amount, 2) }}</span></td>
+                        <td><span class="cat-badge">{{ ucfirst($expense->category) }}</span></td>
+                        <td style="color:var(--text-muted)">{{ $expense->expense_date->format('d M Y') }}</td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="px-4 py-3 text-center text-gray-500">
+                        <td colspan="4" class="text-center py-4" style="color:var(--text-muted)">
                             No expenses yet.
-                            <a href="{{ route('expenses.create') }}" class="text-blue-600 hover:underline">Add one!</a>
+                            <a href="{{ route('expenses.create') }}" class="text-primary">Add one!</a>
                         </td>
                     </tr>
                 @endforelse
@@ -175,5 +122,143 @@
         </table>
     </div>
 
-</div>
+    {{-- ── Chart.js ── --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <script>
+        // ── Detect dark mode ──────────────────────────────
+        const isDark = document.body.classList.contains('dark');
+        const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+        const labelColor = isDark ? '#94a3b8' : '#64748b';
+        const tooltipBg = isDark ? '#1e293b' : '#ffffff';
+        const tooltipText = isDark ? '#e2e8f0' : '#0f172a';
+
+        // ── Category colors ───────────────────────────────
+        const catColors = {
+            food: '#facc15',
+            travel: '#60a5fa',
+            office: '#a78bfa',
+            health: '#34d399',
+            other: '#94a3b8',
+        };
+
+        // ── Donut Chart ───────────────────────────────────
+        @if ($byCategory->count() > 0)
+            const categoryData = {
+                labels: @json($byCategory->pluck('category')->map(fn($c) => ucfirst($c))),
+                datasets: [{
+                    data: @json($byCategory->pluck('total')),
+                    backgroundColor: @json($byCategory->pluck('category')->map(fn($c) => $catColors[$c] ?? '#94a3b8')),
+                    borderWidth: 0,
+                    hoverOffset: 8,
+                }]
+            };
+
+            new Chart(document.getElementById('categoryChart'), {
+                type: 'doughnut',
+                data: categoryData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: tooltipBg,
+                            titleColor: tooltipText,
+                            bodyColor: tooltipText,
+                            borderColor: isDark ? '#334155' : '#e2e8f0',
+                            borderWidth: 1,
+                            padding: 10,
+                            callbacks: {
+                                label: ctx =>
+                                    ` ₹${Number(ctx.raw).toLocaleString('en-IN', {minimumFractionDigits:2})}`
+                            }
+                        }
+                    }
+                }
+            });
+        @endif
+
+        // ── Line Chart ────────────────────────────────────
+        @if ($monthlySpending->count() > 0)
+            const monthlyData = {
+                labels: @json($monthlySpending->pluck('label')),
+                datasets: [{
+                    label: 'Spent',
+                    data: @json($monthlySpending->pluck('total')),
+                    borderColor: '#6366f1',
+                    backgroundColor: isDark ?
+                        'rgba(99,102,241,0.15)' :
+                        'rgba(99,102,241,0.08)',
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#6366f1',
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
+                    tension: 0.4,
+                }]
+            };
+
+            new Chart(document.getElementById('monthlyChart'), {
+                type: 'line',
+                data: monthlyData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: tooltipBg,
+                            titleColor: tooltipText,
+                            bodyColor: tooltipText,
+                            borderColor: isDark ? '#334155' : '#e2e8f0',
+                            borderWidth: 1,
+                            padding: 10,
+                            callbacks: {
+                                label: ctx =>
+                                    ` ₹${Number(ctx.raw).toLocaleString('en-IN', {minimumFractionDigits:2})}`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: labelColor,
+                                font: {
+                                    size: 11
+                                }
+                            },
+                            border: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: gridColor
+                            },
+                            ticks: {
+                                color: labelColor,
+                                font: {
+                                    size: 11
+                                },
+                                callback: val => '₹' + val.toLocaleString('en-IN')
+                            },
+                            border: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        @endif
+    </script>
+
 @endsection
