@@ -19,10 +19,8 @@ class BudgetController extends Controller
         $defaultCategories = collect([
             'food',
             'travel',
-            'health',
             'office',
-            'shopping',
-            'entertainment',
+            'health',
             'other'
         ]);
 
@@ -54,7 +52,8 @@ class BudgetController extends Controller
         Budget::updateOrCreate(
             [
                 'user_id'  => Auth::id(),
-                'category' => ($request->category)],
+                'category' => ($request->category)
+            ],
             ['amount' => $request->amount]
         );
 
