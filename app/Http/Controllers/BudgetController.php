@@ -46,7 +46,7 @@ class BudgetController extends Controller
     {
         $request->validate([
             'category' => ['required', 'string'],
-            'amount'   => ['required', 'numeric', 'min:1'],
+            'amount'   => ['required', 'numeric', 'min:0.01'],
         ]);
 
         Budget::updateOrCreate(

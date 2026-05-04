@@ -26,7 +26,7 @@ class BudgetController extends Controller
     // POST /api/budgets
     public function store(BudgetStoreRequest $request): JsonResponse
     {
-        $data = $request->validated;
+        $data = $request->validated();
 
         $budget = Budget::updateOrCreate(
             [
@@ -47,7 +47,7 @@ class BudgetController extends Controller
     {
         $this->authorize('update', $budget);
 
-        $data = $request->validated;
+        $data = $request->validated();
         $budget->update($data);
 
         return response()->json([

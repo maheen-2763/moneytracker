@@ -14,6 +14,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property-read DatabaseNotificationCollection<DatabaseNotification> $notifications
@@ -31,7 +32,7 @@ use Illuminate\Support\Facades\Storage;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * Get the attributes that should be cast.
@@ -51,7 +52,7 @@ class User extends Authenticatable
         return $this->hasMany(Expense::class);
     }
 
-     public function budgets(): HasMany
+    public function budgets(): HasMany
     {
         return $this->hasMany(Budget::class);
     }

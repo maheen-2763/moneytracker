@@ -12,9 +12,31 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    // POST /api/v1/register
+    public function register(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'name'                  => ['required', 'string', 'max:255'],
+            'email'                 => ['required', 'email', 'unique:users,email'],
+            'password'              => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
 
+        $user = User::create([
+            'name'     => $data['name'],
+            'email'    => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
 
-    // POST /api/login
+        $token = $user->createToken('api-token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Registration successful.',
+            'token'   => $token,
+            'user'    => new UserResource($user),
+        ], 201);
+    }
+
+    // POST /api/v1/login
     public function login(Request $request): JsonResponse
     {
         $request->validate([
@@ -39,7 +61,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // POST /api/logout
+    // POST /api/v1/logout
     public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
@@ -49,7 +71,7 @@ class AuthController extends Controller
         ]);
     }
 
-    // GET /api/me
+    // GET /api/v1/me
     public function me(Request $request): JsonResponse
     {
         return response()->json([

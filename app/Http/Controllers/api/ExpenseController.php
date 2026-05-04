@@ -30,7 +30,7 @@ class ExpenseController extends Controller
     // POST /api/expenses
     public function store(StoreFormRequest $request): JsonResponse
     {
-        $data = $request->validated;
+        $data = $request->validated();
 
         $expense = Expense::create([
             ...$data,
@@ -58,7 +58,7 @@ class ExpenseController extends Controller
     {
         $this->authorize('update', $expense);
 
-        $data = $request->validated;
+        $data = $request->validated();
 
         $expense->update($data);
 

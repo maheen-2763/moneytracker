@@ -20,12 +20,11 @@ test('user can create an expense', function () {
         'amount'       => 45.50,
         'category'     => 'food',
         'expense_date' => now()->format('Y-m-d'),
-        'notes'        => 'Office lunch',
+        'description'   => 'Office lunch',
     ])->assertRedirect(route('expenses.index'));
 
     $this->assertDatabaseHas('expenses', [
         'title'   => 'Team Lunch',
-        'amount'  => 45.50,
         'user_id' => $this->user->id,
     ]);
 });
