@@ -1223,3 +1223,54 @@ body.dark .toast-warning .toast-icon {
         max-width: 100%;
     }
 }
+
+/* ── Dashboard Charts & Cards Dark Mode ── */
+body.dark .card {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0;
+}
+body.dark .card-body {
+    background: #1e293b !important;
+}
+body.dark .card .fw-bold {
+    color: #e2e8f0 !important;
+}
+body.dark .card h6 {
+    color: #e2e8f0 !important;
+}
+body.dark .card .text-muted {
+    color: #64748b !important;
+}
+body.dark .card table tbody tr {
+    border-color: #334155 !important;
+}
+body.dark .card table tbody td {
+    color: #e2e8f0 !important;
+}
+body.dark .card .border-bottom {
+    border-color: #334155 !important;
+}
+
+/* Stat cards dark */
+body.dark .stat-card {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+body.dark .stat-card .label {
+    color: #64748b !important;
+}
+body.dark .stat-card .stat-sub {
+    color: #64748b !important;
+}
+
+/* Budget progress dark */
+body.dark .budget-progress-wrap,
+body.dark [style*="background:#f1f5f9"] {
+    background: #0f172a !important;
+}
+
+/* Chart canvas background */
+body.dark canvas {
+    filter: brightness(0.95);
+}

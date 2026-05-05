@@ -2,65 +2,74 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Budget;
 use App\Models\Expense;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request): View
+    public function index()
     {
-        $userId = $request->user()->id;
+        $userId = Auth::id();
 
-        $totalAll = Expense::forUser($userId)->sum('amount');
-
-        $totalThisMonth = Expense::forUser($userId)
-            ->whereRaw("strftime('%Y-%m', expense_date) = ?", [now()->format('Y-m')])
+        // ── Summary stats ──────────────────────
+        $totalAllTime = Expense::where('user_id', $userId)
             ->sum('amount');
 
-        $totalThisWeek = Expense::forUser($userId)
+        $thisMonth = Expense::where('user_id', $userId)
+            ->whereMonth('expense_date', now()->month)
+            ->whereYear('expense_date',  now()->year)
+            ->sum('amount');
+
+        $thisWeek = Expense::where('user_id', $userId)
             ->whereBetween('expense_date', [
-                now()->startOfWeek()->format('Y-m-d'),
-                now()->endOfWeek()->format('Y-m-d'),
-            ])
-            ->sum('amount');
+                now()->startOfWeek(),
+                now()->endOfWeek(),
+            ])->sum('amount');
 
-        $totalExpenses = Expense::forUser($userId)->count();
+        $totalExpenses = Expense::where('user_id', $userId)->count();
 
-        $byCategory = Expense::forUser($userId)
-            ->selectRaw('category, SUM(amount) as total, COUNT(*) as count')
+        // ── Monthly trend (last 6 months) ──────
+        $isMySQL = config('database.default') === 'mysql';
+        $fmt = $isMySQL
+            ? "DATE_FORMAT(expense_date, '%Y-%m')"
+            : "strftime('%Y-%m', expense_date)";
+
+        $monthlyTrend = Expense::where('user_id', $userId)
+            ->where('expense_date', '>=', now()->subMonths(6))
+            ->selectRaw("$fmt as month, SUM(amount) as total")
+            ->groupByRaw($fmt)
+            ->orderBy('month')
+            ->get();
+
+        // ── Category breakdown (this month) ────
+        $categoryBreakdown = Expense::where('user_id', $userId)
+            ->whereMonth('expense_date', now()->month)
+            ->whereYear('expense_date',  now()->year)
+            ->selectRaw('category, SUM(amount) as total')
             ->groupBy('category')
             ->orderByDesc('total')
             ->get();
 
-        $recentExpenses = Expense::forUser($userId)
-            ->orderByDesc('expense_date')
-            ->limit(5)
+        // ── Budgets ────────────────────────────
+        $budgets = Budget::where('user_id', $userId)->get();
+
+        // ── Recent expenses ────────────────────
+        $recentExpenses = Expense::where('user_id', $userId)
+            ->latest('expense_date')
+            ->take(6)
             ->get();
 
-        $monthlySpending = Expense::forUser($userId)
-            ->selectRaw("
-                strftime('%Y', expense_date) as year,
-                strftime('%m', expense_date) as month,
-                SUM(amount) as total
-            ")
-            ->where('expense_date', '>=', now()->subMonths(6)->format('Y-m-d'))
-            ->groupByRaw("strftime('%Y', expense_date), strftime('%m', expense_date)")
-            ->orderByRaw("strftime('%Y', expense_date), strftime('%m', expense_date)")
-            ->get()
-            ->map(fn($row) => [
-                'label' => \Carbon\Carbon::createFromDate($row->year, $row->month, 1)->format('M Y'),
-                'total' => $row->total,
-            ]);
-
         return view('dashboard', compact(
-            'totalAll',
-            'totalThisMonth',
-            'totalThisWeek',
+            'totalAllTime',
+            'thisMonth',
+            'thisWeek',
             'totalExpenses',
-            'byCategory',
+            'monthlyTrend',
+            'categoryBreakdown',
+            'budgets',
             'recentExpenses',
-            'monthlySpending',
         ));
     }
 }

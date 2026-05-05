@@ -10,10 +10,10 @@ Route::prefix('v1')->name('api.v1.')->group(function () {  // ← add name prefi
 
     // Public
     Route::post('/register', [AuthController::class, 'register'])->name('register');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login')->middleware('throttle:5,1');
 
     // Protected
-    Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
         Route::post('/logout',   [AuthController::class, 'logout'])->name('logout');
         Route::get('/me',        [AuthController::class, 'me'])->name('me');
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

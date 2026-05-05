@@ -420,6 +420,10 @@
                 <a href="{{ route('register') }}">Create one for free</a>
             </div>
 
+            <div class="auth-footer">
+                <a href="{{ route('admin.login.post') }}"> Login as Admin</a>
+            </div>
+
         </div>
     </div>
 
