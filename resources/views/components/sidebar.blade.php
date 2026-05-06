@@ -35,8 +35,13 @@
                 <i class="bi bi-bar-chart-line"></i> Reports
             </a>
         </li>
-
-
+        <li class="nav-section">Developer</li>
+        <li class="nav-item">
+            <a href="{{ route('api.docs') }}" target="_blank" class="nav-link">
+                <i class="bi bi-code-slash"></i> API Docs
+                <i class="bi bi-box-arrow-up-right ms-auto" style="font-size:.65rem;"></i>
+            </a>
+        </li>
         <li class="nav-section">Account</li>
         <li class="nav-item">
             <a href="{{ route('profile.index') }}"

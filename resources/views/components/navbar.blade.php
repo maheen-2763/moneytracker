@@ -75,8 +75,8 @@
             <button class="btn btn-sm btn-light d-flex align-items-center gap-2 dropdown-toggle"
                 data-bs-toggle="dropdown">
                 <img src="{{ auth()->user()->avatarUrl() }}" class="rounded-circle" width="28" height="28"
-                    style="object-fit:cover;" alt="avatar">
-                <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
+                    style="object-fit:cover;" alt="avatar"> <span
+                    class="d-none d-md-inline">{{ auth()->user()->name }}</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow-sm">
                 <li>

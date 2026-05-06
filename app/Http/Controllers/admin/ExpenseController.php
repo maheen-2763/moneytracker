@@ -28,7 +28,7 @@ class ExpenseController extends Controller
                 $q->where('user_id', $v)
             )
             ->latest('expense_date')
-            ->paginate(10);
+            ->paginate(15);
 
         $categories = Expense::distinct()->pluck('category');
         $users      = \App\Models\User::orderBy('name')->get();

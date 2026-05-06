@@ -212,3 +212,12 @@
             .forEach(el => new bootstrap.Tooltip(el));
     </script>
 @endpush
+
+@push('styles')
+    <style>
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+@endpush

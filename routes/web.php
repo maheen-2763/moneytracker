@@ -40,4 +40,9 @@ Route::middleware(['auth', 'verified', 'throttle:60,1'])->group(function () {
         ->name('dashboard');
 });
 
+// Public API docs page — no auth needed
+Route::get('/api/docs', function () {
+    return view('api.docs');
+})->name('api.docs');
+
 require __DIR__ . '/auth.php';

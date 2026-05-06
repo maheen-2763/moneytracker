@@ -197,6 +197,7 @@ body {
 .table-card tbody tr {
     transition: background 0.15s;
 }
+
 .table-card tbody tr:hover {
     background: #f8fafc;
 }
