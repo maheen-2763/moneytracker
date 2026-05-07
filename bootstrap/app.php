@@ -25,8 +25,14 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,  // ← add
+            'two_factor' => \App\Http\Middleware\RequiresTwoFactor::class, // ← add
+        ]);
+
+        $middleware->appendToGroup('web', [
+            \App\Http\Middleware\RequiresTwoFactor::class,
         ]);
     })
+
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

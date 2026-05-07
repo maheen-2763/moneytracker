@@ -41,9 +41,11 @@
 
 <body>
 
-    @include('components.sidebar')
-
-    @include('components.navbar', ['title' => View::yieldContent('title')])
+    {{-- ✅ FIXED: Only show sidebar & navbar to authenticated users --}}
+    @auth
+        @include('components.sidebar')
+        @include('components.navbar', ['title' => $title ?? 'Dashboard'])
+    @endauth
 
     <main id="main-content">
         @include('components.alert')
@@ -61,21 +63,21 @@
         const closeBtn = document.getElementById('sidebarClose');
 
         function openSidebar() {
-            sidebar.classList.add('show');
-            overlay.classList.add('show');
+            sidebar?.classList.add('show');
+            overlay?.classList.add('show');
             toggle?.classList.add('open');
             document.body.style.overflow = 'hidden'; // prevent bg scroll
         }
 
         function closeSidebar() {
-            sidebar.classList.remove('show');
-            overlay.classList.remove('show');
+            sidebar?.classList.remove('show');
+            overlay?.classList.remove('show');
             toggle?.classList.remove('open');
             document.body.style.overflow = '';
         }
 
         toggle?.addEventListener('click', () => {
-            sidebar.classList.contains('show') ? closeSidebar() : openSidebar();
+            sidebar?.classList.contains('show') ? closeSidebar() : openSidebar();
         });
 
         overlay?.addEventListener('click', closeSidebar);

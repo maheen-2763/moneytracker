@@ -83,6 +83,21 @@
                             {{ $user->created_at->format('d M Y') }}
                         </span>
                     </div>
+                    <div class="info-row border-0 pb-0 align-items-center">
+                        <div>
+                            <div class="info-value">Two-Factor Auth</div>
+                            <div class="info-label">
+                                @if (auth()->user()->two_factor_enabled)
+                                    <span class="text-success">✅ Enabled</span>
+                                @else
+                                    <span class="text-muted">Not enabled</span>
+                                @endif
+                            </div>
+                        </div>
+                        <a href="{{ route('profile.security') }}" class="btn btn-sm btn-outline-secondary ms-auto">
+                            Manage Security
+                        </a>
+                    </div>
                 </div>
             </div>
 

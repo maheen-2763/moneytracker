@@ -50,6 +50,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="{{ route('profile.security') }}"
+                class="nav-link {{ request()->routeIs('profile.security') ? 'active' : '' }}">
+                <i class="bi bi-shield-lock"></i> Security
+            </a>
+        </li>
+        <li class="nav-item">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="nav-link btn btn-link w-100 text-start text-danger">

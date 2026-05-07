@@ -28,8 +28,18 @@ use Laravel\Sanctum\HasApiTokens;
  * @method void notifyNow(mixed $notification)
  */
 
-#[Fillable(['name', 'email', 'password', 'avatar', 'phone', 'bio'])]
-#[Hidden(['password', 'remember_token'])]
+#[Fillable([
+    'name',
+    'email',
+    'password',
+    'avatar',
+    'phone',
+    'bio',
+    'two_factor_secret',
+    'two_factor_enabled',
+    'two_factor_confirmed_at',
+])]
+#[Hidden(['password', 'remember_token', 'two_factor_secret'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
@@ -45,6 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'two_factor_confirmed_at' => 'datetime'
         ];
     }
 
