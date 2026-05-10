@@ -1,54 +1,64 @@
+<div align="center">
+
 # 💰 MoneyTracker
 
-A full-featured personal finance web application built with **Laravel 11**, designed to help users track expenses, set budgets, and get alerts when spending limits are exceeded.
+**A full-featured personal finance web application**
 
-> Built as a portfolio project to demonstrate real-world Laravel development skills.
+[![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=flat&logo=php)](https://php.net)
+[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=flat&logo=laravel)](https://laravel.com)
+[![Tests](https://img.shields.io/badge/Tests-57%20passing-22c55e?style=flat)](https://pestphp.com)
+[![License](https://img.shields.io/badge/License-MIT-6366f1?style=flat)](LICENSE)
+
+[Live Demo](#) · [API Docs](#) · [Report Bug](#)
+
+</div>
 
 ---
 
-## 🌐 Live Demo
+## 📸 Screenshots
 
-🔗 [moneytracker.yourdomain.com](https://moneytracker.yourdomain.com)
-
-**Demo credentials:**
-
-- Email: `demo@moneytracker.com`
-- Password: `password`
+| Dashboard                          | Expenses                       | Admin                    |
+| ---------------------------------- | ------------------------------ | ------------------------ |
+| ![Dashboard](images/dashboard.png) | ![Expenses](docs/expenses.png) | ![Admin](docs/admin.png) |
 
 ---
 
 ## ✨ Features
 
-| Feature           | Description                                        |
-| ----------------- | -------------------------------------------------- |
-| 🔐 Authentication | Register, login, logout via Laravel Breeze         |
-| 💸 Expense CRUD   | Create, view, edit, soft-delete expenses           |
-| 📊 Dashboard      | Summary cards, category breakdown, monthly charts  |
-| 📈 Reports        | Filter by date/category, export to PDF & Excel     |
-| 🏷️ Budgets        | Set monthly limits per category with progress bars |
-| 🔔 Notifications  | Bell icon alerts when budget is exceeded           |
-| 👤 Profile        | Avatar upload, edit info, change password          |
-| 🌙 Dark Mode      | Persists via localStorage                          |
-| 📱 Responsive     | Mobile-first with slide-in sidebar                 |
+- 🔐 **Authentication** — Register, login, logout with Laravel Breeze
+- 💸 **Expense CRUD** — Full create, read, update, soft-delete
+- 📊 **Dashboard** — Charts, summary cards, category breakdown
+- 📈 **Reports** — Filter by date/category, export PDF & Excel
+- 🏷️ **Budget Limits** — Set monthly limits with progress bars
+- 🔔 **Notifications** — Bell icon alerts when budget exceeded
+- 👤 **User Profile** — Avatar upload, edit info, change password
+- 🔒 **2FA Security** — Google Authenticator support
+- 📧 **Email Notifications** — Welcome, budget alert, weekly report
+- 🌙 **Dark Mode** — Persists via localStorage
+- 📱 **Mobile Responsive** — Slide-in sidebar, card views
+- 🛡️ **Admin Panel** — Separate admin with full management
+- 🌐 **REST API** — Sanctum token auth with full docs
+- 🧪 **Tests** — 57 tests, 117 assertions with PestPHP
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer           | Technology                           |
-| --------------- | ------------------------------------ |
-| Backend         | PHP 8.2, Laravel 11                  |
-| Frontend        | Bootstrap 5, Plus Jakarta Sans       |
-| Database        | MySQL (production), SQLite (testing) |
-| Auth            | Laravel Breeze                       |
-| PDF Export      | barryvdh/laravel-dompdf              |
-| Excel Export    | maatwebsite/laravel-excel            |
-| Testing         | PestPHP — 57 tests, 117 assertions   |
-| Dev Environment | Laravel Herd                         |
+| Layer    | Technology                               |
+| -------- | ---------------------------------------- |
+| Backend  | PHP 8.2, Laravel 11                      |
+| Frontend | Bootstrap 5, Chart.js, Plus Jakarta Sans |
+| Database | MySQL (production), SQLite (testing)     |
+| Auth     | Laravel Breeze + Sanctum                 |
+| 2FA      | pragmarx/google2fa-laravel               |
+| PDF      | barryvdh/laravel-dompdf                  |
+| Excel    | maatwebsite/laravel-excel                |
+| Testing  | PestPHP — 57 tests                       |
+| Mail     | SMTP (Mailtrap/Gmail)                    |
 
 ---
 
-## 🚀 Local Setup
+## 🚀 Quick Start
 
 ### Requirements
 
@@ -60,62 +70,86 @@ A full-featured personal finance web application built with **Laravel 11**, desi
 ### Installation
 
 ```bash
-# 1. Clone the repo
-git clone https://github.com/yourusername/moneytracker.git
+# 1. Clone
+git clone https://github.com/maheen-2763/moneytracker.git
 cd moneytracker
 
 # 2. Install dependencies
 composer install
 npm install
 
-# 3. Environment setup
+# 3. Environment
 cp .env.example .env
 php artisan key:generate
 
-# 4. Configure database in .env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=moneytracker
-DB_USERNAME=root
-DB_PASSWORD=
+# 4. Configure .env
+# Set DB_DATABASE, DB_USERNAME, DB_PASSWORD
+# Set MAIL_* credentials
 
-# 5. Run migrations and seed
+# 5. Database
 php artisan migrate --seed
 
-# 6. Create storage symlink
+# 6. Storage
 php artisan storage:link
 
 # 7. Build assets
-npm run dev
+npm run build
 
-# 8. Start server
+# 8. Serve
 php artisan serve
 ```
 
-Visit `http://localhost:8000`
+Visit `http://moneytracker.test`
+
+---
+
+## 👑 Admin Access
+
+```bash
+# Create admin account
+php artisan db:seed --class=AdminSeeder
+
+# Login at: /admin/login
+# Email:    admin@moneytracker.com
+# Password: admin123
+```
 
 ---
 
 ## 🧪 Running Tests
 
 ```bash
-# Run all tests
+# All tests
 php artisan test
 
-# Run specific test file
+# Specific suite
 php artisan test --filter=BudgetTest
 
-# Run with coverage report
+# With coverage
 php artisan test --coverage
 ```
 
-**Test results:**
-
 ```
-Tests: 57 passed (117 assertions)
+Tests:    57 passed (117 assertions)
 Duration: 5.68s
 ```
+
+---
+
+## 🌐 API
+
+Base URL: `/api/v1`
+
+| Method | Endpoint     | Description    |
+| ------ | ------------ | -------------- |
+| POST   | `/login`     | Get auth token |
+| POST   | `/register`  | Create account |
+| GET    | `/expenses`  | List expenses  |
+| POST   | `/expenses`  | Create expense |
+| GET    | `/budgets`   | List budgets   |
+| GET    | `/dashboard` | Summary stats  |
+
+Full docs at `/api/docs`
 
 ---
 
@@ -123,107 +157,27 @@ Duration: 5.68s
 
 ```
 app/
-├── Http/Controllers/
-│   ├── BudgetController.php
-│   ├── ExpenseController.php
-│   ├── NotificationController.php
-│   ├── ProfileController.php
-│   ├── ReportController.php
-│   └── ExportController.php
-├── Models/
-│   ├── Budget.php
-│   ├── Expense.php
-│   └── User.php
-├── Notifications/
-│   └── BudgetExceeded.php
-└── Services/
-    └── ExpenseService.php
+├── Http/
+│   ├── Controllers/
+│   │   ├── Api/          ← REST API controllers
+│   │   ├── Admin/        ← Admin panel controllers
+│   │   └── ...           ← Web controllers
+│   ├── Middleware/
+│   │   ├── AdminMiddleware.php
+│   │   └── RequiresTwoFactor.php
+│   └── Requests/         ← Form validation
+├── Models/               ← Eloquent models
+├── Mail/                 ← Email classes
+├── Notifications/        ← DB notifications
+└── Services/             ← Business logic
 
 resources/views/
-├── layouts/app.blade.php
-├── components/
-│   ├── sidebar.blade.php
-│   ├── navbar.blade.php
-│   └── alert.blade.php
-├── expenses/
-├── budgets/
-├── reports/
-├── profile/
-└── notifications/
-
-tests/
-├── Feature/
-│   ├── Auth/
-│   ├── BudgetTest.php
-│   ├── ExpenseTest.php
-│   ├── NotificationTest.php
-│   └── ProfileTest.php
-└── Unit/
-    └── BudgetTest.php
-```
-
----
-
-## 🔌 API Endpoints
-
-| Method   | Endpoint             | Description       |
-| -------- | -------------------- | ----------------- |
-| `POST`   | `/api/login`         | Get auth token    |
-| `GET`    | `/api/expenses`      | List expenses     |
-| `POST`   | `/api/expenses`      | Create expense    |
-| `PUT`    | `/api/expenses/{id}` | Update expense    |
-| `DELETE` | `/api/expenses/{id}` | Delete expense    |
-| `GET`    | `/api/budgets`       | List budgets      |
-| `GET`    | `/api/dashboard`     | Dashboard summary |
-
-Full API docs: [api-docs link]
-
----
-
-## 📸 Screenshots
-
-| Dashboard                        | Expenses                       | Budgets                      |
-| -------------------------------- | ------------------------------ | ---------------------------- |
-| ![Dashboard](docs/dashboard.png) | ![Expenses](docs/expenses.png) | ![Budgets](docs/budgets.png) |
-
----
-
-## 🔑 Key Implementation Highlights
-
-**Service Layer Pattern**
-
-```php
-// ExpenseService handles all business logic
-// Controllers stay thin and focused
-$this->service->create($userId, $data, $receipt);
-```
-
-**Policy-based Authorization**
-
-```php
-// Every resource is protected
-$this->authorize('update', $expense);
-$this->authorize('delete', $budget);
-```
-
-**Smart Budget Notifications**
-
-```php
-// Fires only once per budget breach
-// Duplicate guard prevents notification spam
-if (!$alreadyNotified) {
-    Auth::user()->notify(new BudgetExceeded($budget, $spent));
-}
-```
-
-**Comprehensive Test Coverage**
-
-```php
-// 57 tests covering features, auth, policies & units
-test('user cannot edit another users expense', function () {
-    // ...
-    ->assertForbidden();  // 403 enforced
-});
+├── admin/                ← Admin panel views
+├── api/                  ← API documentation
+├── auth/                 ← Login, register, 2FA
+├── components/           ← Blade components
+├── emails/               ← Email templates
+└── ...                   ← Feature views
 ```
 
 ---
@@ -232,9 +186,8 @@ test('user cannot edit another users expense', function () {
 
 **Mohammed Maheen Afzal**
 
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
-- Email: your@email.com
+[![GitHub](https://img.shields.io/badge/GitHub-yourusername-181717?style=flat&logo=github)](https://github.com/maheen-2763)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-yourprofile-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/yourprofile)
 
 ---
 

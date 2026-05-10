@@ -12,6 +12,9 @@ use Illuminate\View\View;
 use App\Models\Budget;
 use App\Notifications\BudgetExceeded;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\BudgetExceededMail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ExpenseReceiptMail;
 
 
 class ExpenseController extends Controller
@@ -40,13 +43,16 @@ class ExpenseController extends Controller
     {
         $data = $request->validated();
 
-        $this->service->create(
+        $expense = $this->service->create(
             $request->user()->id,
             $data,
             $request->file('receipt')
         );
 
         $this->checkBudget($data['category']);
+
+        Mail::to($request->user()->email)
+            ->send(new ExpenseReceiptMail($request->user(), $expense));
 
         return redirect()->route('expenses.index')
             ->with('toast_success', 'Expense added successfully!');
@@ -118,7 +124,13 @@ class ExpenseController extends Controller
                 ->exists();
 
             if (!$alreadyNotified) {
-                Auth::user()->notify(new BudgetExceeded($budget, $spent));
+                $user = Auth::user();
+
+                // DB notification (bell icon)
+                $user->notify(new BudgetExceeded($budget, $spent));
+
+                Mail::to($user->email)
+                    ->send(new BudgetExceededMail($user, $budget, $spent));
             }
         }
     }
