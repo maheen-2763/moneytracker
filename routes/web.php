@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 // Landing page - accessible to everyone
 Route::get('/', function () {
     return view('landing');
-})->name('landing');
+})->name('home');
 
 // Public API docs page — no auth needed
 Route::get('/api/docs', function () {
@@ -73,50 +73,6 @@ Route::middleware(['auth', 'verified', 'throttle:60,1'])->group(function () {
     })->name('logout');
 });
 
-
-// ← Remove before deploying!
-if (app()->environment('local')) {
-
-    Route::get('/email-preview/welcome', function () {
-        return new \App\Mail\WelcomeMail(Auth::user());
-    });
-
-    Route::get('/email-preview/budget-exceeded', function () {
-        $budget = \App\Models\Budget::first();
-        return new \App\Mail\BudgetExceededMail(
-            Auth::user(),
-            $budget,
-            $budget->amount + 100
-        );
-    });
-
-    Route::get('/email-preview/weekly-report', function () {
-        $user = Auth::user();
-        return new \App\Mail\WeeklyReportMail($user, [
-            'this_week'       => 4250,
-            'this_month'      => 12800,
-            'expense_count'   => 8,
-            'daily_avg'       => 607,
-            'top_category'    => (object)[
-                'category' => 'food',
-                'total'    => 2100,
-                'count'    => 5,
-            ],
-            'recent_expenses' => \App\Models\Expense::where(
-                'user_id',
-                $user->id
-            )->take(5)->get(),
-            'budgets' => $user->budgets,
-        ]);
-    });
-
-    Route::get('/email-preview/expense-receipt', function () {
-        return new \App\Mail\ExpenseReceiptMail(
-            Auth::user(),
-            \App\Models\Expense::where('user_id', Auth::id())->first()
-        );
-    });
-}
 
 // Auth routes (login, register, etc.)
 require __DIR__ . '/auth.php';

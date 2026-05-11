@@ -18,9 +18,9 @@ class ExpenseFactory extends Factory
                 'travel',
                 'health',
                 'office',
-                'shopping'
+                'other'
             ]),
-            'expense_date' => $this->faker->dateTimeThisMonth(), // ← matches your column
+            'expense_date' => $this->faker->dateTimeBetween('-6 months', 'now'), // ← matches your column
             'description' => $this->faker->optional()->sentence(),
         ];
     }

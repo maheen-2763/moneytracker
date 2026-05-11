@@ -57,6 +57,7 @@ class DashboardController extends Controller
 
         // ── Recent expenses ────────────────────
         $recentExpenses = Expense::where('user_id', $userId)
+            ->select('expenses.*')
             ->latest('expense_date')
             ->take(6)
             ->get();

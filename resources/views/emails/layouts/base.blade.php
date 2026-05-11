@@ -239,16 +239,18 @@
             @yield('content')
         </div>
 
-        {{-- Footer --}}
-        <div class="email-footer">
-            <p>
-                You're receiving this because you have an account at
-                <a href="{{ url('/') }}">MoneyTracker</a>.<br>
-                <a href="{{ url('/profile') }}">Manage email preferences</a>
-                &nbsp;·&nbsp;
-                <a href="{{ url('/') }}">Visit MoneyTracker</a>
-            </p>
-        </div>
+        @auth
+            {{-- Footer --}}
+            <div class="email-footer">
+                <p>
+                    You're receiving this because you have an account at
+                    <a href="{{ url('/profile') }}">MoneyTracker</a>.<br>
+                    <a href="{{ url('/profile') }}">Manage email preferences</a>
+                    &nbsp;·&nbsp;
+                    <a href="{{ url('/') }}">Visit MoneyTracker</a>
+                </p>
+            </div>
+        @endauth
 
     </div>
 </body>
