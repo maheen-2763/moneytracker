@@ -1,107 +1,307 @@
-<nav class="navbar d-flex align-items-center px-3" id="topnav">
+{{-- TOP NAVBAR --}}
+<nav id="topnav"
+    class="topbar
+           sticky top-0 z-40
+           flex items-center justify-between
+           px-4 md:px-6 py-3">
 
-    {{-- Hamburger --}}
-    <button class="hamburger-btn d-md-none me-3" id="sidebarToggle" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
+    {{-- LEFT --}}
+    <div class="flex items-center gap-3">
 
-    {{-- Page title --}}
-    <span class="page-title">{{ $title ?? 'Dashboard' }}</span>
+        {{-- MOBILE TOGGLE --}}
+        <button id="sidebarToggle"
+            class="md:hidden
+                   inline-flex items-center justify-center
+                   w-10 h-10 rounded-xl
+                   border border-ui
+                   bg-card
+                   hover:bg-gray-100 dark:hover:bg-slate-800
+                   transition-all duration-200">
 
-    {{-- Right side --}}
-    <div class="ms-auto d-flex align-items-center gap-2">
+            <i class="bi bi-list text-lg"></i>
 
-        {{-- Add Expense --}}
-        <a href="{{ route('expenses.create') }}" class="btn btn-sm btn-primary d-flex align-items-center gap-1">
+        </button>
+
+        {{-- PAGE TITLE --}}
+        <div>
+            <h1 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
+                {{ $title ?? 'Dashboard' }}
+            </h1>
+
+        </div>
+
+    </div>
+
+    {{-- RIGHT --}}
+    <div class="flex items-center gap-2 md:gap-3">
+
+        {{-- ADD EXPENSE --}}
+        <a href="{{ route('expenses.create') }}" class="btn-primary-ui gap-2">
+
             <i class="bi bi-plus-lg"></i>
-            <span class="d-none d-md-inline">Add Expense</span>
+
+            <span class="hidden md:inline">
+                Add Expense
+            </span>
+
         </a>
-        @auth
-            {{-- 🔔 Notifications bell --}}
-            @php $unread = auth()->user()->unreadNotifications->count() ?? 0; @endphp
-            <div class="dropdown">
-                <button class="btn btn-sm btn-light position-relative" data-bs-toggle="dropdown" aria-label="Notifications">
-                    <i class="bi bi-bell"></i>
+
+        {{-- NOTIFICATION --}}
+        @php
+            $unread = auth()->user()->unreadNotifications->count() ?? 0;
+        @endphp
+
+        <div class="relative">
+
+            <button id="notifToggle"
+                class="relative
+                       inline-flex items-center justify-center
+                       w-10 h-10 rounded-xl
+                       border border-ui
+                       bg-card
+                       hover:bg-gray-100 dark:hover:bg-slate-800
+                       transition-all duration-200">
+
+                <i class="bi bi-bell text-lg"></i>
+
+                @if ($unread > 0)
+                    <span
+                        class="absolute -top-1 -right-1
+                               min-w-[20px] h-5
+                               px-1
+                               flex items-center justify-center
+                               rounded-full
+                               bg-red-500 text-white
+                               text-[10px] font-bold">
+
+                        {{ $unread > 9 ? '9+' : $unread }}
+
+                    </span>
+                @endif
+
+            </button>
+
+            {{-- DROPDOWN --}}
+            <div id="notifMenu"
+                class="hidden absolute right-0 mt-3
+                       w-80 overflow-hidden
+                       rounded-2xl
+                       border border-ui
+                       bg-card
+                       shadow-2xl">
+
+                {{-- HEADER --}}
+                <div class="flex items-center justify-between
+                           px-4 py-3 border-b border-ui">
+
+                    <h3 class="card-title-ui">
+                        Notifications
+                    </h3>
+
                     @if ($unread > 0)
-                        <span class="notif-badge">{{ $unread > 9 ? '9+' : $unread }}</span>
-                    @endif
-                </button>
+                        <a href="{{ route('notifications.read-all') }}"
+                            class="text-xs font-semibold text-indigo-500 hover:text-indigo-600">
 
-                <div class="dropdown-menu dropdown-menu-end notif-dropdown shadow">
-                    <div class="notif-header d-flex justify-content-between align-items-center">
-                        <span class="fw-bold">Notifications</span>
-                        @if ($unread > 0)
-                            <a href="{{ route('notifications.read-all') }}" class="notif-read-all">Mark all read</a>
-                        @endif
-                    </div>
+                            Mark all read
 
-                    {{-- ← forelse not foreach --}}
-                    @forelse(auth()->user()->notifications->take(2) as $notif)
-                        <a href="{{ route('notifications.read', $notif->id) }}"
-                            class="notif-item {{ is_null($notif->read_at) ? 'unread' : '' }}">
-                            <div class="notif-icon">
-                                <i class="bi bi-exclamation-triangle-fill"></i>
-                            </div>
-                            <div class="notif-body">
-                                <div class="notif-text">{{ $notif->data['message'] }}</div>
-                                <div class="notif-time">
-                                    {{ $notif->created_at->diffForHumans() }}
-                                </div>
-                            </div>
                         </a>
+                    @endif
+
+                </div>
+
+                {{-- ITEMS --}}
+                <div class="max-h-96 overflow-y-auto">
+
+                    @forelse(auth()->user()->notifications->take(5) as $notif)
+                        <a href="{{ route('notifications.read', $notif->id) }}"
+                            class="flex items-start gap-3
+                                   px-4 py-4
+                                   transition-all duration-200
+                                   hover:bg-gray-50 dark:hover:bg-slate-800">
+
+                            <div
+                                class="w-10 h-10 rounded-full
+                                       flex items-center justify-center
+                                       bg-yellow-100 dark:bg-yellow-900/20">
+
+                                <i class="bi bi-bell-fill text-yellow-600"></i>
+
+                            </div>
+
+                            <div class="flex-1 min-w-0">
+
+                                <p class="text-sm text-gray-700 dark:text-slate-300">
+                                    {{ $notif->data['message'] }}
+                                </p>
+
+                                <p class="text-xs text-gray-400 mt-1">
+                                    {{ $notif->created_at->diffForHumans() }}
+                                </p>
+
+                            </div>
+
+                        </a>
+
                     @empty
-                        <div class="notif-empty">
-                            <i class="bi bi-check-circle text-success fs-4 d-block mb-1"></i>
-                            All caught up!
+
+                        <div class="px-6 py-10 text-center">
+
+                            <i class="bi bi-check-circle text-3xl text-green-500"></i>
+
+                            <p class="meta-ui mt-2">
+                                All caught up!
+                            </p>
+
                         </div>
                     @endforelse
 
-                    <div class="notif-footer">
-                        <a href="{{ route('notifications.index') }}">View all notifications</a>
-                    </div>
+                </div>
 
-                </div>{{-- end notif-dropdown --}}
-            </div>{{-- end notification dropdown --}}
-        @endauth
+            </div>
 
-        {{-- 🌙 Dark mode toggle --}}
-        <button class="btn btn-sm btn-light" id="darkToggle" data-bs-toggle="tooltip" data-bs-title="Toggle dark mode">
-            <i class="bi bi-moon-stars" id="darkIcon"></i>
+        </div>
+
+        {{-- DARK MODE --}}
+        <button id="darkToggle"
+            class="inline-flex items-center justify-center
+                   w-10 h-10 rounded-xl
+                   border border-ui
+                   bg-card
+                   hover:bg-gray-100 dark:hover:bg-slate-800
+                   transition-all duration-200">
+
+            <i class="bi bi-moon-stars text-lg" id="darkIcon"></i>
+
         </button>
-        @auth
-            {{-- 👤 User dropdown --}}
-            <div class="dropdown">
-                <button class="btn btn-sm btn-light d-flex align-items-center gap-2 dropdown-toggle"
-                    data-bs-toggle="dropdown">
-                    <img src="{{ auth()->user()->avatarUrl() }}" class="rounded-circle" width="28" height="28"
-                        style="object-fit:cover;" alt="avatar"> <span
-                        class="d-none d-md-inline">{{ auth()->user()->name }}</span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-                    <li>
-                        <a class="dropdown-item" href="{{ route('profile.index') }}">
-                            <i class="bi bi-person me-2"></i> Profile
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button class="dropdown-item text-danger">
-                                <i class="bi bi-box-arrow-left me-2"></i> Logout
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-            </div>{{-- end user dropdown --}}
 
-        </div>{{-- end ms-auto --}}
-    </nav>
-@endauth
+        {{-- USER --}}
+        <div class="relative">
 
-{{-- Mobile overlay --}}
-<div class="sidebar-overlay d-md-none" id="sidebarOverlay"></div>
+            <button id="userToggle"
+                class="flex items-center gap-3
+                       px-2 py-2
+                       rounded-xl
+                       border border-ui
+                       bg-card
+                       hover:bg-gray-100 dark:hover:bg-slate-800
+                       transition-all duration-200">
+
+                <img src="{{ auth()->user()->avatarUrl() }}" class="w-9 h-9 rounded-full object-cover" alt="avatar">
+
+                <div class="hidden md:flex flex-col items-start leading-tight">
+
+                    <span class="text-sm font-semibold text-gray-900 dark:text-white">
+                        {{ auth()->user()->name }}
+                    </span>
+
+                    <span class="text-xs text-gray-500 dark:text-slate-400">
+                        User
+                    </span>
+
+                </div>
+
+                <i class="bi bi-chevron-down text-xs text-gray-400"></i>
+
+            </button>
+
+            {{-- DROPDOWN --}}
+            <div id="userMenu"
+                class="hidden absolute right-0 mt-3
+                       w-56 overflow-hidden
+                       rounded-2xl
+                       border border-ui
+                       bg-card
+                       shadow-2xl">
+
+                <a href="{{ route('profile.index') }}"
+                    class="flex items-center gap-3
+                           px-4 py-3 text-sm
+                           hover:bg-gray-50 dark:hover:bg-slate-800">
+
+                    <i class="bi bi-person"></i>
+
+                    Profile
+
+                </a>
+
+                <form method="POST" action="{{ route('logout') }}">
+
+                    @csrf
+
+                    <button
+                        class="w-full flex items-center gap-3
+                               px-4 py-3 text-sm
+                               text-red-500
+                               hover:bg-red-50 dark:hover:bg-red-900/20">
+
+                        <i class="bi bi-box-arrow-right"></i>
+
+                        Logout
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+@push('scripts')
+    <script>
+        /* ELEMENTS */
+        const notifToggle = document.getElementById('notifToggle');
+        const notifMenu = document.getElementById('notifMenu');
+
+        const userToggle = document.getElementById('userToggle');
+        const userMenu = document.getElementById('userMenu');
+
+        /* NOTIFICATION DROPDOWN */
+        notifToggle?.addEventListener('click', function(e) {
+
+            e.stopPropagation();
+
+            notifMenu?.classList.toggle('hidden');
+
+            userMenu?.classList.add('hidden');
+
+        });
+
+        /* USER DROPDOWN */
+        userToggle?.addEventListener('click', function(e) {
+
+            e.stopPropagation();
+
+            userMenu?.classList.toggle('hidden');
+
+            notifMenu?.classList.add('hidden');
+
+        });
+
+        /* OUTSIDE CLICK */
+        document.addEventListener('click', function(e) {
+
+            if (
+                !notifToggle?.contains(e.target) &&
+                !notifMenu?.contains(e.target)
+            ) {
+
+                notifMenu?.classList.add('hidden');
+
+            }
+
+            if (
+                !userToggle?.contains(e.target) &&
+                !userMenu?.contains(e.target)
+            ) {
+
+                userMenu?.classList.add('hidden');
+
+            }
+
+        });
+    </script>
+@endpush

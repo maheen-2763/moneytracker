@@ -1,137 +1,197 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth" x-data="{ darkMode: false }"
+    :class="{ 'dark': darkMode }">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- ✅ CHANGED: allows each view to set its own title --}}
     <title>@yield('title', config('app.name', 'Laravel'))</title>
 
-    <!-- Fonts -->
+    {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    {{-- Icons --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script>
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.add('dark-loading');
-        }
-    </script>
-    <style>
-        .dark-loading * {
-            transition: none !important;
-        }
-    </style>
-
-    <!-- Scripts -->
+    {{-- Tailwind --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- ✅ ADDED: for page-specific CSS --}}
+    {{-- Page Styles --}}
     @stack('styles')
+
+    {{-- Prevent dark-mode flicker --}}
+    <script>
+        if (
+            localStorage.getItem('theme') === 'dark' ||
+            (!localStorage.getItem('theme') &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+
 </head>
 
-<body>
+<body
+    class="font-[Plus_Jakarta_Sans] bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white antialiased transition-colors duration-300">
 
-    {{-- ✅ FIXED: Only show sidebar & navbar to authenticated users --}}
+    {{-- Sidebar + Navbar --}}
     @auth
+
         @include('components.sidebar')
-        @include('components.navbar', ['title' => $title ?? 'Dashboard'])
+
+
+
+        @include('components.navbar', [
+            'title' => $title ?? 'Dashboard',
+        ])
+
     @endauth
 
-    <main id="main-content">
+    {{-- Main Content --}}
+    <main id="main-content" class="min-h-screen md:ml-72 pt-24 px-8">
+
         @include('components.alert')
 
         @yield('content')
+
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {{-- Toast Notifications --}}
+    <div id="toast-container" class="fixed top-5 right-5 z-[9999] space-y-3">
+    </div>
+
+    {{-- Flash Messages --}}
+    @if (session('toast_success'))
+        <div class="hidden" id="flash-success">
+            {{ session('toast_success') }}
+        </div>
+    @endif
+
+    @if (session('toast_error'))
+        <div class="hidden" id="flash-error">
+            {{ session('toast_error') }}
+        </div>
+    @endif
+
+    @if (session('toast_warning'))
+        <div class="hidden" id="flash-warning">
+            {{ session('toast_warning') }}
+        </div>
+    @endif
+
+    {{-- Page Scripts --}}
     @stack('scripts')
 
     <script>
+        /* ─────────────────────────────────────
+                                                                                                   Sidebar
+                                                                                                ───────────────────────────────────── */
+
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');
         const toggle = document.getElementById('sidebarToggle');
         const closeBtn = document.getElementById('sidebarClose');
 
         function openSidebar() {
-            sidebar?.classList.add('show');
-            overlay?.classList.add('show');
-            toggle?.classList.add('open');
-            document.body.style.overflow = 'hidden'; // prevent bg scroll
+            sidebar?.classList.remove('-translate-x-full');
+            overlay?.classList.remove('hidden');
+
+            document.body.classList.add('overflow-hidden');
         }
 
         function closeSidebar() {
-            sidebar?.classList.remove('show');
-            overlay?.classList.remove('show');
-            toggle?.classList.remove('open');
-            document.body.style.overflow = '';
+            sidebar?.classList.add('-translate-x-full');
+            overlay?.classList.add('hidden');
+
+            document.body.classList.remove('overflow-hidden');
         }
 
         toggle?.addEventListener('click', () => {
-            sidebar?.classList.contains('show') ? closeSidebar() : openSidebar();
+
+            if (sidebar?.classList.contains('-translate-x-full')) {
+                openSidebar();
+            } else {
+                closeSidebar();
+            }
+
         });
 
         overlay?.addEventListener('click', closeSidebar);
+
         closeBtn?.addEventListener('click', closeSidebar);
 
-        // Close sidebar when a nav link is clicked on mobile
-        document.querySelectorAll('#sidebar .nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth < 768) closeSidebar();
-            });
-        });
+        document.querySelectorAll('#sidebar .nav-link')
+            .forEach(link => {
 
-        // Tooltips init
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('[data-bs-toggle="tooltip"]')
-                .forEach(el => new bootstrap.Tooltip(el));
-        });
-        // ── Dark Mode ──────────────────────────
+                link.addEventListener('click', () => {
+
+                    if (window.innerWidth < 768) {
+                        closeSidebar();
+                    }
+
+                });
+
+            });
+
+        /* ─────────────────────────────────────
+           Dark Mode
+        ───────────────────────────────────── */
+
         const darkToggle = document.getElementById('darkToggle');
         const darkIcon = document.getElementById('darkIcon');
 
         function applyTheme(theme) {
+
             if (theme === 'dark') {
-                document.body.classList.add('dark');
-                darkIcon?.classList.replace('bi-moon-stars', 'bi-sun');
+
+                document.documentElement.classList.add('dark');
+
+                darkIcon?.classList.remove('bi-moon-stars');
+                darkIcon?.classList.add('bi-sun');
+
             } else {
-                document.body.classList.remove('dark');
-                darkIcon?.classList.replace('bi-sun', 'bi-moon-stars');
+
+                document.documentElement.classList.remove('dark');
+
+                darkIcon?.classList.remove('bi-sun');
+                darkIcon?.classList.add('bi-moon-stars');
+
             }
         }
 
-        // Apply saved theme on load
-        applyTheme(localStorage.getItem('theme') || 'light');
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
 
+        applyTheme(savedTheme);
+
+        // Toggle
         darkToggle?.addEventListener('click', () => {
-            const next = document.body.classList.contains('dark') ? 'light' : 'dark';
-            localStorage.setItem('theme', next);
-            applyTheme(next);
+
+            const nextTheme =
+                document.documentElement.classList.contains('dark') ?
+                'light' :
+                'dark';
+
+            localStorage.setItem('theme', nextTheme);
+
+            applyTheme(nextTheme);
+
         });
-    </script>
 
-    {{-- ── Toast Notifications ── --}}
-    <div id="toast-container" aria-live="polite"></div>
+        /* ─────────────────────────────────────
+           Toast System
+        ───────────────────────────────────── */
 
-    @if (session('toast_success'))
-        <div class="d-none" id="flash-success">{{ session('toast_success') }}</div>
-    @endif
-    @if (session('toast_error'))
-        <div class="d-none" id="flash-error">{{ session('toast_error') }}</div>
-    @endif
-    @if (session('toast_warning'))
-        <div class="d-none" id="flash-warning">{{ session('toast_warning') }}</div>
-    @endif
-    <script>
-        /* ── Toast System ── */
         const TOAST_ICONS = {
             success: 'bi-check-lg',
             error: 'bi-x-lg',
@@ -139,42 +199,76 @@
         };
 
         function showToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
+
+            const container =
+                document.getElementById('toast-container');
 
             const toast = document.createElement('div');
-            toast.className = `toast-item toast-${type}`;
+
+            toast.className = `
+                flex items-center gap-3
+                px-4 py-3 rounded-2xl
+                shadow-lg border
+                backdrop-blur-md
+                bg-white dark:bg-gray-900
+                border-gray-200 dark:border-gray-800
+                animate-[fadeIn_.3s_ease]
+            `;
+
             toast.innerHTML = `
-        <div class="toast-icon">
-            <i class="bi ${TOAST_ICONS[type]}"></i>
-        </div>
-        <span>${message}</span>
-        <button class="toast-close" onclick="dismissToast(this.parentElement)">
-            <i class="bi bi-x"></i>
-        </button>
-        <div class="toast-progress"></div>
-    `;
+                <div class="text-lg">
+                    <i class="bi ${TOAST_ICONS[type]}"></i>
+                </div>
+
+                <span class="text-sm font-medium flex-1">
+                    ${message}
+                </span>
+
+                <button class="text-gray-400 hover:text-red-500 transition">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            `;
+
+            toast.querySelector('button')
+                .addEventListener('click', () => dismissToast(toast));
 
             container.appendChild(toast);
 
-            // Auto dismiss after 3.5s
             setTimeout(() => dismissToast(toast), 3500);
+
         }
 
         function dismissToast(toast) {
-            if (!toast || toast.classList.contains('hiding')) return;
-            toast.classList.add('hiding');
+
+            toast.classList.add('opacity-0', 'translate-x-5');
+
             setTimeout(() => toast.remove(), 300);
+
         }
 
-        // ── Fire flash messages on page load ──
         document.addEventListener('DOMContentLoaded', () => {
-            const success = document.getElementById('flash-success');
-            const error = document.getElementById('flash-error');
-            const warning = document.getElementById('flash-warning');
 
-            if (success) showToast(success.textContent.trim(), 'success');
-            if (error) showToast(error.textContent.trim(), 'error');
-            if (warning) showToast(warning.textContent.trim(), 'warning');
+            const success =
+                document.getElementById('flash-success');
+
+            const error =
+                document.getElementById('flash-error');
+
+            const warning =
+                document.getElementById('flash-warning');
+
+            if (success) {
+                showToast(success.textContent.trim(), 'success');
+            }
+
+            if (error) {
+                showToast(error.textContent.trim(), 'error');
+            }
+
+            if (warning) {
+                showToast(warning.textContent.trim(), 'warning');
+            }
+
         });
     </script>
 
