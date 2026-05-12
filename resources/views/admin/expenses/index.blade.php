@@ -7,7 +7,7 @@
 
         {{-- ── Page Header ── --}}
         <div>
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+            <h1 class="text-xl font-bold text-gray-900 dark:text-white">
                 All Expenses
             </h1>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -118,7 +118,7 @@
                 <div class="flex gap-2 lg:col-span-6">
                     <button type="submit"
                         class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg
-                           bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-600
+                           bg-indigo-500 hover:bg-indigo-600 dark:hover:bg-indigo-600
                            text-white text-sm font-semibold transition">
                         <i class="bi bi-funnel"></i> Filter
                     </button>

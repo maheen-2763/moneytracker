@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <div class="min-h-screen bg-gray-50 dark:bg-gray-950 py-8">
+    <div class="space-y-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
             {{-- ── Page Header ── --}}
@@ -25,7 +25,7 @@
                     </a>
                     <a href="{{ route('admin.users.index') }}"
                         class="inline-flex items-center gap-2 px-4 py-2 rounded-lg
-                           bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-600
+                           bg-indigo-500 hover:bg-indigo-600dark:hover:bg-indigo-600
                            text-white text-sm font-semibold transition">
                         <i class="bi bi-people"></i> All Users
                     </a>
@@ -154,7 +154,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             {{-- ── Charts Row ── --}}
@@ -166,7 +165,7 @@
                         bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
                         <h3 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                            <i class="bi bi-graph-up text-indigo-600 dark:text-indigo-400"></i>
+                            <i class="bi bi-graph-up text-indigo-500 dark:text-indigo-400"></i>
                             Monthly Spending Trend
                         </h3>
                     </div>
@@ -209,7 +208,7 @@
                             Top Spenders
                         </h3>
                         <a href="{{ route('admin.users.index') }}"
-                            class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
+                            class="text-xs font-semibold text-indigo-500 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
                             View all →
                         </a>
                     </div>
@@ -220,7 +219,7 @@
                                 $rankColors = [
                                     0 => [
                                         'bg' => 'bg-indigo-100 dark:bg-indigo-900/30',
-                                        'text' => 'text-indigo-600 dark:text-indigo-400',
+                                        'text' => 'text-indigo-500 dark:text-indigo-400',
                                     ],
                                     1 => [
                                         'bg' => 'bg-amber-100 dark:bg-amber-900/30',
@@ -278,11 +277,11 @@
                         class="px-6 py-4 border-b border-gray-200 dark:border-gray-800
                             flex items-center justify-between">
                         <h3 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                            <i class="bi bi-clock-history text-indigo-600 dark:text-indigo-400"></i>
+                            <i class="bi bi-clock-history text-indigo-500 dark:text-indigo-400"></i>
                             Recent Expenses
                         </h3>
                         <a href="{{ route('admin.expenses.index') }}"
-                            class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
+                            class="text-xs font-semibold text-indigo-500 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300">
                             View all →
                         </a>
                     </div>
@@ -374,142 +373,139 @@
 
             </div>
 
-        </div>
-    </div>
+            @push('scripts')
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                    const ctx = document.getElementById('monthlyChart');
+                    const categoryCtx = document.getElementById('categoryChart');
 
-    @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            const ctx = document.getElementById('monthlyChart');
-            const categoryCtx = document.getElementById('categoryChart');
-
-            // Monthly Trend Chart
-            const monthlyData = @json($monthlyTrend);
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: monthlyData.map(d => d.month),
-                    datasets: [{
-                        label: 'Total Spent (₹)',
-                        data: monthlyData.map(d => d.total),
-                        borderColor: '#4f46e5',
-                        backgroundColor: 'rgba(79, 70, 229, 0.06)',
-                        borderWidth: 2.5,
-                        pointBackgroundColor: '#4f46e5',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        fill: true,
-                        tension: 0.4,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
+                    // Monthly Trend Chart
+                    const monthlyData = @json($monthlyTrend);
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: monthlyData.map(d => d.month),
+                            datasets: [{
+                                label: 'Total Spent (₹)',
+                                data: monthlyData.map(d => d.total),
+                                borderColor: '#4f46e5',
+                                backgroundColor: 'rgba(79, 70, 229, 0.06)',
+                                borderWidth: 2.5,
+                                pointBackgroundColor: '#4f46e5',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2,
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
+                                fill: true,
+                                tension: 0.4,
+                            }]
                         },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12,
-                            borderRadius: 8,
-                            titleFont: {
-                                size: 13,
-                                weight: 'bold'
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    padding: 12,
+                                    borderRadius: 8,
+                                    titleFont: {
+                                        size: 13,
+                                        weight: 'bold'
+                                    },
+                                    bodyFont: {
+                                        size: 12
+                                    },
+                                    callbacks: {
+                                        label: ctx => '₹' + Number(ctx.raw).toLocaleString('en-IN')
+                                    }
+                                }
                             },
-                            bodyFont: {
-                                size: 12
-                            },
-                            callbacks: {
-                                label: ctx => '₹' + Number(ctx.raw).toLocaleString('en-IN')
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: '#9ca3af',
-                                font: {
-                                    size: 11,
-                                    weight: '500'
+                            scales: {
+                                x: {
+                                    grid: {
+                                        display: false
+                                    },
+                                    ticks: {
+                                        color: '#9ca3af',
+                                        font: {
+                                            size: 11,
+                                            weight: '500'
+                                        }
+                                    }
+                                },
+                                y: {
+                                    grid: {
+                                        color: '#f3f4f6',
+                                        drawBorder: false
+                                    },
+                                    ticks: {
+                                        color: '#9ca3af',
+                                        font: {
+                                            size: 11,
+                                            weight: '500'
+                                        },
+                                        callback: val => '₹' + Number(val).toLocaleString('en-IN')
+                                    }
                                 }
                             }
+                        }
+                    });
+
+                    // Category Doughnut Chart
+                    const categoryData = @json($byCategory);
+                    const categoryColors = {
+                        food: '#f59e0b',
+                        travel: '#3b82f6',
+                        health: '#10b981',
+                        office: '#8b5cf6',
+                        other: '#6b7280',
+                    };
+
+                    new Chart(categoryCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: categoryData.map(d => d.category.charAt(0).toUpperCase() + d.category.slice(1)),
+                            datasets: [{
+                                data: categoryData.map(d => d.total),
+                                backgroundColor: categoryData.map(d => categoryColors[d.category] ?? '#6b7280'),
+                                borderWidth: 2,
+                                borderColor: '#fff',
+                                hoverOffset: 8,
+                            }]
                         },
-                        y: {
-                            grid: {
-                                color: '#f3f4f6',
-                                drawBorder: false
-                            },
-                            ticks: {
-                                color: '#9ca3af',
-                                font: {
-                                    size: 11,
-                                    weight: '500'
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: '65%',
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        color: '#6b7280',
+                                        font: {
+                                            size: 11,
+                                            weight: '600'
+                                        },
+                                        padding: 16,
+                                        usePointStyle: true,
+                                        pointStyleWidth: 6,
+                                    }
                                 },
-                                callback: val => '₹' + Number(val).toLocaleString('en-IN')
+                                tooltip: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    padding: 12,
+                                    borderRadius: 8,
+                                    callbacks: {
+                                        label: ctx => ' ₹' + Number(ctx.raw).toLocaleString('en-IN')
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-            });
+                    });
+                </script>
+            @endpush
 
-            // Category Doughnut Chart
-            const categoryData = @json($byCategory);
-            const categoryColors = {
-                food: '#f59e0b',
-                travel: '#3b82f6',
-                health: '#10b981',
-                office: '#8b5cf6',
-                other: '#6b7280',
-            };
-
-            new Chart(categoryCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: categoryData.map(d => d.category.charAt(0).toUpperCase() + d.category.slice(1)),
-                    datasets: [{
-                        data: categoryData.map(d => d.total),
-                        backgroundColor: categoryData.map(d => categoryColors[d.category] ?? '#6b7280'),
-                        borderWidth: 2,
-                        borderColor: '#fff',
-                        hoverOffset: 8,
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '65%',
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                color: '#6b7280',
-                                font: {
-                                    size: 11,
-                                    weight: '600'
-                                },
-                                padding: 16,
-                                usePointStyle: true,
-                                pointStyleWidth: 6,
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            padding: 12,
-                            borderRadius: 8,
-                            callbacks: {
-                                label: ctx => ' ₹' + Number(ctx.raw).toLocaleString('en-IN')
-                            }
-                        }
-                    }
-                }
-            });
-        </script>
-    @endpush
-
-@endsection
+        @endsection

@@ -5,18 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin — @yield('title', 'Dashboard')</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                fontFamily: {
-                    sans: ['Plus Jakarta Sans', 'sans-serif'],
-                }
-            }
+        if (
+            localStorage.getItem('theme') === 'dark' ||
+            (!localStorage.getItem('theme') &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark');
         }
     </script>
     @stack('styles')
