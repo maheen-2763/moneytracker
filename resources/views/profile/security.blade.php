@@ -3,253 +3,293 @@
 
 @section('content')
 
-    <div class="page-heading">
-        <h4>🔒 Security Settings</h4>
-        <small>
-            <a href="{{ route('profile.index') }}" class="text-muted">
-                ← Back to profile
+    <div class="max-w-5xl mx-auto space-y-6">
+
+        {{-- Header --}}
+        <div class="flex items-center justify-between flex-wrap gap-3">
+            <div>
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+                    🔒 Security Settings
+                </h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                    Manage your account security and privacy
+                </p>
+            </div>
+            <a href="{{ route('profile.index') }}"
+                class="text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+                ← Back to Profile
             </a>
-        </small>
-    </div>
+        </div>
 
-    <div class="row g-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        {{-- ── Two Factor Auth Card ── --}}
-        <div class="col-md-8">
-            <div class="profile-info-card">
-                <div class="info-card-header">
-                    <i class="bi bi-shield-lock me-2"></i>
-                    Two-Factor Authentication (2FA)
-                    @if ($user->two_factor_enabled)
-                        <span class="badge bg-success ms-2" style="font-size:.65rem;">Enabled ✅</span>
-                    @else
-                        <span class="badge bg-secondary ms-2" style="font-size:.65rem;">Disabled</span>
-                    @endif
-                </div>
-                <div class="info-card-body">
+            {{-- ── Two Factor Auth Card ── --}}
+            <div class="lg:col-span-2">
+                <div
+                    class="rounded-2xl border border-gray-200 dark:border-gray-800
+                        bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
+                    <div
+                        class="flex items-center gap-2 px-6 py-4
+                        border-b border-gray-200 dark:border-gray-800">
+                        <i class="bi bi-shield-lock text-indigo-500"></i>
+                        <h2 class="text-sm font-bold text-gray-900 dark:text-white flex-1">
+                            Two-Factor Authentication (2FA)
+                        </h2>
+                        @if ($user->two_factor_enabled)
+                            <span
+                                class="px-2.5 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 text-xs font-semibold">Enabled
+                                ✅</span>
+                        @else
+                            <span
+                                class="px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-semibold">Disabled</span>
+                        @endif
+                    </div>
+                    <div class="p-6 space-y-6">
 
-                    @if ($user->two_factor_enabled)
-                        {{-- ── Already enabled ── --}}
-                        <div class="d-flex align-items-start gap-3 mb-4">
-                            <div style="font-size:2rem;">✅</div>
-                            <div>
-                                <div class="fw-bold mb-1">
-                                    2FA is active on your account
-                                </div>
-                                <div class="text-muted" style="font-size:.85rem;">
-                                    Your account is protected with two-factor
-                                    authentication. You'll need your authenticator
-                                    app every time you sign in.
-                                </div>
-                                <div class="text-muted mt-1" style="font-size:.78rem;">
-                                    Enabled:
-                                    {{ $user->two_factor_confirmed_at?->format('d M Y, h:i A') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Disable 2FA --}}
-                        <div class="border border-danger rounded p-3" style="background:#fff5f5;">
-                            <div class="fw-bold text-danger mb-1">
-                                Disable Two-Factor Authentication
-                            </div>
-                            <div class="text-muted mb-3" style="font-size:.82rem;">
-                                Enter your password to disable 2FA.
-                                Your account will be less secure.
-                            </div>
-                            <form method="POST" action="{{ route('2fa.disable') }}">
-                                @csrf
-                                <div class="d-flex gap-2">
-                                    <input type="password" name="password"
-                                        class="form-control form-control-sm
-                                              @error('password') is-invalid @enderror"
-                                        placeholder="Enter your password" required>
-                                    <button type="submit" class="btn btn-sm btn-danger px-3"
-                                        onclick="return confirm('Disable 2FA?')">
-                                        Disable
-                                    </button>
-                                </div>
-                                @error('password')
-                                    <div class="text-danger mt-1" style="font-size:.78rem;">
-                                        {{ $message }}
+                        @if ($user->two_factor_enabled)
+                            {{-- ── Already enabled ── --}}
+                            <div class="flex gap-4">
+                                <div class="text-3xl flex-shrink-0">✅</div>
+                                <div>
+                                    <div class="font-semibold text-gray-900 dark:text-white mb-1">
+                                        2FA is active on your account
                                     </div>
-                                @enderror
-                            </form>
-                        </div>
-                    @else
-                        {{-- ── Setup 2FA ── --}}
-                        <div class="row g-4">
-
-                            {{-- Step 1: QR Code --}}
-                            <div class="col-md-5 text-center">
-                                <div class="fw-semibold mb-2" style="font-size:.85rem;">
-                                    Step 1: Scan QR Code
-                                </div>
-                                <div class="border rounded p-3 d-inline-block bg-white">
-                                    <img src="data:image/svg+xml;base64,{{ $qrCodeSvg }}" width="160" height="160"
-                                        alt="QR Code">
-                                </div>
-                                <div class="text-muted mt-2" style="font-size:.75rem;">
-                                    Use Google Authenticator,<br>
-                                    Authy, or any TOTP app
+                                    <div class="text-gray-600 dark:text-gray-400 text-sm mb-2">
+                                        Your account is protected with two-factor
+                                        authentication. You'll need your authenticator
+                                        app every time you sign in.
+                                    </div>
+                                    <div class="text-gray-500 dark:text-gray-500 text-xs">
+                                        Enabled:
+                                        {{ $user->two_factor_confirmed_at?->format('d M Y, h:i A') }}
+                                    </div>
                                 </div>
                             </div>
 
-                            {{-- Step 2: Manual key + verify --}}
-                            <div class="col-md-7">
-                                <div class="fw-semibold mb-2" style="font-size:.85rem;">
-                                    Step 2: Manual Key (if QR fails)
+                            {{-- Disable 2FA --}}
+                            <div
+                                class="border border-red-200 dark:border-red-900/40 rounded-xl p-4 bg-red-50 dark:bg-red-900/20">
+                                <div class="font-semibold text-red-900 dark:text-red-200 mb-1">
+                                    Disable Two-Factor Authentication
                                 </div>
-                                <div class="d-flex align-items-center gap-2 mb-3">
-                                    <code class="p-2 rounded"
-                                        style="background:#f1f5f9;
-                                             font-size:.78rem;
-                                             letter-spacing:.1em;
-                                             word-break:break-all;">
-                                        {{ $secret }}
-                                    </code>
-                                    <button onclick="copySecret('{{ $secret }}')"
-                                        class="btn btn-sm btn-outline-secondary">
-                                        <i class="bi bi-copy"></i>
-                                    </button>
+                                <div class="text-gray-700 dark:text-gray-300 text-sm mb-4">
+                                    Enter your password to disable 2FA.
+                                    Your account will be less secure.
                                 </div>
-
-                                <div class="fw-semibold mb-2" style="font-size:.85rem;">
-                                    Step 3: Enter 6-digit Code
-                                </div>
-                                <form method="POST" action="{{ route('2fa.enable') }}">
+                                <form method="POST" action="{{ route('2fa.disable') }}">
                                     @csrf
-                                    <div class="d-flex gap-2 mb-2">
-                                        <input type="text" name="otp"
-                                            class="form-control
-                                                  @error('otp') is-invalid @enderror"
-                                            placeholder="Enter 6-digit code" maxlength="6" inputmode="numeric"
-                                            pattern="[0-9]{6}" autocomplete="off" required>
-                                        <button type="submit" class="btn btn-primary px-4">
-                                            Enable
+                                    <div class="flex gap-2">
+                                        <input type="password" name="password"
+                                            class="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-700
+                                              rounded-xl text-sm placeholder-gray-400 dark:placeholder-gray-500
+                                              bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                                              focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500
+                                              @error('password') ring-2 ring-red-500 border-red-500 @enderror
+                                              transition"
+                                            placeholder="Enter your password" required>
+                                        <button type="submit"
+                                            class="px-5 py-2.5 bg-red-600 hover:bg-red-700 dark:hover:bg-red-600 text-white text-sm font-semibold rounded-xl transition"
+                                            onclick="return confirm('Disable 2FA?')">
+                                            Disable
                                         </button>
                                     </div>
-                                    @error('otp')
-                                        <div class="text-danger" style="font-size:.78rem;">
+                                    @error('password')
+                                        <div class="text-red-600 dark:text-red-400 text-xs mt-2">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </form>
+                            </div>
+                        @else
+                            {{-- ── Setup 2FA ── --}}
+                            <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
 
-                                <div class="mt-3 p-3 rounded" style="background:#f0fdf4; border:1px solid #bbf7d0;">
-                                    <div class="fw-bold text-success mb-1" style="font-size:.82rem;">
-                                        <i class="bi bi-shield-check me-1"></i>
-                                        What 2FA protects you from:
+                                {{-- Step 1: QR Code --}}
+                                <div class="md:col-span-2 flex flex-col items-center">
+                                    <div class="font-semibold text-sm text-gray-900 dark:text-white mb-3">
+                                        Step 1: Scan QR Code
                                     </div>
-                                    <ul class="text-muted mb-0" style="font-size:.78rem; padding-left:1rem;">
-                                        <li>Password theft</li>
-                                        <li>Phishing attacks</li>
-                                        <li>Unauthorized access</li>
-                                    </ul>
+                                    <div
+                                        class="border border-gray-200 dark:border-gray-700 rounded-xl p-4 bg-white dark:bg-gray-800 inline-block">
+                                        <img src="data:image/svg+xml;base64,{{ $qrCodeSvg }}" width="160"
+                                            height="160" alt="QR Code">
+                                    </div>
+                                    <div class="text-gray-600 dark:text-gray-400 text-xs mt-3 text-center">
+                                        Use Google Authenticator,<br>
+                                        Authy, or any TOTP app
+                                    </div>
+                                </div>
+
+                                {{-- Step 2: Manual key + verify --}}
+                                <div class="md:col-span-3 space-y-4">
+                                    <div>
+                                        <div class="font-semibold text-sm text-gray-900 dark:text-white mb-3">
+                                            Step 2: Manual Key (if QR fails)
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <code
+                                                class="flex-1 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-gray-800 text-xs font-mono tracking-widest break-all
+                                                    text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700">
+                                                {{ $secret }}
+                                            </code>
+                                            <button onclick="copySecret('{{ $secret }}')"
+                                                class="px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition"
+                                                title="Copy secret key">
+                                                <i class="bi bi-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <div class="font-semibold text-sm text-gray-900 dark:text-white mb-3">
+                                            Step 3: Enter 6-digit Code
+                                        </div>
+                                        <form method="POST" action="{{ route('2fa.enable') }}">
+                                            @csrf
+                                            <div class="flex gap-2 mb-3">
+                                                <input type="text" name="otp"
+                                                    class="flex-1 px-4 py-2.5 border border-gray-300 dark:border-gray-700
+                                                       rounded-xl text-sm placeholder-gray-400 dark:placeholder-gray-500
+                                                       bg-white dark:bg-gray-800 text-gray-900 dark:text-white
+                                                       focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500
+                                                       @error('otp') ring-2 ring-red-500 border-red-500 @enderror
+                                                       transition"
+                                                    placeholder="Enter 6-digit code" maxlength="6" inputmode="numeric"
+                                                    pattern="[0-9]{6}" autocomplete="off" required>
+                                                <button type="submit"
+                                                    class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-600 text-white text-sm font-semibold rounded-xl transition">
+                                                    Enable
+                                                </button>
+                                            </div>
+                                            @error('otp')
+                                                <div class="text-red-600 dark:text-red-400 text-xs">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </form>
+                                    </div>
+
+                                    <div
+                                        class="p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-900/40">
+                                        <div
+                                            class="font-semibold text-green-900 dark:text-green-200 mb-2 text-sm flex items-center gap-1">
+                                            <i class="bi bi-shield-check"></i>
+                                            What 2FA protects you from:
+                                        </div>
+                                        <ul class="text-gray-700 dark:text-gray-300 text-xs space-y-1 ml-4">
+                                            <li>• Password theft</li>
+                                            <li>• Phishing attacks</li>
+                                            <li>• Unauthorized access</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            {{-- ── Security Tips ── --}}
+            <div class="lg:col-span-1">
+                <div
+                    class="rounded-2xl border border-gray-200 dark:border-gray-800
+                    bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
+                    <div
+                        class="flex items-center gap-2 px-6 py-4
+                    border-b border-gray-200 dark:border-gray-800">
+                        <i class="bi bi-lightbulb text-indigo-500"></i>
+                        <span class="font-bold text-sm text-gray-900 dark:text-white">Security Tips</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+
+                            <div class="flex gap-3">
+                                <span class="text-xl flex-shrink-0">🔑</span>
+                                <div>
+                                    <div class="font-semibold text-sm text-gray-900 dark:text-white">
+                                        Strong Password
+                                    </div>
+                                    <div class="text-gray-600 dark:text-gray-400 text-xs mt-0.5">
+                                        Use 12+ chars with mixed case,
+                                        numbers and symbols
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <span class="text-xl flex-shrink-0">📱</span>
+                                <div>
+                                    <div class="font-semibold text-sm text-gray-900 dark:text-white">
+                                        Enable 2FA
+                                    </div>
+                                    <div class="text-gray-600 dark:text-gray-400 text-xs mt-0.5">
+                                        Adds a second layer of protection
+                                        even if password is stolen
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <span class="text-xl flex-shrink-0">🚫</span>
+                                <div>
+                                    <div class="font-semibold text-sm text-gray-900 dark:text-white">
+                                        Don't Reuse Passwords
+                                    </div>
+                                    <div class="text-gray-600 dark:text-gray-400 text-xs mt-0.5">
+                                        Use a password manager like
+                                        Bitwarden or 1Password
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <span class="text-xl flex-shrink-0">👁️</span>
+                                <div>
+                                    <div class="font-semibold text-sm text-gray-900 dark:text-white">
+                                        Review Active Sessions
+                                    </div>
+                                    <div class="text-gray-600 dark:text-gray-400 text-xs mt-0.5">
+                                        Sign out from devices you
+                                        no longer use
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <span class="text-xl flex-shrink-0">🔔</span>
+                                <div>
+                                    <div class="font-semibold text-sm text-gray-900 dark:text-white">
+                                        Keep Email Updated
+                                    </div>
+                                    <div class="text-gray-600 dark:text-gray-400 text-xs mt-0.5">
+                                        Needed for password reset
+                                        and notifications
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                    @endif
+
+                        {{-- Quick actions --}}
+                        <div class="mt-6">
+                            <a href="{{ route('profile.edit') }}#password"
+                                class="w-full block px-4 py-2.5 border border-indigo-300 dark:border-indigo-900/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-sm font-semibold rounded-xl transition text-center">
+                                <i class="bi bi-lock me-1"></i>Change Password
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        {{-- ── Security Tips ── --}}
-        <div class="col-md-4">
-            <div class="profile-info-card">
-                <div class="info-card-header">
-                    <i class="bi bi-lightbulb me-2"></i>Security Tips
-                </div>
-                <div class="info-card-body">
-                    <div class="d-flex flex-column gap-3">
+        @push('scripts')
+            <script>
+                function copySecret(secret) {
+                    navigator.clipboard.writeText(secret).then(() => {
+                        alert('Secret key copied!');
+                    });
+                }
+            </script>
+        @endpush
 
-                        <div class="d-flex gap-2 align-items-start">
-                            <span style="font-size:1.1rem;">🔑</span>
-                            <div>
-                                <div class="fw-semibold" style="font-size:.82rem;">
-                                    Strong Password
-                                </div>
-                                <div class="text-muted" style="font-size:.75rem;">
-                                    Use 12+ chars with mixed case,
-                                    numbers and symbols
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex gap-2 align-items-start">
-                            <span style="font-size:1.1rem;">📱</span>
-                            <div>
-                                <div class="fw-semibold" style="font-size:.82rem;">
-                                    Enable 2FA
-                                </div>
-                                <div class="text-muted" style="font-size:.75rem;">
-                                    Adds a second layer of protection
-                                    even if password is stolen
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex gap-2 align-items-start">
-                            <span style="font-size:1.1rem;">🚫</span>
-                            <div>
-                                <div class="fw-semibold" style="font-size:.82rem;">
-                                    Don't Reuse Passwords
-                                </div>
-                                <div class="text-muted" style="font-size:.75rem;">
-                                    Use a password manager like
-                                    Bitwarden or 1Password
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex gap-2 align-items-start">
-                            <span style="font-size:1.1rem;">👁️</span>
-                            <div>
-                                <div class="fw-semibold" style="font-size:.82rem;">
-                                    Review Active Sessions
-                                </div>
-                                <div class="text-muted" style="font-size:.75rem;">
-                                    Sign out from devices you
-                                    no longer use
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex gap-2 align-items-start">
-                            <span style="font-size:1.1rem;">🔔</span>
-                            <div>
-                                <div class="fw-semibold" style="font-size:.82rem;">
-                                    Keep Email Updated
-                                </div>
-                                <div class="text-muted" style="font-size:.75rem;">
-                                    Needed for password reset
-                                    and notifications
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    {{-- Quick actions --}}
-                    <div class="mt-4 d-grid gap-2">
-                        <a href="{{ route('profile.edit') }}#password" class="btn btn-sm btn-outline-primary">
-                            <i class="bi bi-lock me-1"></i>Change Password
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    @push('scripts')
-        <script>
-            function copySecret(secret) {
-                navigator.clipboard.writeText(secret).then(() => {
-                    alert('Secret key copied!');
-                });
-            }
-        </script>
-    @endpush
-
-@endsection
+    @endsection

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth" x-data="{ darkMode: false }"
-    :class="{ 'dark': darkMode }">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 
 <head>
     <meta charset="utf-8">
@@ -94,8 +93,8 @@
 
     <script>
         /* ─────────────────────────────────────
-                                                                                                   Sidebar
-                                                                                                ───────────────────────────────────── */
+                                                                                                       Sidebar
+                                                                                                    ───────────────────────────────────── */
 
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');

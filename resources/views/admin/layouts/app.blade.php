@@ -5,193 +5,168 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin — @yield('title', 'Dashboard')</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #f1f5f9;
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                fontFamily: {
+                    sans: ['Plus Jakarta Sans', 'sans-serif'],
+                }
+            }
         }
-
-        #admin-sidebar {
-            width: 240px;
-            min-height: 100vh;
-            background: #1e1b4b;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .admin-brand {
-            padding: 1.25rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 800;
-            color: #fff;
-            border-bottom: 1px solid #312e81;
-            letter-spacing: -0.02em;
-        }
-
-        .admin-brand span {
-            color: #a5b4fc;
-        }
-
-        .admin-nav-section {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #4338ca;
-            padding: 1rem 1.5rem 0.3rem;
-            font-weight: 700;
-        }
-
-        .admin-nav-link {
-            color: #a5b4fc;
-            padding: 0.6rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.65rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            text-decoration: none;
-            border-left: 3px solid transparent;
-            transition: all 0.15s;
-        }
-
-        .admin-nav-link:hover,
-        .admin-nav-link.active {
-            background: #312e81;
-            color: #fff;
-            border-left-color: #818cf8;
-        }
-
-        #admin-topnav {
-            margin-left: 240px;
-            background: #fff;
-            border-bottom: 1px solid #e2e8f0;
-            height: 56px;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            padding: 0 1.5rem;
-        }
-
-        #admin-content {
-            margin-left: 240px;
-            padding: 1.75rem 2rem;
-        }
-
-        .admin-stat-card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 1.25rem 1.5rem;
-            transition: transform 0.2s;
-        }
-
-        .admin-stat-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .admin-stat-card .label {
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: #64748b;
-        }
-
-        .admin-stat-card .value {
-            font-size: 1.75rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            color: #0f172a;
-        }
-
-        .admin-badge {
-            padding: 0.2rem 0.55rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            background: #ede9fe;
-            color: #6d28d9;
-        }
-    </style>
+    </script>
     @stack('styles')
 </head>
 
-<body>
+<body class="font-sans bg-gray-50 dark:bg-gray-950">
 
-    {{-- Sidebar --}}
-    <nav id="admin-sidebar">
-        <div class="admin-brand">
-            <i class="bi bi-shield-check me-2"></i>
-            Money<span>Tracker</span> Admin
+    <div class="flex min-h-screen">
+
+        {{-- ── Sidebar ── --}}
+        <aside
+            class="w-64 bg-indigo-950 dark:bg-slate-900 fixed h-screen z-50 overflow-y-auto
+                    border-r border-indigo-900 dark:border-slate-800">
+
+            {{-- Brand --}}
+            <div class="px-6 py-5 border-b border-indigo-900 dark:border-slate-800">
+                <div class="flex items-center gap-2 text-white font-bold text-lg tracking-tight">
+                    <i class="bi bi-shield-check"></i>
+                    <span>Money<span class="text-indigo-300">Tracker</span></span>
+                </div>
+                <p class="text-xs text-indigo-300 mt-1">Admin Panel</p>
+            </div>
+
+            {{-- Navigation --}}
+            <nav class="p-4 space-y-6">
+
+                {{-- Overview Section --}}
+                <div>
+                    <p class="text-xs font-bold text-indigo-300 uppercase tracking-wider mb-3 px-3">
+                        Overview
+                    </p>
+                    <a href="{{ route('admin.dashboard') }}"
+                        class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-900 dark:hover:bg-slate-800
+                               transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-indigo-900 dark:bg-slate-800 text-white border-l-2 border-indigo-300' : 'border-l-2 border-transparent' }}">
+                        <i class="bi bi-grid-1x2 text-lg"></i>
+                        <span class="text-sm font-medium">Dashboard</span>
+                    </a>
+                </div>
+
+                {{-- Management Section --}}
+                <div>
+                    <p class="text-xs font-bold text-indigo-300 uppercase tracking-wider mb-3 px-3">
+                        Management
+                    </p>
+                    <div class="space-y-2">
+                        <a href="{{ route('admin.users.index') }}"
+                            class="flex items-center justify-between px-4 py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-900 dark:hover:bg-slate-800
+                                   transition-colors {{ request()->routeIs('admin.users.*') ? 'bg-indigo-900 dark:bg-slate-800 text-white border-l-2 border-indigo-300' : 'border-l-2 border-transparent' }}">
+                            <div class="flex items-center gap-3">
+                                <i class="bi bi-people text-lg"></i>
+                                <span class="text-sm font-medium">Users</span>
+                            </div>
+                            <span
+                                class="inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-bold
+                                       bg-red-500/20 text-red-300">
+                                {{ \App\Models\User::count() }}
+                            </span>
+                        </a>
+
+                        <a href="{{ route('admin.expenses.index') }}"
+                            class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-indigo-200 hover:bg-indigo-900 dark:hover:bg-slate-800
+                                   transition-colors {{ request()->routeIs('admin.expenses.*') ? 'bg-indigo-900 dark:bg-slate-800 text-white border-l-2 border-indigo-300' : 'border-l-2 border-transparent' }}">
+                            <i class="bi bi-receipt text-lg"></i>
+                            <span class="text-sm font-medium">All Expenses</span>
+                        </a>
+                    </div>
+                </div>
+
+                {{-- Account Section --}}
+                <div>
+                    <p class="text-xs font-bold text-indigo-300 uppercase tracking-wider mb-3 px-3">
+                        Account
+                    </p>
+                    <form method="POST" action="{{ route('admin.logout') }}">
+                        @csrf
+                        <button type="submit"
+                            class="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-300 hover:bg-red-900/30
+                                   transition-colors border-l-2 border-transparent">
+                            <i class="bi bi-box-arrow-left text-lg"></i>
+                            <span class="text-sm font-medium">Logout</span>
+                        </button>
+                    </form>
+                </div>
+
+            </nav>
+
+        </aside>
+
+        {{-- ── Main Content ── --}}
+        <div class="flex-1 ml-64">
+
+            {{-- ── Top Navigation ── --}}
+            <nav class="sticky top-0 z-40 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-gray-900 dark:text-white">
+                        @yield('title', 'Dashboard')
+                    </h2>
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="px-3 py-1 rounded-full text-xs font-bold bg-red-100 dark:bg-red-900/30
+                                   text-red-700 dark:text-red-300">
+                            Admin
+                        </span>
+                        <span class="text-sm font-semibold text-gray-600 dark:text-gray-400">
+                            {{ Auth::guard('admin')->user()->name }}
+                        </span>
+                    </div>
+                </div>
+            </nav>
+
+            {{-- ── Page Content ── --}}
+            <main class="p-6 lg:p-8">
+
+                {{-- Alerts --}}
+                @if (session('success'))
+                    <div
+                        class="mb-6 flex items-center gap-3 px-4 py-3 rounded-lg bg-green-50 dark:bg-green-900/20
+                            border border-green-200 dark:border-green-900/40 text-green-800 dark:text-green-300">
+                        <i class="bi bi-check-circle text-lg flex-shrink-0"></i>
+                        <span class="text-sm font-medium">{{ session('success') }}</span>
+                        <button onclick="this.parentElement.remove()"
+                            class="ml-auto text-green-600 dark:text-green-400 hover:text-green-700">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div
+                        class="mb-6 flex items-center gap-3 px-4 py-3 rounded-lg bg-red-50 dark:bg-red-900/20
+                            border border-red-200 dark:border-red-900/40 text-red-800 dark:text-red-300">
+                        <i class="bi bi-exclamation-circle text-lg flex-shrink-0"></i>
+                        <span class="text-sm font-medium">{{ session('error') }}</span>
+                        <button onclick="this.parentElement.remove()"
+                            class="ml-auto text-red-600 dark:text-red-400 hover:text-red-700">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
+                    </div>
+                @endif
+
+                @yield('content')
+
+            </main>
+
         </div>
 
-        <div class="admin-nav-section">Overview</div>
-        <a href="{{ route('admin.dashboard') }}"
-            class="admin-nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-            <i class="bi bi-grid-1x2"></i> Dashboard
-        </a>
+    </div>
 
-        <div class="admin-nav-section">Manage</div>
-        <a href="{{ route('admin.users.index') }}"
-            class="admin-nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-            <i class="bi bi-people"></i> Users
-            <span class="admin-badge ms-auto">{{ \App\Models\User::count() }}</span>
-        </a>
-        <a href="{{ route('admin.expenses.index') }}"
-            class="admin-nav-link {{ request()->routeIs('admin.expenses.*') ? 'active' : '' }}">
-            <i class="bi bi-receipt"></i> All Expenses
-        </a>
-
-        <div class="admin-nav-section">Account</div>
-        <form method="POST" action="{{ route('admin.logout') }}">
-            @csrf
-            <button type="submit" class="admin-nav-link btn btn-link w-100 text-start" style="color:#f87171;">
-                <i class="bi bi-box-arrow-left"></i> Logout
-            </button>
-        </form>
-    </nav>
-
-    {{-- Top Navbar --}}
-    <nav id="admin-topnav">
-        <span style="font-weight:700; font-size:0.9rem; color:#0f172a;">
-            @yield('title', 'Dashboard')
-        </span>
-        <div class="ms-auto d-flex align-items-center gap-3">
-            <span class="badge bg-danger">Admin</span>
-            <span style="font-size:0.85rem; color:#64748b;">
-                {{ Auth::guard('admin')->user()->name }}
-            </span>
-        </div>
-    </nav>
-
-    {{-- Content --}}
-    <main id="admin-content">
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show">
-                <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show">
-                <i class="bi bi-exclamation-circle me-2"></i>{{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-        @endif
-
-        @yield('content')
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
+
 </body>
 
 </html>

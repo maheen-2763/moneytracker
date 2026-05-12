@@ -3,59 +3,93 @@
 @section('title', 'My Expenses')
 
 @php
-    $categories = [
-        'food' => ['bg' => '#fef3c7', 'text' => '#92400e'],
-        'travel' => ['bg' => '#dbeafe', 'text' => '#1d4ed8'],
-        'office' => ['bg' => '#ede9fe', 'text' => '#6d28d9'],
-        'health' => ['bg' => '#dcfce7', 'text' => '#166534'],
-        'other' => ['bg' => '#e2e8f0', 'text' => '#475569'],
+    $badgeMap = [
+        'food' => 'bg-yellow-100 text-yellow-800',
+        'travel' => 'bg-sky-100 text-sky-800',
+        'health' => 'bg-green-100 text-green-800',
+        'office' => 'bg-violet-100 text-violet-800',
+        'other' => 'bg-gray-100 text-gray-700',
     ];
 @endphp
 
 @section('content')
 
-    <div class="page-wrapper">
+    <div class="space-y-6">
 
         {{-- HEADER --}}
-        <div class="page-heading d-flex justify-content-between align-items-center flex-wrap gap-3">
-
+        <div class="flex items-center justify-between flex-wrap gap-3">
             <div>
-                <h4>My Expenses</h4>
-                <small>{{ $expenses->total() }} total records</small>
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white">
+                    My Expenses
+                </h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                    {{ $expenses->total() }} total records
+                </p>
             </div>
 
-            <a href="{{ route('expenses.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-lg me-1"></i>
+            <a href="{{ route('expenses.create') }}"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg
+                   bg-indigo-500 hover:bg-indigo-600
+                   text-white text-sm font-medium transition">
+                <i class="bi bi-plus-lg"></i>
                 Add Expense
             </a>
-
         </div>
 
         {{-- FILTER --}}
-        <div class="filter-card mb-4">
+        <div
+            class="rounded-2xl border border-gray-200 dark:border-gray-800
+                bg-white dark:bg-gray-900 shadow-sm p-6">
 
-            <div class="card-title-ui mb-2">Filter Expenses</div>
-            <div class="card-subtitle-ui mb-3">Narrow down your records quickly</div>
+            <h2 class="text-sm font-bold text-gray-900 dark:text-white mb-1">
+                Filter Expenses
+            </h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                Narrow down your records quickly
+            </p>
 
-            <form method="GET" action="{{ route('expenses.index') }}" class="row g-3 align-items-end">
+            <form method="GET" action="{{ route('expenses.index') }}"
+                class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
 
-                <div class="col-md-3">
-                    <label class="form-label">From</label>
-                    <input type="date" name="start_date" value="{{ request('start_date') }}" class="form-control">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">
+                        From
+                    </label>
+                    <input type="date" name="start_date" value="{{ request('start_date') }}"
+                        class="w-full rounded-lg border border-gray-200 dark:border-gray-700
+                              bg-white dark:bg-gray-800
+                              text-sm text-gray-900 dark:text-white
+                              px-3 py-2
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                              focus:border-indigo-500">
                 </div>
 
-                <div class="col-md-3">
-                    <label class="form-label">To</label>
-                    <input type="date" name="end_date" value="{{ request('end_date') }}" class="form-control">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">
+                        To
+                    </label>
+                    <input type="date" name="end_date" value="{{ request('end_date') }}"
+                        class="w-full rounded-lg border border-gray-200 dark:border-gray-700
+                              bg-white dark:bg-gray-800
+                              text-sm text-gray-900 dark:text-white
+                              px-3 py-2
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                              focus:border-indigo-500">
                 </div>
 
-                <div class="col-md-3">
-                    <label class="form-label">Category</label>
-
-                    <select name="category" class="form-select">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-1">
+                        Category
+                    </label>
+                    <select name="category"
+                        class="w-full rounded-lg border border-gray-200 dark:border-gray-700
+                               bg-white dark:bg-gray-800
+                               text-sm text-gray-900 dark:text-white
+                               px-3 py-2
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                               focus:border-indigo-500">
                         <option value="">All</option>
-
-                        @foreach (array_keys($categories) as $cat)
+                        @foreach (array_keys($badgeMap) as $cat)
                             <option value="{{ $cat }}" @selected(request('category') == $cat)>
                                 {{ ucfirst($cat) }}
                             </option>
@@ -63,100 +97,131 @@
                     </select>
                 </div>
 
-                <div class="col-md-3 d-flex gap-2">
-
-                    <button class="btn btn-primary w-100">
-                        <i class="bi bi-funnel me-1"></i> Filter
+                <div class="flex gap-2">
+                    <button type="submit"
+                        class="flex-1 inline-flex items-center justify-center gap-2
+                               px-4 py-2 rounded-lg
+                               bg-indigo-500 hover:bg-indigo-600
+                               text-white text-sm font-medium transition">
+                        <i class="bi bi-funnel"></i> Filter
                     </button>
 
-                    <a href="{{ route('expenses.index') }}" class="btn btn-outline-secondary">
+                    <a href="{{ route('expenses.index') }}"
+                        class="inline-flex items-center justify-center
+                          w-10 h-10 rounded-lg
+                          border border-gray-200 dark:border-gray-700
+                          text-gray-500 dark:text-gray-400
+                          hover:bg-gray-100 dark:hover:bg-gray-800 transition">
                         <i class="bi bi-x-lg"></i>
                     </a>
-
                 </div>
 
             </form>
         </div>
 
-        {{-- TABLE --}}
-        <div class="table-card d-none d-md-block">
+        {{-- TABLE (desktop) --}}
+        <div
+            class="hidden md:block rounded-2xl border border-gray-200 dark:border-gray-800
+                bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
-            <table class="table">
-
+            <table class="w-full border-collapse">
                 <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Amount</th>
-                        <th>Category</th>
-                        <th>Date</th>
-                        <th>Actions</th>
+                    <tr class="border-b border-gray-200 dark:border-gray-800">
+                        <th
+                            class="px-6 py-3 text-left text-xs font-semibold uppercase
+                               tracking-widest text-gray-500 dark:text-gray-400">
+                            Title
+                        </th>
+                        <th
+                            class="px-6 py-3 text-left text-xs font-semibold uppercase
+                               tracking-widest text-gray-500 dark:text-gray-400">
+                            Amount
+                        </th>
+                        <th
+                            class="px-6 py-3 text-left text-xs font-semibold uppercase
+                               tracking-widest text-gray-500 dark:text-gray-400">
+                            Category
+                        </th>
+                        <th
+                            class="px-6 py-3 text-left text-xs font-semibold uppercase
+                               tracking-widest text-gray-500 dark:text-gray-400">
+                            Date
+                        </th>
+                        <th
+                            class="px-6 py-3 text-left text-xs font-semibold uppercase
+                               tracking-widest text-gray-500 dark:text-gray-400">
+                            Actions
+                        </th>
                     </tr>
                 </thead>
 
                 <tbody>
-
                     @forelse($expenses as $expense)
                         @php
                             $category = $expense->category ?? 'other';
-                            $style = $categories[$category] ?? $categories['other'];
                             $date = $expense->date ? \Carbon\Carbon::parse($expense->date) : null;
                         @endphp
 
-                        <tr>
+                        <tr
+                            class="border-b border-gray-100 dark:border-gray-800
+                               hover:bg-gray-50 dark:hover:bg-gray-800/60
+                               transition-colors duration-150">
 
-                            {{-- TITLE --}}
-                            <td>
-                                <div class="fw-semibold">
+                            {{-- Title --}}
+                            <td class="px-6 py-4 align-middle">
+                                <p class="text-sm font-semibold text-gray-900 dark:text-white">
                                     {{ $expense->title }}
-                                </div>
-
+                                </p>
                                 @if ($expense->notes)
-                                    <small class="text-muted">
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                                         {{ Str::limit($expense->notes, 40) }}
-                                    </small>
+                                    </p>
                                 @endif
                             </td>
 
-                            {{-- AMOUNT --}}
-                            <td class="text-danger fw-bold">
+                            {{-- Amount --}}
+                            <td class="px-6 py-4 align-middle text-sm font-bold text-red-500">
                                 ₹{{ number_format($expense->amount, 2) }}
                             </td>
 
-                            {{-- CATEGORY --}}
-                            <td>
-                                <span class="px-2 py-1 rounded small"
-                                    style="background: {{ $style['bg'] }}; color: {{ $style['text'] }};">
+                            {{-- Category --}}
+                            <td class="px-6 py-4 align-middle">
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full
+                                         text-xs font-semibold
+                                         {{ $badgeMap[$category] ?? 'bg-gray-100 text-gray-700' }}">
                                     {{ ucfirst($category) }}
                                 </span>
                             </td>
 
-                            {{-- DATE (SAFE FIX) --}}
-                            <td class="text-muted small">
+                            {{-- Date --}}
+                            <td class="px-6 py-4 align-middle text-sm text-gray-500 dark:text-gray-400">
                                 {{ $date ? $date->diffForHumans() : 'No date' }}
                             </td>
 
-                            {{-- ACTIONS --}}
-                            <td>
-                                <div class="d-flex gap-2">
+                            {{-- Actions --}}
+                            <td class="px-6 py-4 align-middle">
+                                <div class="flex items-center gap-3">
 
-                                    <a href="{{ route('expenses.show', $expense) }}" class="text-primary">
+                                    <a href="{{ route('expenses.show', $expense) }}"
+                                        class="text-indigo-500 hover:text-indigo-600 transition">
                                         <i class="bi bi-eye"></i>
                                     </a>
 
-                                    <a href="{{ route('expenses.edit', $expense) }}" class="text-warning">
+                                    <a href="{{ route('expenses.edit', $expense) }}"
+                                        class="text-yellow-500 hover:text-yellow-600 transition">
                                         <i class="bi bi-pencil"></i>
                                     </a>
 
                                     <form method="POST" action="{{ route('expenses.destroy', $expense) }}"
                                         onsubmit="return confirm('Delete this expense?')">
-
                                         @csrf
                                         @method('DELETE')
-
-                                        <button class="text-danger border-0 bg-transparent">
+                                        <button
+                                            class="text-red-500 hover:text-red-600
+                                                   bg-transparent border-0 transition">
                                             <i class="bi bi-trash"></i>
                                         </button>
-
                                     </form>
 
                                 </div>
@@ -165,88 +230,83 @@
                         </tr>
 
                     @empty
-
                         <tr>
-                            <td colspan="5" class="text-center py-5 text-muted">
+                            <td colspan="5" class="py-10 text-center text-sm text-gray-500 dark:text-gray-400">
                                 No expenses found
                             </td>
                         </tr>
                     @endforelse
-
                 </tbody>
-
             </table>
 
         </div>
 
-        {{-- MOBILE --}}
-        <div class="d-md-none">
+        {{-- MOBILE CARDS --}}
+        <div class="md:hidden space-y-3">
 
             @forelse($expenses as $expense)
                 @php
                     $category = $expense->category ?? 'other';
-                    $style = $categories[$category] ?? $categories['other'];
                     $date = $expense->date ? \Carbon\Carbon::parse($expense->date) : null;
                 @endphp
 
-                <div class="card mb-3 p-3">
+                <div
+                    class="rounded-2xl border border-gray-200 dark:border-gray-800
+                        bg-white dark:bg-gray-900 shadow-sm p-4">
 
-                    <div class="d-flex justify-content-between">
-
+                    <div class="flex items-start justify-between">
                         <div>
-                            <div class="fw-semibold">{{ $expense->title }}</div>
-                            <small class="text-muted">
+                            <p class="text-sm font-semibold text-gray-900 dark:text-white">
+                                {{ $expense->title }}
+                            </p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                                 {{ $date ? $date->format('d M Y') : 'No date' }}
-                            </small>
+                            </p>
                         </div>
-
-                        <div class="text-danger fw-bold">
+                        <p class="text-sm font-bold text-red-500">
                             ₹{{ number_format($expense->amount, 2) }}
-                        </div>
-
+                        </p>
                     </div>
 
-                    <div class="d-flex justify-content-between align-items-center mt-2">
-
-                        <span class="px-2 py-1 rounded small"
-                            style="background: {{ $style['bg'] }}; color: {{ $style['text'] }};">
+                    <div class="flex items-center justify-between mt-3">
+                        <span
+                            class="inline-flex items-center px-3 py-1 rounded-full
+                                 text-xs font-semibold
+                                 {{ $badgeMap[$category] ?? 'bg-gray-100 text-gray-700' }}">
                             {{ ucfirst($category) }}
                         </span>
 
-                        <div class="d-flex gap-2">
-
-                            <a href="{{ route('expenses.show', $expense) }}" class="text-primary">
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('expenses.show', $expense) }}"
+                                class="text-indigo-500 hover:text-indigo-600 transition">
                                 <i class="bi bi-eye"></i>
                             </a>
-
-                            <a href="{{ route('expenses.edit', $expense) }}" class="text-warning">
+                            <a href="{{ route('expenses.edit', $expense) }}"
+                                class="text-yellow-500 hover:text-yellow-600 transition">
                                 <i class="bi bi-pencil"></i>
                             </a>
-
                             <form method="POST" action="{{ route('expenses.destroy', $expense) }}">
                                 @csrf
                                 @method('DELETE')
-
-                                <button class="text-danger border-0 bg-transparent">
+                                <button
+                                    class="text-red-500 hover:text-red-600
+                                           bg-transparent border-0 transition">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
-
                         </div>
-
                     </div>
 
                     @if ($expense->notes)
-                        <div class="mt-2 small text-muted">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
                             {{ $expense->notes }}
-                        </div>
+                        </p>
                     @endif
 
                 </div>
 
             @empty
-
-                <div class="text-center text-muted py-5">
+                <div class="text-center text-sm text-gray-500 dark:text-gray-400 py-10">
                     No expenses found
                 </div>
             @endforelse
@@ -254,7 +314,7 @@
         </div>
 
         {{-- PAGINATION --}}
-        <div class="d-flex justify-content-center mt-3">
+        <div class="flex justify-center">
             {{ $expenses->withQueryString()->links() }}
         </div>
 

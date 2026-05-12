@@ -3,27 +3,57 @@
 
 @section('content')
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="space-y-6">
+
+        {{-- ── Page Header ── --}}
         <div>
-            <h4 style="font-weight:800; letter-spacing:-0.03em; color:#0f172a; margin:0;">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
                 All Expenses
-            </h4>
-            <small class="text-muted">{{ $expenses->total() }} total records</small>
+            </h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                {{ $expenses->total() }} total records
+            </p>
         </div>
-    </div>
 
-    {{-- ── Filters ── --}}
-    <div class="card border-0 shadow-sm mb-4" style="border-radius:14px;">
-        <div class="card-body py-3">
-            <form method="GET" class="row g-2 align-items-end">
+        {{-- ── Filter Card ── --}}
+        <div
+            class="rounded-2xl border border-gray-200 dark:border-gray-800
+                bg-white dark:bg-gray-900 shadow-sm p-6">
 
-                <div class="col-md-4">
-                    <input type="text" name="search" class="form-control form-control-sm"
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-4">
+                Filters
+            </h3>
+
+            <form method="GET" action="{{ route('admin.expenses.index') }}"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+
+                {{-- Search --}}
+                <div class="lg:col-span-2">
+                    <label
+                        class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">
+                        Search
+                    </label>
+                    <input type="text" name="search"
+                        class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700
+                              rounded-lg bg-white dark:bg-gray-800
+                              text-gray-900 dark:text-white text-sm
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                              focus:border-indigo-500 transition"
                         placeholder="Search by title..." value="{{ request('search') }}">
                 </div>
 
-                <div class="col-md-2">
-                    <select name="category" class="form-select form-select-sm">
+                {{-- Category --}}
+                <div>
+                    <label
+                        class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">
+                        Category
+                    </label>
+                    <select name="category"
+                        class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700
+                              rounded-lg bg-white dark:bg-gray-800
+                              text-gray-900 dark:text-white text-sm
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                              focus:border-indigo-500 transition">
                         <option value="">All Categories</option>
                         @foreach ($categories as $cat)
                             <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>
@@ -33,8 +63,18 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <select name="user_id" class="form-select form-select-sm">
+                {{-- User --}}
+                <div>
+                    <label
+                        class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">
+                        User
+                    </label>
+                    <select name="user_id"
+                        class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700
+                              rounded-lg bg-white dark:bg-gray-800
+                              text-gray-900 dark:text-white text-sm
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                              focus:border-indigo-500 transition">
                         <option value="">All Users</option>
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>
@@ -44,180 +84,194 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <input type="date" name="start_date" class="form-control form-control-sm"
-                        value="{{ request('start_date') }}" placeholder="From">
+                {{-- From Date --}}
+                <div>
+                    <label
+                        class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">
+                        From
+                    </label>
+                    <input type="date" name="start_date"
+                        class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700
+                              rounded-lg bg-white dark:bg-gray-800
+                              text-gray-900 dark:text-white text-sm
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                              focus:border-indigo-500 transition"
+                        value="{{ request('start_date') }}">
                 </div>
 
-                <div class="col-md-2">
-                    <input type="date" name="end_date" class="form-control form-control-sm"
-                        value="{{ request('end_date') }}" placeholder="To">
+                {{-- To Date --}}
+                <div>
+                    <label
+                        class="block text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-widest">
+                        To
+                    </label>
+                    <input type="date" name="end_date"
+                        class="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700
+                              rounded-lg bg-white dark:bg-gray-800
+                              text-gray-900 dark:text-white text-sm
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                              focus:border-indigo-500 transition"
+                        value="{{ request('end_date') }}">
                 </div>
 
-                <div class="col-12 d-flex gap-2">
-                    <button type="submit" class="btn btn-sm btn-primary px-4">
-                        <i class="bi bi-funnel me-1"></i> Filter
+                {{-- Buttons --}}
+                <div class="flex gap-2 lg:col-span-6">
+                    <button type="submit"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg
+                           bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-600
+                           text-white text-sm font-semibold transition">
+                        <i class="bi bi-funnel"></i> Filter
                     </button>
-                    <a href="{{ route('admin.expenses.index') }}" class="btn btn-sm btn-outline-secondary">
-                        <i class="bi bi-x-lg me-1"></i> Clear
+                    <a href="{{ route('admin.expenses.index') }}"
+                        class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg
+                           border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300
+                           hover:bg-gray-50 dark:hover:bg-gray-800 text-sm font-semibold transition">
+                        <i class="bi bi-x-lg"></i> Clear
                     </a>
                 </div>
 
             </form>
         </div>
-    </div>
 
-    {{-- ── Table ── --}}
-    <div class="card border-0 shadow-sm" style="border-radius:14px; overflow:hidden;">
-        <table class="table table-hover mb-0">
-            <thead style="background:#f8fafc;">
-                <tr>
-                    <th
-                        style="padding:.85rem 1.25rem; font-size:.7rem; font-weight:700;
-                           text-transform:uppercase; letter-spacing:.08em;
-                           color:#94a3b8; border-bottom:1px solid #e2e8f0;">
-                        User
-                    </th>
-                    <th
-                        style="padding:.85rem 1rem; font-size:.7rem; font-weight:700;
-                           text-transform:uppercase; letter-spacing:.08em;
-                           color:#94a3b8; border-bottom:1px solid #e2e8f0;">
-                        Title
-                    </th>
-                    <th
-                        style="padding:.85rem 1rem; font-size:.7rem; font-weight:700;
-                           text-transform:uppercase; letter-spacing:.08em;
-                           color:#94a3b8; border-bottom:1px solid #e2e8f0;">
-                        Category
-                    </th>
-                    <th
-                        style="padding:.85rem 1rem; font-size:.7rem; font-weight:700;
-                           text-transform:uppercase; letter-spacing:.08em;
-                           color:#94a3b8; border-bottom:1px solid #e2e8f0;">
-                        Amount
-                    </th>
-                    <th
-                        style="padding:.85rem 1rem; font-size:.7rem; font-weight:700;
-                           text-transform:uppercase; letter-spacing:.08em;
-                           color:#94a3b8; border-bottom:1px solid #e2e8f0;">
-                        Date
-                    </th>
-                    <th
-                        style="padding:.85rem 1rem; font-size:.7rem; font-weight:700;
-                           text-transform:uppercase; letter-spacing:.08em;
-                           color:#94a3b8; border-bottom:1px solid #e2e8f0;">
-                        Actions
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $catColors = [
-                        'food' => ['bg' => '#fef9c3', 'color' => '#854d0e'],
-                        'travel' => ['bg' => '#e0f2fe', 'color' => '#075985'],
-                        'health' => ['bg' => '#dcfce7', 'color' => '#166534'],
-                        'office' => ['bg' => '#ede9fe', 'color' => '#5b21b6'],
-                        'other' => ['bg' => '#f1f5f9', 'color' => '#475569'],
-                    ];
-                @endphp
+        {{-- ── Table ── --}}
+        <div
+            class="rounded-2xl border border-gray-200 dark:border-gray-800
+                bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
-                @forelse($expenses as $expense)
-                    @php $cat = $catColors[$expense->category] ?? $catColors['other']; @endphp
-                    <tr style="border-bottom:1px solid #f8fafc;">
-                        <td style="padding:.85rem 1.25rem; vertical-align:middle;">
-                            <div class="d-flex align-items-center gap-2">
-                                <img src="{{ $expense->user->avatarUrl() }}" class="rounded-circle" width="30"
-                                    height="30" style="object-fit:cover; border:2px solid #e2e8f0;">
-                                <div>
-                                    <div style="font-size:.82rem; font-weight:700; color:#0f172a;">
-                                        {{ $expense->user->name }}
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-800">
+                        <tr>
+                            <th
+                                class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-widest
+                                     text-gray-700 dark:text-gray-300">
+                                User</th>
+                            <th
+                                class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-widest
+                                     text-gray-700 dark:text-gray-300">
+                                Title</th>
+                            <th
+                                class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-widest
+                                     text-gray-700 dark:text-gray-300">
+                                Category</th>
+                            <th
+                                class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-widest
+                                     text-gray-700 dark:text-gray-300">
+                                Amount</th>
+                            <th
+                                class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-widest
+                                     text-gray-700 dark:text-gray-300">
+                                Date</th>
+                            <th
+                                class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-widest
+                                     text-gray-700 dark:text-gray-300">
+                                Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+                        @php
+                            $catColorMap = [
+                                'food' => 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200',
+                                'travel' => 'bg-sky-100 dark:bg-sky-900/30 text-sky-800 dark:text-sky-200',
+                                'health' => 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200',
+                                'office' => 'bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-200',
+                                'other' => 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300',
+                            ];
+                        @endphp
+
+                        @forelse($expenses as $expense)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition">
+
+                                {{-- User --}}
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <img src="{{ $expense->user->avatarUrl() }}" alt="{{ $expense->user->name }}"
+                                            class="w-8 h-8 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700">
+                                        <div>
+                                            <p class="text-sm font-semibold text-gray-900 dark:text-white">
+                                                {{ $expense->user->name }}
+                                            </p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">
+                                                {{ $expense->user->email }}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div style="font-size:.72rem; color:#94a3b8;">
-                                        {{ $expense->user->email }}
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td style="padding:.85rem 1rem; vertical-align:middle;">
-                            <div
-                                style="font-size:.875rem; font-weight:600; color:#0f172a;
-                                max-width:160px; white-space:nowrap;
-                                overflow:hidden; text-overflow:ellipsis;">
-                                {{ $expense->title ?: '—' }}
-                            </div>
-                            @if ($expense->description)
-                                <div
-                                    style="font-size:.72rem; color:#94a3b8;
-                                    max-width:160px; white-space:nowrap;
-                                    overflow:hidden; text-overflow:ellipsis;">
-                                    {{ $expense->description }}
-                                </div>
-                            @endif
-                        </td>
-                        <td style="padding:.85rem 1rem; vertical-align:middle;">
-                            <span
-                                style="display:inline-flex; align-items:center;
-                                 padding:.2rem .65rem; border-radius:20px;
-                                 font-size:.72rem; font-weight:700;
-                                 background:{{ $cat['bg'] }};
-                                 color:{{ $cat['color'] }};">
-                                {{ ucfirst($expense->category) }}
-                            </span>
-                        </td>
-                        <td style="padding:.85rem 1rem; vertical-align:middle;">
-                            <span
-                                style="font-weight:800; color:#ef4444;
-                                 font-size:.875rem; font-variant-numeric:tabular-nums;">
-                                ₹{{ number_format($expense->amount, 2) }}
-                            </span>
-                        </td>
-                        <td
-                            style="padding:.85rem 1rem; vertical-align:middle;
-                           color:#64748b; font-size:.82rem;">
-                            {{ \Carbon\Carbon::parse($expense->expense_date)->format('d M Y') }}
-                        </td>
-                        <td style="padding:.85rem 1rem; vertical-align:middle;">
-                            <form method="POST" action="{{ route('admin.expenses.destroy', $expense) }}"
-                                onsubmit="return confirm('Permanently delete this expense?')">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip"
-                                    data-bs-title="Delete permanently">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" class="text-center py-5 text-muted">
-                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>
-                            No expenses found.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+                                </td>
 
-    {{-- Pagination --}}
-    <div class="mt-4 d-flex justify-content-center">
-        {{ $expenses->withQueryString()->links() }}
+                                {{-- Title --}}
+                                <td class="px-6 py-4">
+                                    <div class="max-w-xs">
+                                        <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                                            {{ $expense->title ?: '—' }}
+                                        </p>
+                                        @if ($expense->description)
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 truncate">
+                                                {{ $expense->description }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </td>
+
+                                {{-- Category --}}
+                                <td class="px-6 py-4">
+                                    <span
+                                        class="inline-flex px-3 py-1 rounded-full text-xs font-semibold
+                                              {{ $catColorMap[$expense->category] ?? $catColorMap['other'] }}">
+                                        {{ ucfirst($expense->category) }}
+                                    </span>
+                                </td>
+
+                                {{-- Amount --}}
+                                <td class="px-6 py-4">
+                                    <span class="text-sm font-bold text-red-600 dark:text-red-400">
+                                        ₹{{ number_format($expense->amount, 2) }}
+                                    </span>
+                                </td>
+
+                                {{-- Date --}}
+                                <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                    {{ \Carbon\Carbon::parse($expense->expense_date)->format('d M Y') }}
+                                </td>
+
+                                {{-- Actions --}}
+                                <td class="px-6 py-4">
+                                    <form method="POST" action="{{ route('admin.expenses.destroy', $expense) }}"
+                                        class="inline" onsubmit="return confirm('Permanently delete this expense?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20
+                                                   rounded-lg transition"
+                                            title="Delete permanently">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="px-6 py-12 text-center">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <i class="bi bi-inbox text-4xl text-gray-300 dark:text-gray-700 mb-3"></i>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                            No expenses found.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        {{-- ── Pagination ── --}}
+        <div class="flex justify-center">
+            {{ $expenses->withQueryString()->links() }}
+        </div>
+
     </div>
 
 @endsection
-
-@push('scripts')
-    <script>
-        document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            .forEach(el => new bootstrap.Tooltip(el));
-    </script>
-@endpush
-
-@push('styles')
-    <style>
-        svg {
-            width: 16px;
-            height: 16px;
-        }
-    </style>
-@endpush

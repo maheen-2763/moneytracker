@@ -4,81 +4,117 @@
 
 @section('content')
 
-    <div class="page-wrapper">
+    <div class="space-y-8">
 
-        {{-- ── Summary Cards ───────────────────────── --}}
-        <div class="grid grid-cols-2 lg:grid-cols-4 section-gap">
+        {{-- ── Summary Cards ─────────────────── --}}
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
 
             {{-- Total Spent --}}
-            <div class="stat-card">
-                <div class="label-ui">Total Spent</div>
-
-                <div class="value-ui text-red-500 mt-2">
+            <div
+                class="rounded-2xl border border-gray-200 dark:border-gray-800
+                    bg-white dark:bg-gray-900 p-6
+                    shadow-sm hover:-translate-y-1 hover:shadow-md
+                    transition-all duration-200">
+                <p
+                    class="text-xs font-semibold uppercase tracking-widest
+                      text-gray-500 dark:text-gray-400">
+                    Total Spent
+                </p>
+                <p class="text-4xl font-extrabold tracking-tight text-red-500 mt-2">
                     ₹{{ number_format($totalAllTime, 0) }}
-                </div>
-
-                <div class="meta-ui mt-2">All time</div>
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    All time
+                </p>
             </div>
 
             {{-- This Month --}}
-            <div class="stat-card">
-                <div class="label-ui">This Month</div>
-
-                <div class="value-ui text-blue-500 mt-2">
+            <div
+                class="rounded-2xl border border-gray-200 dark:border-gray-800
+                    bg-white dark:bg-gray-900 p-6
+                    shadow-sm hover:-translate-y-1 hover:shadow-md
+                    transition-all duration-200">
+                <p
+                    class="text-xs font-semibold uppercase tracking-widest
+                      text-gray-500 dark:text-gray-400">
+                    This Month
+                </p>
+                <p class="text-4xl font-extrabold tracking-tight text-blue-500 mt-2">
                     ₹{{ number_format($thisMonth, 0) }}
-                </div>
-
-                <div class="meta-ui mt-2">
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
                     {{ now()->format('F Y') }}
-                </div>
+                </p>
             </div>
 
             {{-- This Week --}}
-            <div class="stat-card">
-                <div class="label-ui">This Week</div>
-
-                <div class="value-ui text-green-500 mt-2">
+            <div
+                class="rounded-2xl border border-gray-200 dark:border-gray-800
+                    bg-white dark:bg-gray-900 p-6
+                    shadow-sm hover:-translate-y-1 hover:shadow-md
+                    transition-all duration-200">
+                <p
+                    class="text-xs font-semibold uppercase tracking-widest
+                      text-gray-500 dark:text-gray-400">
+                    This Week
+                </p>
+                <p class="text-4xl font-extrabold tracking-tight text-green-500 mt-2">
                     ₹{{ number_format($thisWeek, 0) }}
-                </div>
-
-                <div class="meta-ui mt-2">
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
                     {{ now()->startOfWeek()->format('d M') }} — {{ now()->endOfWeek()->format('d M') }}
-                </div>
+                </p>
             </div>
 
             {{-- Total Expenses --}}
-            <div class="stat-card">
-                <div class="label-ui">Total Expenses</div>
-
-                <div class="value-ui text-purple mt-2">
+            <div
+                class="rounded-2xl border border-gray-200 dark:border-gray-800
+                    bg-white dark:bg-gray-900 p-6
+                    shadow-sm hover:-translate-y-1 hover:shadow-md
+                    transition-all duration-200">
+                <p
+                    class="text-xs font-semibold uppercase tracking-widest
+                      text-gray-500 dark:text-gray-400">
+                    Total Expenses
+                </p>
+                <p class="text-4xl font-extrabold tracking-tight text-purple-500 mt-2">
                     {{ $totalExpenses }}
-                </div>
-
-                <div class="meta-ui mt-2">Records</div>
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                    Records
+                </p>
             </div>
 
         </div>
 
-        {{-- ── Charts ───────────────────────── --}}
-        <div class="grid grid-cols-1 xl:grid-cols-3 section-gap">
+        {{-- ── Charts ─────────────────────────── --}}
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
             {{-- Monthly Spending --}}
-            <div class="dashboard-card xl:col-span-2">
+            <div
+                class="xl:col-span-2 rounded-2xl border border-gray-200 dark:border-gray-800
+                    bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
-                <div class=" p-6 border-b border-ui flex items-center justify-between">
-
+                <div
+                    class="flex items-center justify-between px-6 py-4
+                        border-b border-gray-200 dark:border-gray-800">
                     <div>
-                        <h2 class="card-title-ui">Monthly Spending</h2>
-                        <p class="card-subtitle-ui">Last 6 months</p>
+                        <h2 class="text-base font-bold text-gray-900 dark:text-white">
+                            Monthly Spending
+                        </h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Last 6 months
+                        </p>
                     </div>
-
-                    <span class="badge-pill bg-indigo-500/10 text-indigo-500">
+                    <span
+                        class="inline-flex items-center px-3 py-1 rounded-full
+                             text-xs font-semibold
+                             bg-indigo-500/10 text-indigo-500">
                         Trend
                     </span>
-
                 </div>
 
-                <div class=" p-6">
+                <div class="p-6">
                     <div class="h-[320px]">
                         <canvas id="monthlyChart"></canvas>
                     </div>
@@ -87,14 +123,20 @@
             </div>
 
             {{-- Category Chart --}}
-            <div class="dashboard-card">
+            <div
+                class="rounded-2xl border border-gray-200 dark:border-gray-800
+                    bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
-                <div class=" p-6 border-b border-ui">
-                    <h2 class="card-title-ui">By Category</h2>
-                    <p class="card-subtitle-ui">This month</p>
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+                    <h2 class="text-base font-bold text-gray-900 dark:text-white">
+                        By Category
+                    </h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        This month
+                    </p>
                 </div>
 
-                <div class=" p-6">
+                <div class="p-6">
                     <div class="h-[320px]">
                         <canvas id="categoryChart"></canvas>
                     </div>
@@ -104,151 +146,147 @@
 
         </div>
 
-        {{-- ── Budget + Recent Expenses ───────────────────────── --}}
-        <div class="grid grid-cols-1 xl:grid-cols-3 section-gap">
+        {{-- ── Budget + Recent Expenses ────────── --}}
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-            {{-- Budget --}}
-            <div class="dashboard-card">
+            {{-- Budget Status --}}
+            <div
+                class="rounded-2xl border border-gray-200 dark:border-gray-800
+                    bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
-                <div class="flex items-center justify-between p-6 border-b border-ui">
-                    <h2 class="card-title-ui">Budget Status</h2>
-
-                    <a href="{{ route('budgets.index') }}" class="action-link">
+                <div
+                    class="flex items-center justify-between px-6 py-4
+                        border-b border-gray-200 dark:border-gray-800">
+                    <h2 class="text-base font-bold text-gray-900 dark:text-white">
+                        Budget Status
+                    </h2>
+                    <a href="{{ route('budgets.index') }}"
+                        class="text-xs font-semibold text-indigo-500 hover:text-indigo-600">
                         Manage →
                     </a>
                 </div>
 
-
-                {{-- BODY --}}
-                <div class="card-pad">
-
+                <div class="px-6 pt-4 pb-2">
                     @if ($budgets->count())
-
-                        <div class="stack-lg">
-
+                        <div class="space-y-4">
                             @foreach ($budgets as $budget)
                                 @php
                                     $spent = $budget->spentThisMonth();
                                     $pct = $budget->percentUsed();
-
-                                    $map = [
+                                    $barColor = match ($budget->status()) {
                                         'success' => 'bg-green-500',
                                         'warning' => 'bg-yellow-500',
                                         'danger' => 'bg-red-500',
-                                    ];
+                                        default => 'bg-gray-400',
+                                    };
                                 @endphp
-
-                                <div class="space-y-3">
-
-                                    {{-- Header --}}
+                                <div class="space-y-2">
                                     <div class="flex justify-between items-center">
-                                        <span class="table-title-ui">
+                                        <span
+                                            class="text-sm font-semibold
+                                                 text-gray-900 dark:text-white">
                                             {{ ucfirst($budget->category) }}
                                         </span>
-
-                                        <span class="table-meta-ui">
+                                        <span class="text-sm text-gray-500 dark:text-gray-400">
                                             ₹{{ number_format($spent, 0) }} / ₹{{ number_format($budget->amount, 0) }}
                                         </span>
                                     </div>
-
-                                    {{-- Progress --}}
-                                    <div class="w-full h-2 bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                                        <div class="h-full {{ $map[$budget->status()] }} rounded-full"
+                                    <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                        <div class="h-full {{ $barColor }} rounded-full"
                                             style="width: {{ min($pct, 100) }}%">
                                         </div>
                                     </div>
-
-                                    {{-- Meta --}}
-                                    <div class="meta-ui">
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">
                                         {{ $pct }}% used
-                                    </div>
-
+                                    </p>
                                 </div>
                             @endforeach
-
                         </div>
                     @else
-                        {{-- EMPTY STATE (clean + centered system) --}}
                         <div class="flex flex-col items-center justify-center py-10 text-center">
-
                             <div class="text-3xl mb-2">💰</div>
-
-                            <p class="text-sm text-muted">
+                            <p class="text-sm text-gray-500 dark:text-gray-400">
                                 No budgets set yet.
                             </p>
-
-                            <a href="{{ route('budgets.index') }}" class="action-link mt-3 inline-block">
+                            <a href="{{ route('budgets.index') }}"
+                                class="text-xs font-semibold text-indigo-500 hover:text-indigo-600 mt-3">
                                 Set your first budget →
                             </a>
-
                         </div>
-
                     @endif
-
                 </div>
 
             </div>
 
             {{-- Recent Expenses --}}
-            <div class="dashboard-card xl:col-span-2 overflow-hidden">
+            <div
+                class="xl:col-span-2 rounded-2xl border border-gray-200 dark:border-gray-800
+                    bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
-                <div class="flex justify-between  p-6 border-b border-ui">
-                    <h2 class="card-title-ui">Recent Expenses</h2>
-
-                    <a href="{{ route('expenses.index') }}" class="action-link">
+                <div
+                    class="flex items-center justify-between px-6 py-4
+                        border-b border-gray-200 dark:border-gray-800">
+                    <h2 class="text-base font-bold text-gray-900 dark:text-white">
+                        Recent Expenses
+                    </h2>
+                    <a href="{{ route('expenses.index') }}"
+                        class="text-xs font-semibold text-indigo-500 hover:text-indigo-600">
                         View all →
                     </a>
                 </div>
 
-                <table class="table-ui">
-
+                <table class="w-full border-collapse">
                     <tbody>
-
                         @forelse($recentExpenses as $expense)
                             @php
                                 $badgeMap = [
-                                    'food' => 'badge-food',
-                                    'travel' => 'badge-travel',
-                                    'health' => 'badge-health',
-                                    'office' => 'badge-office',
-                                    'other' => 'badge-other',
+                                    'food' => 'bg-yellow-100 text-yellow-800',
+                                    'travel' => 'bg-sky-100 text-sky-800',
+                                    'health' => 'bg-green-100 text-green-800',
+                                    'office' => 'bg-violet-100 text-violet-800',
+                                    'other' => 'bg-gray-100 text-gray-700',
                                 ];
                             @endphp
+                            <tr
+                                class="border-b border-gray-100 dark:border-gray-800
+                                   hover:bg-gray-50 dark:hover:bg-gray-800/60
+                                   transition-colors duration-150">
 
-                            <tr>
-
-                                <td class="table-cell">
-                                    <div class="font-semibold text-main">
+                                <td class="px-6 py-4 align-middle">
+                                    <p class="text-sm font-semibold text-gray-900 dark:text-white">
                                         {{ $expense->title }}
-                                    </div>
-
-                                    <div class="meta-ui">
+                                    </p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                                         {{ \Carbon\Carbon::parse($expense->expense_date)->diffForHumans() }}
-                                    </div>
+                                    </p>
                                 </td>
 
-                                <td class="table-cell">
-                                    <span class="badge-pill {{ $badgeMap[$expense->category] ?? 'badge-other' }}">
+                                <td class="px-6 py-4 align-middle">
+                                    <span
+                                        class="inline-flex items-center px-3 py-1 rounded-full
+                                             text-xs font-semibold
+                                             {{ $badgeMap[$expense->category] ?? 'bg-gray-100 text-gray-700' }}">
                                         {{ ucfirst($expense->category) }}
                                     </span>
                                 </td>
 
-                                <td class="table-cell expense-amount">
+                                <td
+                                    class="px-6 py-4 align-middle text-right
+                                       text-sm font-bold text-red-500">
                                     ₹{{ number_format($expense->amount, 2) }}
                                 </td>
 
                             </tr>
-
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center py-10 text-muted">
+                                <td colspan="3"
+                                    class="py-10 text-center
+                                                   text-sm text-gray-500 dark:text-gray-400">
                                     No expenses yet.
                                 </td>
                             </tr>
                         @endforelse
-
                     </tbody>
-
                 </table>
 
             </div>

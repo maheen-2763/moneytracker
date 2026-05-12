@@ -1,152 +1,151 @@
-<nav id="sidebar" class="sidebar -translate-x-full md:translate-x-0">
+{{-- SIDEBAR --}}
+<aside id="sidebar"
+    class="fixed top-0 left-0 z-50
+           h-screen w-60
+           flex flex-col
+           bg-gray-900
+           -translate-x-full md:translate-x-0
+           transition-transform duration-300">
 
     {{-- Brand --}}
-    <div class="sidebar-brand">
+    <div class="h-16 px-5 flex items-center justify-between
+                border-b border-gray-800 shrink-0">
 
-        <h1 class="flex items-center gap-2">
-
-            <i class="bi bi-wallet2 text-green-500"></i>
-
-            Money<span>Tracker</span>
-
-        </h1>
+        <a href="{{ route('dashboard') }}" class="flex items-center gap-2 text-white font-bold text-lg no-underline">
+            <i class="bi bi-wallet2 text-green-400"></i>
+            Money<span class="text-indigo-400">Tracker</span>
+        </a>
 
         {{-- Mobile Close --}}
         <button id="sidebarClose"
-            class="md:hidden inline-flex items-center justify-center
-                   w-10 h-10 rounded-xl
-                   border border-slate-700
-                   hover:bg-slate-800 transition">
-
-            <i class="bi bi-x-lg text-lg text-white"></i>
-
+            class="md:hidden w-8 h-8
+                   flex items-center justify-center
+                   rounded-lg text-gray-400
+                   hover:bg-gray-800 transition">
+            <i class="bi bi-x-lg"></i>
         </button>
 
     </div>
 
     {{-- Menu --}}
-    <div class="flex-1 overflow-y-auto py-5">
+    <div class="flex-1 overflow-y-auto py-4 space-y-6">
 
         {{-- Main --}}
-        <p class="sidebar-section">
-            Main
-        </p>
-
-        <div class="space-y-1 px-3">
-
-            <a href="{{ route('dashboard') }}"
-                class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-
-                <i class="bi bi-grid-1x2"></i>
-
-                Dashboard
-
-            </a>
-
+        <div>
+            <p class="px-5 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                Main
+            </p>
+            <div class="space-y-0.5 px-3">
+                <a href="{{ route('dashboard') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+                           text-sm font-medium transition
+                           {{ request()->routeIs('dashboard')
+                               ? 'bg-indigo-500/10 text-indigo-400'
+                               : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <i class="bi bi-grid-1x2 text-base"></i>
+                    Dashboard
+                </a>
+            </div>
         </div>
 
         {{-- Finances --}}
-        <p class="sidebar-section">
-            Finances
-        </p>
+        <div>
+            <p class="px-5 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                Finances
+            </p>
+            <div class="space-y-0.5 px-3">
+                <a href="{{ route('expenses.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+                           text-sm font-medium transition
+                           {{ request()->routeIs('expenses.*')
+                               ? 'bg-indigo-500/10 text-indigo-400'
+                               : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <i class="bi bi-receipt text-base"></i>
+                    Expenses
+                </a>
 
-        <div class="space-y-1 px-3">
+                <a href="{{ route('budgets.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+                           text-sm font-medium transition
+                           {{ request()->routeIs('budgets.*')
+                               ? 'bg-indigo-500/10 text-indigo-400'
+                               : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <i class="bi bi-piggy-bank text-base"></i>
+                    Budgets
+                </a>
 
-            <a href="{{ route('expenses.index') }}"
-                class="sidebar-link {{ request()->routeIs('expenses.*') ? 'active' : '' }}">
-
-                <i class="bi bi-receipt"></i>
-
-                Expenses
-
-            </a>
-
-            <a href="{{ route('budgets.index') }}"
-                class="sidebar-link {{ request()->routeIs('budgets.*') ? 'active' : '' }}">
-
-                <i class="bi bi-piggy-bank"></i>
-
-                Budgets
-
-            </a>
-
-            <a href="{{ route('reports.index') }}"
-                class="sidebar-link {{ request()->routeIs('reports.*') ? 'active' : '' }}">
-
-                <i class="bi bi-bar-chart-line"></i>
-
-                Reports
-
-            </a>
-
+                <a href="{{ route('reports.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+                           text-sm font-medium transition
+                           {{ request()->routeIs('reports.*')
+                               ? 'bg-indigo-500/10 text-indigo-400'
+                               : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <i class="bi bi-bar-chart-line text-base"></i>
+                    Reports
+                </a>
+            </div>
         </div>
 
         {{-- Developer --}}
-        <p class="sidebar-section">
-            Developer
-        </p>
-
-        <div class="space-y-1 px-3">
-
-            <a href="{{ route('api.docs') }}" target="_blank" class="sidebar-link">
-
-                <i class="bi bi-code-slash"></i>
-
-                API Docs
-
-                <i class="bi bi-box-arrow-up-right ml-auto text-xs"></i>
-
-            </a>
-
+        <div>
+            <p class="px-5 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                Developer
+            </p>
+            <div class="space-y-0.5 px-3">
+                <a href="{{ route('api.docs') }}" target="_blank"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+                           text-sm font-medium transition
+                           text-gray-400 hover:bg-gray-800 hover:text-white">
+                    <i class="bi bi-code-slash text-base"></i>
+                    API Docs
+                    <i class="bi bi-box-arrow-up-right ml-auto text-xs"></i>
+                </a>
+            </div>
         </div>
 
         {{-- Account --}}
-        <p class="sidebar-section">
-            Account
-        </p>
+        <div>
+            <p class="px-5 mb-1 text-[10px] font-semibold uppercase tracking-widest text-gray-500">
+                Account
+            </p>
+            <div class="space-y-0.5 px-3">
+                <a href="{{ route('profile.index') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+                           text-sm font-medium transition
+                           {{ request()->routeIs('profile.index')
+                               ? 'bg-indigo-500/10 text-indigo-400'
+                               : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <i class="bi bi-person-circle text-base"></i>
+                    Profile
+                </a>
 
-        <div class="space-y-1 px-3">
+                <a href="{{ route('profile.security') }}"
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg
+                           text-sm font-medium transition
+                           {{ request()->routeIs('profile.security')
+                               ? 'bg-indigo-500/10 text-indigo-400'
+                               : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+                    <i class="bi bi-shield-lock text-base"></i>
+                    Security
+                </a>
 
-            <a href="{{ route('profile.index') }}"
-                class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">
-
-                <i class="bi bi-person-circle"></i>
-
-                Profile
-
-            </a>
-
-            <a href="{{ route('profile.security') }}"
-                class="sidebar-link {{ request()->routeIs('profile.security') ? 'active' : '' }}">
-
-                <i class="bi bi-shield-lock"></i>
-
-                Security
-
-            </a>
-
-            <form method="POST" action="{{ route('logout') }}">
-
-                @csrf
-
-                <button type="submit" class="sidebar-link w-full text-red-400 hover:text-red-300">
-
-                    <i class="bi bi-box-arrow-left"></i>
-
-                    Logout
-
-                </button>
-
-            </form>
-
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg
+                               text-sm font-medium transition
+                               text-red-400 hover:bg-red-500/10 hover:text-red-300">
+                        <i class="bi bi-box-arrow-left text-base"></i>
+                        Logout
+                    </button>
+                </form>
+            </div>
         </div>
 
     </div>
 
-</nav>
+</aside>
 
-{{-- Overlay --}}
-<div id="sidebarOverlay" class="fixed inset-0 z-40
-           bg-black/50 backdrop-blur-sm
-           hidden md:hidden">
+{{-- Mobile Overlay --}}
+<div id="sidebarOverlay" class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm hidden md:hidden">
 </div>
