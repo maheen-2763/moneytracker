@@ -73,6 +73,14 @@ Route::middleware(['auth', 'verified', 'throttle:60,1'])->group(function () {
     })->name('logout');
 });
 
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+
+
+
+
 
 // Auth routes (login, register, etc.)
 require __DIR__ . '/auth.php';

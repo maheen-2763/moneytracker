@@ -20,6 +20,7 @@
         </button>
 
         {{-- Page Title --}}
+
         <h1 class="text-lg font-semibold text-gray-800 dark:text-white">
             {{ $title ?? 'Dashboard' }}
         </h1>
@@ -152,6 +153,14 @@
                            text-sm text-gray-700 dark:text-gray-300
                            hover:bg-gray-50 dark:hover:bg-gray-800 transition">
                     <i class="bi bi-person"></i> Profile
+                </a>
+
+                <a href="{{ route('about') }}"
+                    class="flex items-center gap-2 px-4 py-3
+                           text-sm text-gray-700 dark:text-gray-300
+                           hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+
+                    <i class="bi bi-info-circle text-lg"></i> About App
                 </a>
 
                 <form method="POST" action="{{ route('logout') }}">

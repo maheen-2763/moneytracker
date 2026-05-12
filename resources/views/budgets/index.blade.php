@@ -23,7 +23,7 @@
         {{-- ── Header ── --}}
         <div class="flex items-center justify-between flex-wrap gap-3">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white">
                     🏷️ Budget Limits
                 </h1>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
@@ -110,7 +110,7 @@
                 <div class="lg:col-span-2">
                     <button type="submit"
                         class="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg
-                           bg-indigo-600 hover:bg-indigo-700 dark:hover:bg-indigo-600
+                           bg-indigo-500 hover:bg-indigo-600 dark:hover:bg-indigo-600
                            text-white text-sm font-semibold transition">
                         <i class="bi bi-plus-lg"></i>
                         Set Budget
@@ -203,7 +203,7 @@
                                         <div class="flex items-center gap-2">
                                             <button
                                                 onclick="openEditModal({{ $budget->id }}, '{{ ucfirst($budget->category) }}', {{ $budget->amount }})"
-                                                class="p-2 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition"
+                                                class="p-2 text-indigo-500 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition"
                                                 title="Edit budget">
                                                 <i class="bi bi-pencil"></i>
                                             </button>
@@ -212,7 +212,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition"
+                                                    class="p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition"
                                                     title="Delete budget">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
@@ -257,7 +257,7 @@
                             <div class="flex items-center gap-2">
                                 <button
                                     onclick="openEditModal({{ $budget->id }}, '{{ ucfirst($budget->category) }}', {{ $budget->amount }})"
-                                    class="p-2 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition">
+                                    class="p-2 text-indigo-500 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition">
                                     <i class="bi bi-pencil"></i>
                                 </button>
                                 <form method="POST" action="{{ route('budgets.destroy', $budget) }}" class="inline"
@@ -265,7 +265,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition">
+                                        class="p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
@@ -359,7 +359,7 @@
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             Category:
-                            <span id="modalCategory" class="text-indigo-600 dark:text-indigo-400"></span>
+                            <span id="modalCategory" class="text-indigo-500 dark:text-indigo-400"></span>
                         </label>
                     </div>
 

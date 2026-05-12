@@ -5,413 +5,206 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoneyTracker — Register</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-    {{-- Same <style> block as login.blade.php --}}
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #0f172a;
-            min-height: 100vh;
-            display: flex;
-        }
-
-        /* ── Left Panel ── */
-        .auth-left {
-            width: 45%;
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .auth-left::before {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 50%;
-            top: -100px;
-            left: -100px;
-        }
-
-        .auth-left::after {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            bottom: -80px;
-            right: -80px;
-        }
-
-        .auth-brand {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.5rem;
-            z-index: 1;
-        }
-
-        .auth-brand span {
-            color: #a5b4fc;
-        }
-
-        .auth-tagline {
-            color: #c7d2fe;
-            font-size: 0.9rem;
-            margin-bottom: 3rem;
-            z-index: 1;
-        }
-
-        .auth-features {
-            list-style: none;
-            z-index: 1;
-            width: 100%;
-            max-width: 280px;
-        }
-
-        .auth-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: #e0e7ff;
-            font-size: 0.875rem;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .auth-features li:last-child {
-            border: none;
-        }
-
-        .auth-features li i {
-            width: 28px;
-            height: 28px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            flex-shrink: 0;
-        }
-
-        /* ── Right Panel ── */
-        .auth-right {
-            flex: 1;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .auth-card {
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .auth-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #0f172a;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.35rem;
-        }
-
-        .auth-subtitle {
-            color: #64748b;
-            font-size: 0.875rem;
-            margin-bottom: 2rem;
-        }
-
-        /* ── Form ── */
-        .form-label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #475569;
-            margin-bottom: 0.4rem;
-        }
-
-        .form-control {
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 0.7rem 1rem;
-            font-size: 0.9rem;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #0f172a;
-            transition: border-color 0.2s, box-shadow 0.2s;
-        }
-
-        .form-control:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
-            outline: none;
-        }
-
-        .input-icon-wrap {
-            position: relative;
-        }
-
-        .input-icon-wrap i {
-            position: absolute;
-            left: 0.9rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-
-        .input-icon-wrap .form-control {
-            padding-left: 2.5rem;
-        }
-
-        /* ── Password toggle ── */
-        .pass-wrap {
-            position: relative;
-        }
-
-        .pass-toggle {
-            position: absolute;
-            right: 0.9rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-            padding: 0;
-            font-size: 0.9rem;
-        }
-
-        .pass-toggle:hover {
-            color: #6366f1;
-        }
-
-        /* ── Submit button ── */
-        .btn-auth {
-            width: 100%;
-            padding: 0.75rem;
-            background: #6366f1;
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-            letter-spacing: 0.01em;
-        }
-
-        .btn-auth:hover {
-            background: #4f46e5;
-            transform: translateY(-1px);
-        }
-
-        .btn-auth:active {
-            transform: translateY(0);
-        }
-
-        /* ── Divider ── */
-        .auth-divider {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1.5rem 0;
-            color: #94a3b8;
-            font-size: 0.78rem;
-        }
-
-        .auth-divider::before,
-        .auth-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #e2e8f0;
-        }
-
-        /* ── Footer link ── */
-        .auth-footer {
-            text-align: center;
-            font-size: 0.82rem;
-            color: #64748b;
-            margin-top: 1.5rem;
-        }
-
-        .auth-footer a {
-            color: #6366f1;
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* ── Error ── */
-        .invalid-feedback {
-            font-size: 0.78rem;
-        }
-
-        .form-control.is-invalid {
-            border-color: #ef4444;
-        }
-
-        .auth-error {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 10px;
-            padding: 0.75rem 1rem;
-            font-size: 0.82rem;
-            color: #dc2626;
-            margin-bottom: 1.25rem;
-        }
-
-        /* ── Mobile ── */
-        @media (max-width: 768px) {
-            .auth-left {
-                display: none;
-            }
-
-            .auth-right {
-                background: #f1f5f9;
-            }
-
-            .auth-card {
-                background: #fff;
-                border-radius: 16px;
-                padding: 2rem;
-                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-            }
-        }
-    </style>
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="font-[Plus_Jakarta_Sans] bg-gray-950 min-h-screen flex">
 
-    <div class="auth-left">
-        <div class="auth-brand">
-            <i class="bi bi-wallet2 me-2"></i>Money<span>Tracker</span>
+    {{-- ── Left Panel ── --}}
+    <div
+        class="hidden md:flex w-[45%] flex-col justify-center items-center px-12
+                bg-gradient-to-br from-indigo-950 via-indigo-900 to-indigo-700
+                relative overflow-hidden">
+
+        {{-- Decorative circles --}}
+        <div class="absolute w-96 h-96 rounded-full bg-white/[0.03] -top-24 -left-24"></div>
+        <div class="absolute w-72 h-72 rounded-full bg-white/[0.05] -bottom-20 -right-20"></div>
+
+        {{-- Brand --}}
+        <div class="z-10 w-full max-w-xs">
+            <h1 class="text-3xl font-extrabold text-white tracking-tight mb-1">
+                <i class="bi bi-wallet2 mr-2"></i>
+                Money<span class="text-indigo-300">Tracker</span>
+            </h1>
+            <p class="text-indigo-300 text-sm mb-10">
+                Start tracking in 30 seconds
+            </p>
+
+            {{-- Features --}}
+            <ul class="space-y-0 divide-y divide-white/10">
+                @foreach ([['bi-check-lg', 'Free forever — no credit card'], ['bi-shield-check', 'Your data stays private'], ['bi-lightning-charge', 'Set up in under a minute'], ['bi-graph-up-arrow', 'Instant spending insights'], ['bi-phone', 'Works on all devices']] as [$icon, $text])
+                    <li class="flex items-center gap-3 py-3 text-sm text-indigo-100">
+                        <span
+                            class="w-7 h-7 rounded-lg bg-white/10
+                                     flex items-center justify-center shrink-0">
+                            <i class="bi {{ $icon }} text-xs"></i>
+                        </span>
+                        {{ $text }}
+                    </li>
+                @endforeach
+            </ul>
         </div>
-        <p class="auth-tagline">Start tracking in 30 seconds</p>
-
-        <ul class="auth-features">
-            <li><i class="bi bi-check-lg"></i> Free forever — no credit card</li>
-            <li><i class="bi bi-shield-check"></i> Your data stays private</li>
-            <li><i class="bi bi-lightning-charge"></i> Set up in under a minute</li>
-            <li><i class="bi bi-graph-up-arrow"></i> Instant spending insights</li>
-            <li><i class="bi bi-phone"></i> Works on all devices</li>
-        </ul>
     </div>
 
-    <div class="auth-right">
-        <div class="auth-card">
+    {{-- ── Right Panel ── --}}
+    <div class="flex-1 flex items-center justify-center p-6 bg-white">
 
-            <div class="auth-title">Create account ✨</div>
-            <div class="auth-subtitle">Start tracking your expenses today — it's free</div>
+        <div class="w-full max-w-sm">
 
-            {{-- Errors --}}
+            {{-- Mobile brand --}}
+            <div class="md:hidden text-center mb-8">
+                <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">
+                    <i class="bi bi-wallet2 mr-1 text-indigo-500"></i>
+                    Money<span class="text-indigo-500">Tracker</span>
+                </h1>
+            </div>
+
+            <h2 class="text-2xl font-extrabold text-gray-900 tracking-tight">
+                Create account ✨
+            </h2>
+            <p class="text-sm text-gray-500 mt-1 mb-6">
+                Start tracking your expenses today — it's free
+            </p>
+
+            {{-- Error --}}
             @if ($errors->any())
-                <div class="auth-error">
-                    <i class="bi bi-exclamation-circle me-2"></i>
+                <div
+                    class="mb-5 flex items-center gap-2 px-4 py-3 rounded-xl
+                            bg-red-50 border border-red-200 text-red-700 text-sm">
+                    <i class="bi bi-exclamation-circle shrink-0"></i>
                     {{ $errors->first() }}
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('register') }}" class="space-y-4">
                 @csrf
 
                 {{-- Name --}}
-                <div class="mb-3">
-                    <label class="form-label">Full Name</label>
-                    <div class="input-icon-wrap">
-                        <i class="bi bi-person"></i>
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                            value="{{ old('name') }}" placeholder="Enter your name" autofocus required>
+                <div>
+                    <label
+                        class="block text-xs font-bold uppercase tracking-widest
+                                  text-gray-500 mb-1.5">
+                        Full Name
+                    </label>
+                    <div class="relative">
+                        <i
+                            class="bi bi-person absolute left-3.5 top-1/2 -translate-y-1/2
+                                  text-gray-400 text-sm"></i>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Enter your name"
+                            autofocus required
+                            class="w-full rounded-xl pl-10 pr-4 py-2.5 text-sm
+                                      border border-gray-200 text-gray-900
+                                      placeholder:text-gray-400
+                                      focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                                      focus:border-indigo-500 transition
+                                      @error('name') border-red-400 @enderror">
                     </div>
                     @error('name')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Email --}}
-                <div class="mb-3">
-                    <label class="form-label">Email Address</label>
-                    <div class="input-icon-wrap">
-                        <i class="bi bi-envelope"></i>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                            value="{{ old('email') }}" placeholder="you@example.com" required>
+                <div>
+                    <label
+                        class="block text-xs font-bold uppercase tracking-widest
+                                  text-gray-500 mb-1.5">
+                        Email Address
+                    </label>
+                    <div class="relative">
+                        <i
+                            class="bi bi-envelope absolute left-3.5 top-1/2 -translate-y-1/2
+                                  text-gray-400 text-sm"></i>
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="you@example.com"
+                            required
+                            class="w-full rounded-xl pl-10 pr-4 py-2.5 text-sm
+                                      border border-gray-200 text-gray-900
+                                      placeholder:text-gray-400
+                                      focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                                      focus:border-indigo-500 transition
+                                      @error('email') border-red-400 @enderror">
                     </div>
                     @error('email')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Password --}}
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <div class="pass-wrap">
-                        <div class="input-icon-wrap">
-                            <i class="bi bi-lock"></i>
-                            <input type="password" name="password" id="passwordInput"
-                                class="form-control @error('password') is-invalid @enderror"
-                                placeholder="Min. 8 characters" required>
-                        </div>
-                        <button type="button" class="pass-toggle" onclick="togglePassword('passwordInput','passIcon')">
-                            <i class="bi bi-eye" id="passIcon"></i>
+                <div>
+                    <label
+                        class="block text-xs font-bold uppercase tracking-widest
+                                  text-gray-500 mb-1.5">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <i
+                            class="bi bi-lock absolute left-3.5 top-1/2 -translate-y-1/2
+                                  text-gray-400 text-sm"></i>
+                        <input type="password" name="password" id="passwordInput" placeholder="Min. 8 characters"
+                            required
+                            class="w-full rounded-xl pl-10 pr-10 py-2.5 text-sm
+                                      border border-gray-200 text-gray-900
+                                      placeholder:text-gray-400
+                                      focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                                      focus:border-indigo-500 transition
+                                      @error('password') border-red-400 @enderror">
+                        <button type="button" onclick="togglePassword('passwordInput', 'passIcon')"
+                            class="absolute right-3.5 top-1/2 -translate-y-1/2
+                                       text-gray-400 hover:text-indigo-500 transition">
+                            <i class="bi bi-eye text-sm" id="passIcon"></i>
                         </button>
                     </div>
                     @error('password')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
+                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Confirm Password --}}
-                <div class="mb-4">
-                    <label class="form-label">Confirm Password</label>
-                    <div class="pass-wrap">
-                        <div class="input-icon-wrap">
-                            <i class="bi bi-lock-fill"></i>
-                            <input type="password" name="password_confirmation" id="confirmInput" class="form-control"
-                                placeholder="Repeat password" required>
-                        </div>
-                        <button type="button" class="pass-toggle"
-                            onclick="togglePassword('confirmInput','confirmIcon')">
-                            <i class="bi bi-eye" id="confirmIcon"></i>
+                <div>
+                    <label
+                        class="block text-xs font-bold uppercase tracking-widest
+                                  text-gray-500 mb-1.5">
+                        Confirm Password
+                    </label>
+                    <div class="relative">
+                        <i
+                            class="bi bi-lock-fill absolute left-3.5 top-1/2 -translate-y-1/2
+                                  text-gray-400 text-sm"></i>
+                        <input type="password" name="password_confirmation" id="confirmInput"
+                            placeholder="Repeat password" required
+                            class="w-full rounded-xl pl-10 pr-10 py-2.5 text-sm
+                                      border border-gray-200 text-gray-900
+                                      placeholder:text-gray-400
+                                      focus:outline-none focus:ring-2 focus:ring-indigo-500/30
+                                      focus:border-indigo-500 transition">
+                        <button type="button" onclick="togglePassword('confirmInput', 'confirmIcon')"
+                            class="absolute right-3.5 top-1/2 -translate-y-1/2
+                                       text-gray-400 hover:text-indigo-500 transition">
+                            <i class="bi bi-eye text-sm" id="confirmIcon"></i>
                         </button>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-auth">
+                {{-- Submit --}}
+                <button type="submit"
+                    class="w-full py-2.5 rounded-xl
+                           bg-indigo-500 hover:bg-indigo-600
+                           text-white text-sm font-bold
+                           hover:-translate-y-0.5 transition-all duration-200">
                     Create Account →
                 </button>
 
             </form>
 
-            <div class="auth-footer">
+            <p class="text-center text-sm text-gray-500 mt-6">
                 Already have an account?
-                <a href="{{ route('login') }}">Sign in</a>
-            </div>
+                <a href="{{ route('login') }}" class="font-bold text-indigo-500 hover:text-indigo-600">
+                    Sign in
+                </a>
+            </p>
 
         </div>
     </div>
@@ -429,6 +222,7 @@
             }
         }
     </script>
+
 </body>
 
 </html>

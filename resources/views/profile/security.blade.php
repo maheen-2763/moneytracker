@@ -9,7 +9,7 @@
         <div class="flex items-center justify-between flex-wrap gap-3">
             <div>
                 <h1 class="text-xl font-bold text-gray-900 dark:text-white">
-                    🔒 Security Settings
+                    Security Settings
                 </h1>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                     Manage your account security and privacy
@@ -88,7 +88,7 @@
                                               transition"
                                             placeholder="Enter your password" required>
                                         <button type="submit"
-                                            class="px-5 py-2.5 bg-red-600 hover:bg-red-700 dark:hover:bg-red-600 text-white text-sm font-semibold rounded-xl transition"
+                                            class="px-5 py-2.5 bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white text-sm font-semibold rounded-xl transition"
                                             onclick="return confirm('Disable 2FA?')">
                                             Disable
                                         </button>
@@ -157,7 +157,7 @@
                                                     placeholder="Enter 6-digit code" maxlength="6" inputmode="numeric"
                                                     pattern="[0-9]{6}" autocomplete="off" required>
                                                 <button type="submit"
-                                                    class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 dark:hover:bg-blue-600 text-white text-sm font-semibold rounded-xl transition">
+                                                    class="px-6 py-2.5 bg-blue-500 hover:bg-blue-600 dark:hover:bg-blue-600 text-white text-sm font-semibold rounded-xl transition">
                                                     Enable
                                                 </button>
                                             </div>
@@ -273,7 +273,7 @@
                         {{-- Quick actions --}}
                         <div class="mt-6">
                             <a href="{{ route('profile.edit') }}#password"
-                                class="w-full block px-4 py-2.5 border border-indigo-300 dark:border-indigo-900/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-sm font-semibold rounded-xl transition text-center">
+                                class="w-full block px-4 py-2.5 border border-indigo-300 dark:border-indigo-900/40 text-indigo-500 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-sm font-semibold rounded-xl transition text-center">
                                 <i class="bi bi-lock me-1"></i>Change Password
                             </a>
                         </div>
@@ -282,14 +282,14 @@
             </div>
         </div>
 
-        @push('scripts')
-            <script>
-                function copySecret(secret) {
-                    navigator.clipboard.writeText(secret).then(() => {
-                        alert('Secret key copied!');
-                    });
-                }
-            </script>
-        @endpush
-
     @endsection
+
+    @push('scripts')
+        <script>
+            function copySecret(secret) {
+                navigator.clipboard.writeText(secret).then(() => {
+                    alert('Secret key copied!');
+                });
+            }
+        </script>
+    @endpush

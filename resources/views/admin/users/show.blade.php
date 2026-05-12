@@ -8,7 +8,7 @@
         {{-- ── Header ── --}}
         <div class="flex items-center justify-between flex-wrap gap-3">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
+                <h1 class="text-xl font-bold text-gray-900 dark:text-white">
                     User Profile
                 </h1>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -16,11 +16,7 @@
                 </p>
             </div>
             <a href="{{ route('admin.users.index') }}"
-                class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg
-                   border border-gray-300 dark:border-gray-700
-                   text-gray-700 dark:text-gray-300
-                   hover:bg-gray-50 dark:hover:bg-gray-800
-                   text-sm font-semibold transition">
+                class="text-sm font-medium text-indigo-500 hover:text-indigo-600 transition">
                 <i class="bi bi-arrow-left"></i> Back to Users
             </a>
         </div>
@@ -72,7 +68,7 @@
 
                     <div class="grid grid-cols-3 gap-4 text-center">
                         <div>
-                            <p class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+                            <p class="text-2xl font-bold text-indigo-500 dark:text-indigo-400">
                                 {{ $user->expenses_count }}
                             </p>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">
@@ -80,7 +76,7 @@
                             </p>
                         </div>
                         <div>
-                            <p class="text-2xl font-bold text-red-600 dark:text-red-400">
+                            <p class="text-2xl font-bold text-red-500 dark:text-red-400">
                                 ₹{{ number_format($user->expenses_sum_amount ?? 0, 0) }}
                             </p>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">
@@ -88,7 +84,7 @@
                             </p>
                         </div>
                         <div>
-                            <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                            <p class="text-2xl font-bold text-emerald-500 dark:text-emerald-400">
                                 {{ $budgets->count() }}
                             </p>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 uppercase tracking-wide">
@@ -124,7 +120,7 @@
                         @method('DELETE')
                         <button type="submit" onclick="return confirm('Delete this user permanently?')"
                             class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5
-                                   rounded-lg bg-red-600 hover:bg-red-700 dark:hover:bg-red-600
+                                   rounded-lg bg-red-500 hover:bg-red-600 dark:hover:bg-red-600
                                    text-white text-sm font-semibold transition">
                             <i class="bi bi-trash"></i> Delete User
                         </button>
@@ -144,7 +140,7 @@
 
                     <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
                         <h3 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                            <i class="bi bi-clock-history text-indigo-600 dark:text-indigo-400"></i>
+                            <i class="bi bi-clock-history text-indigo-500"></i>
                             Recent Expenses
                         </h3>
                     </div>
