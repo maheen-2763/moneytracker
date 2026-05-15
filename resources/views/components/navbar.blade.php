@@ -23,8 +23,10 @@
             <i class="bi bi-list text-xl"></i>
         </button>
 
+
         {{-- Logo --}}
         <x-app-logo size="sm" :dark="false" />
+
 
     </div>
 

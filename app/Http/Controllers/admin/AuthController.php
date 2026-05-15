@@ -31,7 +31,7 @@ class AuthController extends Controller
                 'last_login_at' => now(),
             ]);
 
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard')->with('toast_success', 'Logged in successfully.');
         }
 
         return back()->withErrors([

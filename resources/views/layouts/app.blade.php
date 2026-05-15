@@ -118,8 +118,8 @@
 
     <script>
         /* ─────────────────────────────────────
-                                                                                                                                                       Sidebar
-                                                                                                                                                    ───────────────────────────────────── */
+                                                                                                                                                           Sidebar
+                                                                                                                                                        ───────────────────────────────────── */
 
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');
@@ -211,10 +211,6 @@
             applyTheme(nextTheme);
 
         });
-
-        /* ─────────────────────────────────────
-           Toast System
-        ───────────────────────────────────── */
 
         /* ─────────────────────────────────────
            Toast System

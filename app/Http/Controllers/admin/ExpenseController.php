@@ -40,6 +40,6 @@ class ExpenseController extends Controller
     {
         $expense->forceDelete();
 
-        return back()->with('success', 'Expense permanently deleted.');
+        return back()->with('toast_success', 'Expense permanently deleted.');
     }
 }

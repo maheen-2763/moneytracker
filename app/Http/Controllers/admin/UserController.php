@@ -44,7 +44,7 @@ class UserController extends Controller
         $user->tokens()->delete();
         $user->update(['email_verified_at' => null]);
 
-        return back()->with('success', "User {$user->name} has been banned.");
+        return back()->with('toast_success', "User {$user->name} has been banned.");
     }
 
     public function destroy(User $user)
@@ -55,6 +55,6 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users.index')
-            ->with('success', 'User deleted successfully.');
+            ->with('toast_success', 'User deleted successfully.');
     }
 }

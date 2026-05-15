@@ -165,7 +165,7 @@
                     <td>{{ $expense->title }}</td>
                     <td>{{ ucfirst($expense->category) }}</td>
                     <td class="amount">Rs.{{ number_format($expense->amount, 2) }}</td>
-                    <td>{{ \Carbon\Carbon::parse($expense->date)->format('d M Y') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($expense->expense_date)->format('d M Y') }}</td>
                 </tr>
             @empty
                 <tr>
