@@ -5,7 +5,7 @@
                 text-green-700 dark:text-green-400 text-sm"
         id="alert-success">
         <i class="bi bi-check-circle-fill shrink-0"></i>
-        <p class="flex-1 font-medium">{{ session('success') }}</p>
+        <p class="flex-1 font-medium">{{ session('toast_success') }}</p>
         <button onclick="document.getElementById('alert-success').remove()"
             class="text-green-500 hover:text-green-700 dark:hover:text-green-300 transition">
             <i class="bi bi-x-lg text-xs"></i>
@@ -20,7 +20,7 @@
                 text-red-700 dark:text-red-400 text-sm"
         id="alert-error">
         <i class="bi bi-exclamation-circle-fill shrink-0"></i>
-        <p class="flex-1 font-medium">{{ session('error') }}</p>
+        <p class="flex-1 font-medium">{{ session('toast_error') }}</p>
         <button onclick="document.getElementById('alert-error').remove()"
             class="text-red-500 hover:text-red-700 dark:hover:text-red-300 transition">
             <i class="bi bi-x-lg text-xs"></i>
@@ -35,7 +35,7 @@
                 text-yellow-700 dark:text-yellow-400 text-sm"
         id="alert-warning">
         <i class="bi bi-exclamation-triangle-fill shrink-0"></i>
-        <p class="flex-1 font-medium">{{ session('warning') }}</p>
+        <p class="flex-1 font-medium">{{ session('toast_warning') }}</p>
         <button onclick="document.getElementById('alert-warning').remove()"
             class="text-yellow-500 hover:text-yellow-700 dark:hover:text-yellow-300 transition">
             <i class="bi bi-x-lg text-xs"></i>

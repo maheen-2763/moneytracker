@@ -5,7 +5,7 @@
 
 @php
     $sizes = [
-        'sm' => ['icon' => 'w-7 h-7 text-sm', 'text' => 'text-base'],
+        'sm' => ['icon' => 'w-7 h-7 text-xs', 'text' => 'text-sm'],
         'md' => ['icon' => 'w-9 h-9 text-base', 'text' => 'text-lg'],
         'lg' => ['icon' => 'w-12 h-12 text-xl', 'text' => 'text-2xl'],
         'xl' => ['icon' => 'w-16 h-16 text-3xl', 'text' => 'text-4xl'],

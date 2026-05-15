@@ -56,6 +56,8 @@ class ExpenseController extends Controller
 
         return redirect()->route('expenses.index')
             ->with('toast_success', 'Expense added successfully!');
+
+        return back()->with('toast_error', 'Something went wrong. Please try again.');
     }
 
 
@@ -100,6 +102,8 @@ class ExpenseController extends Controller
 
         return redirect()->route('expenses.index')
             ->with('toast_success', 'Expense deleted.');
+
+        return back()->with('toast_error', 'Failed to delete expense.');
     }
 
 

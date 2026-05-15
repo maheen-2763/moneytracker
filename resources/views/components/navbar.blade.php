@@ -2,47 +2,47 @@
 
 <nav
     class="fixed top-0 left-0 right-0 md:left-60 z-40
-            h-16 px-6
+            h-16 px-3 md:px-6
             flex items-center justify-between
             bg-white dark:bg-gray-900
             border-b border-gray-200 dark:border-gray-800">
 
 
 
-    {{-- LEFT: Toggle + Title --}}
-    <div class="flex items-center gap-4">
+
+    {{-- LEFT: Toggle + Logo only --}}
+    <div class="flex items-center gap-3">
 
         {{-- Mobile Sidebar Toggle --}}
         <button id="sidebarToggle"
             class="md:hidden w-9 h-9
-                   flex items-center justify-center
-                   rounded-lg text-gray-500
-                   hover:bg-gray-100 dark:hover:bg-gray-800
-                   transition">
+               flex items-center justify-center
+               rounded-lg text-gray-500
+               hover:bg-gray-100 dark:hover:bg-gray-800
+               transition">
             <i class="bi bi-list text-xl"></i>
         </button>
 
-        {{-- Page Title --}}
+        {{-- Logo --}}
         <x-app-logo size="sm" :dark="false" />
-        <h1 class="text-lg font-semibold text-gray-800 dark:text-white">
-            {{ $title ?? 'Dashboard' }}
-        </h1>
 
     </div>
 
     {{-- RIGHT: Actions --}}
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-1 md:gap-2">
 
-        {{-- Add Expense --}}
+        {{-- Add Expense — icon only on mobile --}}
         <a href="{{ route('expenses.create') }}"
-            class="hidden md:inline-flex items-center gap-2
-                   px-4 py-2 rounded-lg
-                   bg-indigo-500 hover:bg-indigo-600
-                   text-white text-sm font-medium
-                   transition">
+            class="w-9 h-9 md:w-auto md:h-auto
+               inline-flex items-center justify-center gap-2
+               md:px-3 md:py-2 rounded-lg
+               bg-indigo-500 hover:bg-indigo-600
+               text-white text-sm font-medium transition">
             <i class="bi bi-plus-lg"></i>
-            Add Expense
+            <span class="hidden lg:inline">Add Expense</span>
         </a>
+
+
 
         {{-- Notifications --}}
         @php $unread = auth()->user()->unreadNotifications->count() ?? 0; @endphp
@@ -69,7 +69,7 @@
 
             {{-- Notification Dropdown --}}
             <div id="notifMenu"
-                class="hidden absolute right-0 mt-2 w-80
+                class="hidden absolute right-0 mt-2 w-72 sm:w-80
                        rounded-xl border border-gray-200 dark:border-gray-700
                        bg-white dark:bg-gray-900
                        shadow-lg overflow-hidden">
@@ -77,9 +77,11 @@
                 <div
                     class="flex items-center justify-between
                             px-4 py-3 border-b border-gray-100 dark:border-gray-800">
-                    <p class="text-sm font-semibold text-gray-800 dark:text-white">
+                    <a href="{{ route('notifications.index') }}"
+                        class="text-sm font-semibold text-gray-800 dark:text-white
+          hover:text-indigo-500 transition">
                         Notifications
-                    </p>
+                    </a>
                     @if ($unread > 0)
                         <a href="{{ route('notifications.read-all') }}"
                             class="text-xs text-indigo-500 hover:text-indigo-600 font-medium">
@@ -114,6 +116,14 @@
                             All caught up!
                         </div>
                     @endforelse
+                    <a href="{{ route('notifications.index') }}"
+                        class="flex items-center justify-center gap-1
+                           px-4 py-3 text-xs font-semibold
+                           text-indigo-500 hover:text-indigo-600
+                           border-t border-gray-100 dark:border-gray-800
+                           hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                        See all notifications →
+                    </a>
                 </div>
 
             </div>
@@ -136,17 +146,13 @@
                        hover:bg-gray-100 dark:hover:bg-gray-800
                        transition">
                 <img src="{{ auth()->user()->avatarUrl() }}" class="w-8 h-8 rounded-full object-cover" alt="avatar">
-                <span
-                    class="hidden md:block text-sm font-medium
-                             text-gray-700 dark:text-gray-200">
-                    {{ auth()->user()->name }}
-                </span>
-                <i class="bi bi-chevron-down text-xs text-gray-400"></i>
+
+                <i class="bi bi-chevron-down text-xs text-gray-400 hidden md:block"></i>
             </button>
 
             {{-- User Dropdown --}}
             <div id="userMenu"
-                class="hidden absolute right-0 mt-2 w-48
+                class="hidden absolute right-0 mt-2 w-44 sm:w-48
                        rounded-xl border border-gray-200 dark:border-gray-700
                        bg-white dark:bg-gray-900
                        shadow-lg overflow-hidden">

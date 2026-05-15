@@ -74,7 +74,7 @@ class TwoFactorController extends Controller
         session()->forget('2fa_setup_secret');
 
         return redirect()->route('profile.security')
-            ->with('success', '2FA enabled successfully! ✅');
+            ->with('toast_success', '2FA enabled successfully! ✅');
     }
 
     // ── Disable 2FA ────────────────────────
@@ -129,5 +129,6 @@ class TwoFactorController extends Controller
         session(['2fa_verified' => true]);
 
         return redirect()->intended(route('dashboard'));
+        return back()->with('toast_error', 'Invalid verification code. Please try again.');
     }
 }

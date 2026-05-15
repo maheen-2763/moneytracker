@@ -56,10 +56,7 @@
 
             {{-- Mobile brand --}}
             <div class="md:hidden text-center mb-8">
-                <h1 class="text-2xl font-extrabold text-gray-900 tracking-tight">
-                    <i class="bi bi-wallet2 mr-1 text-indigo-500"></i>
-                    Money<span class="text-indigo-500">Tracker</span>
-                </h1>
+
             </div>
             <div class="mb-3 ml-14">
                 <x-app-logo size="lg" :dark="false" />

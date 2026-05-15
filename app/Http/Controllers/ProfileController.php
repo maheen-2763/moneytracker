@@ -57,7 +57,7 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->route('profile.index')
-            ->with('success', 'Profile updated successfully!');
+            ->with('toast_success', 'Profile updated successfully!');
     }
 
     // Update password separately
@@ -76,13 +76,14 @@ class ProfileController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->save();
 
-        return back()->with('success', 'Password changed successfully!');
+        return back()->with('toast_success', 'Password changed successfully!');
+        return back()->with('toast_error', 'Current password is incorrect.');
     }
 
     // Remove avatar — revert to letter avatar
     public function removeAvatar()
     {
-       /** @var User $user */  
+        /** @var User $user */
         $user = Auth::user();
 
         if ($user->avatar) {
@@ -90,6 +91,6 @@ class ProfileController extends Controller
             $user->update(['avatar' => null]);
         }
 
-        return back()->with('success', 'Avatar removed.');
+        return back()->with('toast_success', 'Avatar removed.');
     }
 }

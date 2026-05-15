@@ -57,7 +57,7 @@ class BudgetController extends Controller
             ['amount' => $request->amount]
         );
 
-        return back()->with('success', "Budget set for {$request->category}!");
+        return back()->with('toast_success', "Budget set for {$request->category}!");
     }
 
     public function update(Request $request, Budget $budget)
@@ -70,7 +70,7 @@ class BudgetController extends Controller
 
         $budget->update(['amount' => $request->amount]);
 
-        return back()->with('success', 'Budget updated!');
+        return back()->with('toast_success', 'Budget updated!');
     }
 
     public function destroy(Budget $budget)
@@ -79,6 +79,6 @@ class BudgetController extends Controller
 
         $budget->delete();
 
-        return back()->with('success', 'Budget removed.');
+        return back()->with('toast_success', 'Budget removed.');
     }
 }

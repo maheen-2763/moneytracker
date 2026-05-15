@@ -4,15 +4,15 @@
 
 @section('content')
 
-    <div class="space-y-8">
+    <div class="space-y-4 md:space-y-8">
 
         {{-- ── Summary Cards ─────────────────── --}}
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
 
             {{-- Total Spent --}}
             <div
                 class="rounded-2xl border border-gray-200 dark:border-gray-800
-                    bg-white dark:bg-gray-900 p-6
+                    bg-white dark:bg-gray-900 p-4 md:p-6
                     shadow-sm hover:-translate-y-1 hover:shadow-md
                     transition-all duration-200">
                 <p
@@ -20,7 +20,7 @@
                       text-gray-500 dark:text-gray-400">
                     Total Spent
                 </p>
-                <p class="text-4xl font-extrabold tracking-tight text-red-500 mt-2">
+                <p class="text-2xl md:text-4xl font-extrabold tracking-tight text-red-500 mt-2">
                     ₹{{ number_format($totalAllTime, 0) }}
                 </p>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
@@ -31,7 +31,7 @@
             {{-- This Month --}}
             <div
                 class="rounded-2xl border border-gray-200 dark:border-gray-800
-                    bg-white dark:bg-gray-900 p-6
+                    bg-white dark:bg-gray-900 p-4 md:p-6
                     shadow-sm hover:-translate-y-1 hover:shadow-md
                     transition-all duration-200">
                 <p
@@ -39,7 +39,7 @@
                       text-gray-500 dark:text-gray-400">
                     This Month
                 </p>
-                <p class="text-4xl font-extrabold tracking-tight text-blue-500 mt-2">
+                <p class="text-2xl md:text-4xl font-extrabold tracking-tight text-blue-500 mt-2">
                     ₹{{ number_format($thisMonth, 0) }}
                 </p>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
@@ -50,7 +50,7 @@
             {{-- This Week --}}
             <div
                 class="rounded-2xl border border-gray-200 dark:border-gray-800
-                    bg-white dark:bg-gray-900 p-6
+                    bg-white dark:bg-gray-900 p-4 md:p-6
                     shadow-sm hover:-translate-y-1 hover:shadow-md
                     transition-all duration-200">
                 <p
@@ -58,7 +58,7 @@
                       text-gray-500 dark:text-gray-400">
                     This Week
                 </p>
-                <p class="text-4xl font-extrabold tracking-tight text-green-500 mt-2">
+                <p class="text-2xl md:text-4xl font-extrabold tracking-tight text-green-500 mt-2">
                     ₹{{ number_format($thisWeek, 0) }}
                 </p>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
@@ -69,7 +69,7 @@
             {{-- Total Expenses --}}
             <div
                 class="rounded-2xl border border-gray-200 dark:border-gray-800
-                    bg-white dark:bg-gray-900 p-6
+                    bg-white dark:bg-gray-900 p-4 md:p-6
                     shadow-sm hover:-translate-y-1 hover:shadow-md
                     transition-all duration-200">
                 <p
@@ -77,7 +77,7 @@
                       text-gray-500 dark:text-gray-400">
                     Total Expenses
                 </p>
-                <p class="text-4xl font-extrabold tracking-tight text-purple-500 mt-2">
+                <p class="text-2xl md:text-4xl font-extrabold tracking-tight text-purple-500 mt-2">
                     {{ $totalExpenses }}
                 </p>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
@@ -88,7 +88,7 @@
         </div>
 
         {{-- ── Charts ─────────────────────────── --}}
-        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-3 md:gap-6">
 
             {{-- Monthly Spending --}}
             <div
@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="p-6">
-                    <div class="h-[320px]">
+                    <div class="h-[220px] md:h-[320px]">
                         <canvas id="monthlyChart"></canvas>
                     </div>
                 </div>
@@ -147,7 +147,7 @@
         </div>
 
         {{-- ── Budget + Recent Expenses ────────── --}}
-        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-3 md:gap-6">
 
             {{-- Budget Status --}}
             <div
@@ -234,61 +234,61 @@
                         View all →
                     </a>
                 </div>
-
-                <table class="w-full border-collapse">
-                    <tbody>
-                        @forelse($recentExpenses as $expense)
-                            @php
-                                $badgeMap = [
-                                    'food' => 'bg-yellow-100 text-yellow-800',
-                                    'travel' => 'bg-sky-100 text-sky-800',
-                                    'health' => 'bg-green-100 text-green-800',
-                                    'office' => 'bg-violet-100 text-violet-800',
-                                    'other' => 'bg-gray-100 text-gray-700',
-                                ];
-                            @endphp
-                            <tr
-                                class="border-b border-gray-100 dark:border-gray-800
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse">
+                        <tbody>
+                            @forelse($recentExpenses as $expense)
+                                @php
+                                    $badgeMap = [
+                                        'food' => 'bg-yellow-100 text-yellow-800',
+                                        'travel' => 'bg-sky-100 text-sky-800',
+                                        'health' => 'bg-green-100 text-green-800',
+                                        'office' => 'bg-violet-100 text-violet-800',
+                                        'other' => 'bg-gray-100 text-gray-700',
+                                    ];
+                                @endphp
+                                <tr
+                                    class="border-b border-gray-100 dark:border-gray-800
                                    hover:bg-gray-50 dark:hover:bg-gray-800/60
                                    transition-colors duration-150">
 
-                                <td class="px-6 py-4 align-middle">
-                                    <p class="text-sm font-semibold text-gray-900 dark:text-white">
-                                        {{ $expense->title }}
-                                    </p>
-                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                                        {{ \Carbon\Carbon::parse($expense->expense_date)->diffForHumans() }}
-                                    </p>
-                                </td>
+                                    <td class="px-3 md:px-6 py-3 md:py-4 align-middle">
+                                        <p class="text-sm font-semibold text-gray-900 dark:text-white">
+                                            {{ $expense->title }}
+                                        </p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                                            {{ \Carbon\Carbon::parse($expense->expense_date)->diffForHumans() }}
+                                        </p>
+                                    </td>
 
-                                <td class="px-6 py-4 align-middle">
-                                    <span
-                                        class="inline-flex items-center px-3 py-1 rounded-full
+                                    <td class="px-3 md:px-6 py-3 md:py-4 align-middle">
+                                        <span
+                                            class="inline-flex items-center px-3 py-1 rounded-full
                                              text-xs font-semibold
                                              {{ $badgeMap[$expense->category] ?? 'bg-gray-100 text-gray-700' }}">
-                                        {{ ucfirst($expense->category) }}
-                                    </span>
-                                </td>
+                                            {{ ucfirst($expense->category) }}
+                                        </span>
+                                    </td>
 
-                                <td
-                                    class="px-6 py-4 align-middle text-right
+                                    <td
+                                        class="px-3 md:px-6 py-3 md:py-4 align-middle text-right
                                        text-sm font-bold text-red-500">
-                                    ₹{{ number_format($expense->amount, 2) }}
-                                </td>
+                                        ₹{{ number_format($expense->amount, 2) }}
+                                    </td>
 
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3"
-                                    class="py-10 text-center
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3"
+                                        class="py-10 text-center
                                                    text-sm text-gray-500 dark:text-gray-400">
-                                    No expenses yet.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-
+                                        No expenses yet.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>

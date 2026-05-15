@@ -23,7 +23,7 @@ class NotificationController extends Controller
     {
         Auth::user()->unreadNotifications->markAsRead();
 
-        return back()->with('success', 'All notifications marked as read.');
+        return back()->with('toast_success', 'All notifications marked as read.');
     }
 
     // Full notifications page

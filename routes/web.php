@@ -57,8 +57,8 @@ Route::middleware(['auth', 'verified', 'throttle:60,1'])->group(function () {
 
     // Notification routes
     Route::get('/notifications',              [NotificationController::class, 'index'])->name('notifications.index');
-    Route::get('/notifications/{id}/read',    [NotificationController::class, 'markRead'])->name('notifications.read');
     Route::get('/notifications/read-all',     [NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+    Route::get('/notifications/{id}/read',    [NotificationController::class, 'markRead'])->name('notifications.read');
 
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');

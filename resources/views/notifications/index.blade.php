@@ -8,6 +8,11 @@
         {{-- Header --}}
         <div class="flex items-center justify-between flex-wrap gap-3">
             <div>
+                {{-- Back link --}}
+                <a href="{{ route('dashboard') }}"
+                    class="text-sm font-medium text-indigo-500 hover:text-indigo-600 transition mb-2 inline-block">
+                    ← Back to Dashboard
+                </a>
                 <h1 class="text-xl font-bold text-gray-900 dark:text-white">
                     Notifications
                 </h1>
@@ -19,9 +24,9 @@
             @if (auth()->user()->unreadNotifications->count() > 0)
                 <a href="{{ route('notifications.read-all') }}"
                     class="inline-flex items-center gap-2 px-4 py-2 rounded-lg
-                       border border-indigo-200 dark:border-indigo-900/40
-                       text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20
-                       text-sm font-medium transition">
+                   border border-indigo-200 dark:border-indigo-900/40
+                   text-indigo-500 hover:bg-indigo-50 dark:hover:bg-indigo-900/20
+                   text-sm font-medium transition">
                     <i class="bi bi-check-all"></i>
                     Mark all read
                 </a>
@@ -88,6 +93,14 @@
                     </p>
                 </div>
             @endforelse
+            <a href="{{ route('notifications.index') }}"
+                class="flex items-center justify-center gap-1
+          px-4 py-3 text-xs font-semibold
+          text-indigo-500 hover:text-indigo-600
+          border-t border-gray-100 dark:border-gray-800
+          hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                See all notifications →
+            </a>
 
         </div>
 

@@ -159,7 +159,7 @@
                     @forelse($expenses as $expense)
                         @php
                             $category = $expense->category ?? 'other';
-                            $date = $expense->date ? \Carbon\Carbon::parse($expense->date) : null;
+                            $date = $expense->expense_date ? \Carbon\Carbon::parse($expense->expense_date) : null;
                         @endphp
 
                         <tr
@@ -247,7 +247,7 @@
             @forelse($expenses as $expense)
                 @php
                     $category = $expense->category ?? 'other';
-                    $date = $expense->date ? \Carbon\Carbon::parse($expense->date) : null;
+                    $date = $expense->expense_date ? \Carbon\Carbon::parse($expense->expense_date) : null;
                 @endphp
 
                 <div

@@ -81,7 +81,7 @@
     @endauth
 
     {{-- Main Content --}}
-    <main id="main-content" class="min-h-screen md:ml-72 pt-24 px-8">
+    <main id="main-content" class="min-h-screen md:ml-60 pt-16 mt-5 px-4 md:px-6">
 
         @include('components.alert')
 
@@ -90,7 +90,8 @@
     </main>
 
     {{-- Toast Notifications --}}
-    <div id="toast-container" class="fixed top-5 right-5 z-[9999] space-y-3">
+    <div id="toast-container"
+        class="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] space-y-3 flex flex-col items-center">
     </div>
 
     {{-- Flash Messages --}}
@@ -117,8 +118,8 @@
 
     <script>
         /* ─────────────────────────────────────
-                                                                                                                   Sidebar
-                                                                                                                ───────────────────────────────────── */
+                                                                                                                                                       Sidebar
+                                                                                                                                                    ───────────────────────────────────── */
 
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');
@@ -215,58 +216,84 @@
            Toast System
         ───────────────────────────────────── */
 
-        const TOAST_ICONS = {
-            success: 'bi-check-lg',
-            error: 'bi-x-lg',
-            warning: 'bi-exclamation-lg',
+        /* ─────────────────────────────────────
+           Toast System
+        ───────────────────────────────────── */
+
+        const TOAST_CONFIG = {
+            success: {
+                icon: 'bi-check-circle-fill',
+                color: 'text-green-500',
+                timer: 'bg-green-500',
+                bg: 'bg-green-100 dark:bg-gray-900',
+                border: 'border-green-200 dark:border-green-900/40',
+            },
+            error: {
+                icon: 'bi-x-circle-fill',
+                color: 'text-red-500',
+                timer: 'bg-red-500',
+                bg: 'bg-red-100 dark:bg-gray-900',
+                border: 'border-red-200 dark:border-red-900/40',
+            },
+            warning: {
+                icon: 'bi-exclamation-circle-fill',
+                color: 'text-yellow-500',
+                timer: 'bg-yellow-500',
+                bg: 'bg-yellow-100 dark:bg-gray-900',
+                border: 'border-yellow-200 dark:border-yellow-900/40',
+            },
         };
 
         function showToast(message, type = 'success') {
-
-            const container =
-                document.getElementById('toast-container');
+            const container = document.getElementById('toast-container');
+            const config = TOAST_CONFIG[type] ?? TOAST_CONFIG.success;
+            const duration = 3500;
 
             const toast = document.createElement('div');
-
             toast.className = `
-                flex items-center gap-3
-                px-4 py-3 rounded-2xl
-                shadow-lg border
-                backdrop-blur-md
-                bg-white dark:bg-gray-900
-                border-gray-200 dark:border-gray-800
-                animate-[fadeIn_.3s_ease]
-            `;
+        relative overflow-hidden
+        flex items-center gap-3
+        min-w-[280px] max-w-[360px]
+        px-4 py-3 rounded-2xl
+        border shadow-xl
+        ${config.bg} ${config.border}
+        translate-x-0 opacity-100
+        transition-all duration-300
+    `;
 
             toast.innerHTML = `
-                <div class="text-lg">
-                    <i class="bi ${TOAST_ICONS[type]}"></i>
-                </div>
+        {{-- Icon --}}
+        <i class="bi ${config.icon} ${config.color} text-lg shrink-0"></i>
 
-                <span class="text-sm font-medium flex-1">
-                    ${message}
-                </span>
+        {{-- Message --}}
+        <span class="text-sm font-medium text-gray-800 dark:text-white flex-1">
+            ${message}
+        </span>
 
-                <button class="text-gray-400 hover:text-red-500 transition">
-                    <i class="bi bi-x-lg"></i>
-                </button>
-            `;
+        {{-- Close button --}}
+        <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300
+                       transition shrink-0">
+            <i class="bi bi-x-lg text-xs"></i>
+        </button>
+
+        {{-- Timer bar --}}
+        <div class="absolute bottom-0 left-0 right-0 h-0.5 ${config.timer}
+                    rounded-full origin-left timer-bar"
+             style="animation: shrink ${duration}ms linear forwards;">
+        </div>
+    `;
 
             toast.querySelector('button')
                 .addEventListener('click', () => dismissToast(toast));
 
             container.appendChild(toast);
 
-            setTimeout(() => dismissToast(toast), 3500);
-
+            setTimeout(() => dismissToast(toast), duration);
         }
 
         function dismissToast(toast) {
-
-            toast.classList.add('opacity-0', 'translate-x-5');
-
+            toast.classList.add('opacity-0', '-translate-y-2');
             setTimeout(() => toast.remove(), 300);
-
         }
 
         document.addEventListener('DOMContentLoaded', () => {
