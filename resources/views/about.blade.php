@@ -10,7 +10,7 @@
         {{-- ── HERO ── --}}
         <div
             class="relative overflow-hidden rounded-2xl
-               bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700
+               bg-gradient-to-br from-indigo-400 via-violet-500 to-purple-600
                p-8 sm:p-12 text-white shadow-xl">
 
             {{-- Background blobs --}}
@@ -224,7 +224,7 @@
 
                 <div
                     class="w-20 h-20 rounded-2xl flex-shrink-0
-                           bg-gradient-to-br from-indigo-500 to-violet-600
+                           bg-gradient-to-br from-indigo-400 to-violet-500
                            text-white flex items-center justify-center
                            text-3xl font-black shadow-lg">
                     M

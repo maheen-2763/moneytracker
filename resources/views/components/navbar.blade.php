@@ -163,8 +163,10 @@
                            text-sm text-gray-700 dark:text-gray-300
                            hover:bg-gray-50 dark:hover:bg-gray-800 transition">
 
-                    <i class="bi bi-info-circle text-lg"></i> About App
+                    <i class="bi bi-info-circle text-sm"></i> About App
                 </a>
+
+                <div class="border-t border-gray-100 dark:border-gray-600"></div>
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
