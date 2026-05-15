@@ -372,140 +372,140 @@
                 </div>
 
             </div>
+        @endsection
 
-            @push('scripts')
-                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                <script>
-                    const ctx = document.getElementById('monthlyChart');
-                    const categoryCtx = document.getElementById('categoryChart');
 
-                    // Monthly Trend Chart
-                    const monthlyData = @json($monthlyTrend);
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: monthlyData.map(d => d.month),
-                            datasets: [{
-                                label: 'Total Spent (₹)',
-                                data: monthlyData.map(d => d.total),
-                                borderColor: '#4f46e5',
-                                backgroundColor: 'rgba(79, 70, 229, 0.06)',
-                                borderWidth: 2.5,
-                                pointBackgroundColor: '#4f46e5',
-                                pointBorderColor: '#fff',
-                                pointBorderWidth: 2,
-                                pointRadius: 4,
-                                pointHoverRadius: 6,
-                                fill: true,
-                                tension: 0.4,
-                            }]
+        @push('scripts')
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                const ctx = document.getElementById('monthlyChart');
+                const categoryCtx = document.getElementById('categoryChart');
+
+                // Monthly Trend Chart
+                const monthlyData = @json($monthlyTrend);
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: monthlyData.map(d => d.month),
+                        datasets: [{
+                            label: 'Total Spent (₹)',
+                            data: monthlyData.map(d => d.total),
+                            borderColor: '#4f46e5',
+                            backgroundColor: 'rgba(79, 70, 229, 0.06)',
+                            borderWidth: 2.5,
+                            pointBackgroundColor: '#4f46e5',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            fill: true,
+                            tension: 0.4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                padding: 12,
+                                borderRadius: 8,
+                                titleFont: {
+                                    size: 13,
+                                    weight: 'bold'
+                                },
+                                bodyFont: {
+                                    size: 12
+                                },
+                                callbacks: {
+                                    label: ctx => '₹' + Number(ctx.raw).toLocaleString('en-IN')
+                                }
+                            }
                         },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            plugins: {
-                                legend: {
+                        scales: {
+                            x: {
+                                grid: {
                                     display: false
                                 },
-                                tooltip: {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                                    padding: 12,
-                                    borderRadius: 8,
-                                    titleFont: {
-                                        size: 13,
-                                        weight: 'bold'
-                                    },
-                                    bodyFont: {
-                                        size: 12
-                                    },
-                                    callbacks: {
-                                        label: ctx => '₹' + Number(ctx.raw).toLocaleString('en-IN')
+                                ticks: {
+                                    color: '#9ca3af',
+                                    font: {
+                                        size: 11,
+                                        weight: '500'
                                     }
                                 }
                             },
-                            scales: {
-                                x: {
-                                    grid: {
-                                        display: false
-                                    },
-                                    ticks: {
-                                        color: '#9ca3af',
-                                        font: {
-                                            size: 11,
-                                            weight: '500'
-                                        }
-                                    }
+                            y: {
+                                grid: {
+                                    color: '#f3f4f6',
+                                    drawBorder: false
                                 },
-                                y: {
-                                    grid: {
-                                        color: '#f3f4f6',
-                                        drawBorder: false
+                                ticks: {
+                                    color: '#9ca3af',
+                                    font: {
+                                        size: 11,
+                                        weight: '500'
                                     },
-                                    ticks: {
-                                        color: '#9ca3af',
-                                        font: {
-                                            size: 11,
-                                            weight: '500'
-                                        },
-                                        callback: val => '₹' + Number(val).toLocaleString('en-IN')
-                                    }
+                                    callback: val => '₹' + Number(val).toLocaleString('en-IN')
                                 }
                             }
                         }
-                    });
+                    }
+                });
 
-                    // Category Doughnut Chart
-                    const categoryData = @json($byCategory);
-                    const categoryColors = {
-                        food: '#f59e0b',
-                        travel: '#3b82f6',
-                        health: '#10b981',
-                        office: '#8b5cf6',
-                        other: '#6b7280',
-                    };
+                // Category Doughnut Chart
+                const categoryData = @json($byCategory);
+                const categoryColors = {
+                    food: '#f59e0b',
+                    travel: '#3b82f6',
+                    health: '#10b981',
+                    office: '#8b5cf6',
+                    other: '#6b7280',
+                };
 
-                    new Chart(categoryCtx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: categoryData.map(d => d.category.charAt(0).toUpperCase() + d.category.slice(1)),
-                            datasets: [{
-                                data: categoryData.map(d => d.total),
-                                backgroundColor: categoryData.map(d => categoryColors[d.category] ?? '#6b7280'),
-                                borderWidth: 2,
-                                borderColor: '#fff',
-                                hoverOffset: 8,
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            cutout: '65%',
-                            plugins: {
-                                legend: {
-                                    position: 'bottom',
-                                    labels: {
-                                        color: '#6b7280',
-                                        font: {
-                                            size: 11,
-                                            weight: '600'
-                                        },
-                                        padding: 16,
-                                        usePointStyle: true,
-                                        pointStyleWidth: 6,
-                                    }
-                                },
-                                tooltip: {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                                    padding: 12,
-                                    borderRadius: 8,
-                                    callbacks: {
-                                        label: ctx => ' ₹' + Number(ctx.raw).toLocaleString('en-IN')
-                                    }
+                new Chart(categoryCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: categoryData.map(d => d.category.charAt(0).toUpperCase() + d.category.slice(1)),
+                        datasets: [{
+                            data: categoryData.map(d => d.total),
+                            backgroundColor: categoryData.map(d => categoryColors[d.category] ?? '#6b7280'),
+                            borderWidth: 2,
+                            borderColor: '#fff',
+                            hoverOffset: 8,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '65%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: '#6b7280',
+                                    font: {
+                                        size: 11,
+                                        weight: '600'
+                                    },
+                                    padding: 16,
+                                    usePointStyle: true,
+                                    pointStyleWidth: 6,
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                padding: 12,
+                                borderRadius: 8,
+                                callbacks: {
+                                    label: ctx => ' ₹' + Number(ctx.raw).toLocaleString('en-IN')
                                 }
                             }
                         }
-                    });
-                </script>
-            @endpush
-
-        @endsection
+                    }
+                });
+            </script>
+        @endpush

@@ -24,12 +24,11 @@
         <div class="absolute w-72 h-72 rounded-full bg-white/[0.05] -bottom-20 -right-20"></div>
 
         {{-- Brand --}}
+
+
         <div class="z-10 w-full max-w-xs">
-            <h1 class="text-3xl font-extrabold text-white tracking-tight mb-1">
-                <i class="bi bi-wallet2 mr-2"></i>
-                Money<span class="text-indigo-300">Tracker</span>
-            </h1>
-            <p class="text-indigo-300 text-sm mb-10">
+            <x-app-logo size="lg" :dark="true" />
+            <p class="text-indigo-300 text-sm mb-4 mt-2">
                 Your personal finance companion
             </p>
 
@@ -62,11 +61,12 @@
                     Money<span class="text-indigo-500">Tracker</span>
                 </h1>
             </div>
+            <div class="mb-3 ml-14">
+                <x-app-logo size="lg" :dark="false" />
+            </div>
 
-            <h2 class="text-2xl font-extrabold text-gray-900 tracking-tight">
-                Welcome back 👋
-            </h2>
-            <p class="text-sm text-gray-500 mt-1 mb-6">
+
+            <p class="text-sm text-gray-500 mt-1 mb-5">
                 Sign in to your MoneyTracker account
             </p>
 

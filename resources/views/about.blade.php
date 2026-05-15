@@ -20,15 +20,7 @@
             </div>
 
             <div class="relative z-10">
-                <div
-                    class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm
-                           flex items-center justify-center text-3xl mb-6">
-                    💸
-                </div>
-
-                <h1 class="text-4xl sm:text-5xl font-black tracking-tight leading-tight">
-                    Expense Tracker
-                </h1>
+                <x-app-logo size="md" :dark="true" />
 
                 <p class="mt-4 text-indigo-100 max-w-2xl leading-relaxed text-base sm:text-lg">
                     A modern personal finance management platform designed to help

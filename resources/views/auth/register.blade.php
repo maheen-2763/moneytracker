@@ -25,15 +25,14 @@
 
         {{-- Brand --}}
         <div class="z-10 w-full max-w-xs">
-            <h1 class="text-3xl font-extrabold text-white tracking-tight mb-1">
-                <i class="bi bi-wallet2 mr-2"></i>
-                Money<span class="text-indigo-300">Tracker</span>
-            </h1>
-            <p class="text-indigo-300 text-sm mb-10">
+            <x-app-logo size="lg" :dark="true" />
+            <p class="text-indigo-300 text-sm mb-4 mt-2">
                 Start tracking in 30 seconds
             </p>
 
             {{-- Features --}}
+
+
             <ul class="space-y-0 divide-y divide-white/10">
                 @foreach ([['bi-check-lg', 'Free forever — no credit card'], ['bi-shield-check', 'Your data stays private'], ['bi-lightning-charge', 'Set up in under a minute'], ['bi-graph-up-arrow', 'Instant spending insights'], ['bi-phone', 'Works on all devices']] as [$icon, $text])
                     <li class="flex items-center gap-3 py-3 text-sm text-indigo-100">
@@ -60,6 +59,9 @@
                     <i class="bi bi-wallet2 mr-1 text-indigo-500"></i>
                     Money<span class="text-indigo-500">Tracker</span>
                 </h1>
+            </div>
+            <div class="mb-3 ml-14">
+                <x-app-logo size="lg" :dark="false" />
             </div>
 
             <h2 class="text-2xl font-extrabold text-gray-900 tracking-tight">

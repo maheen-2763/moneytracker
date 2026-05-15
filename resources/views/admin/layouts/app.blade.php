@@ -1,14 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{-- SEO Meta Tags --}}
+    <meta name="description"
+        content="MoneyTracker — Track expenses, set budgets, and get alerts. A production-grade personal finance app built with Laravel 11.">
+    <meta name="keywords" content="money tracker, expense tracker, budget, personal finance, Laravel">
+    <meta name="author" content="Mohammed Maheen Afzal">
+    <meta name="robots" content="index, follow">
+
+    {{-- Open Graph (for social sharing) --}}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MoneyTracker — Your finances, finally under control.">
+    <meta property="og:description" content="Track expenses, set budgets, get alerts — all in one beautiful dashboard.">
+    <meta property="og:url" content="{{ url()->current() }}">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MoneyTracker">
+    <meta name="twitter:description" content="Track expenses, set budgets, get alerts.">
+
+    {{-- Favicon --}}
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+
+    {{-- Theme color (mobile browser bar) --}}
+    <meta name="theme-color" content="#6366f1">
     <title>Admin — @yield('title', 'Dashboard')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @stack('styles')
+
     <script>
         if (
             localStorage.getItem('theme') === 'dark' ||
@@ -18,7 +45,7 @@
             document.documentElement.classList.add('dark');
         }
     </script>
-    @stack('styles')
+
 </head>
 
 <body class="font-sans bg-gray-50 dark:bg-gray-950">
@@ -33,10 +60,10 @@
             {{-- Brand --}}
             <div class="px-6 py-5 border-b border-indigo-900 dark:border-slate-800">
                 <div class="flex items-center gap-2 text-white font-bold text-lg tracking-tight">
-                    <i class="bi bi-shield-check"></i>
-                    <span>Money<span class="text-indigo-300">Tracker</span></span>
+
+                    <x-app-logo size="md" :dark="true" />
                 </div>
-                <p class="text-xs text-indigo-300 mt-1">Admin Panel</p>
+                <p class="text-xs text-indigo-300 mt-3">Admin Panel</p>
             </div>
 
             {{-- Navigation --}}
@@ -113,7 +140,15 @@
                     <h2 class="text-lg font-bold text-gray-900 dark:text-white">
                         @yield('title', 'Dashboard')
                     </h2>
+
                     <div class="flex items-center gap-4">
+                        <button id="darkToggle"
+                            class="w-9 h-9 flex items-center justify-center
+                   rounded-lg text-gray-500
+                   hover:bg-gray-100 dark:hover:bg-gray-800
+                   transition">
+                            <i class="bi bi-moon-stars text-lg" id="darkIcon"></i>
+                        </button>
                         <span
                             class="px-3 py-1 rounded-full text-xs font-bold bg-red-100 dark:bg-red-900/30
                                    text-red-700 dark:text-red-300">
@@ -166,6 +201,33 @@
 
     @stack('scripts')
 
+    <script>
+        /* ── Dark Mode ── */
+        const darkToggle = document.getElementById('darkToggle');
+        const darkIcon = document.getElementById('darkIcon');
+
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                darkIcon?.classList.remove('bi-moon-stars');
+                darkIcon?.classList.add('bi-sun');
+            } else {
+                document.documentElement.classList.remove('dark');
+                darkIcon?.classList.remove('bi-sun');
+                darkIcon?.classList.add('bi-moon-stars');
+            }
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        applyTheme(savedTheme);
+
+        darkToggle?.addEventListener('click', () => {
+            const nextTheme = document.documentElement.classList.contains('dark') ?
+                'light' : 'dark';
+            localStorage.setItem('theme', nextTheme);
+            applyTheme(nextTheme);
+        });
+    </script>
 </body>
 
 </html>

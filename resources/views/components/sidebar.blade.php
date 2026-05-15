@@ -11,10 +11,7 @@
     <div class="h-16 px-5 flex items-center justify-between
                 border-b border-gray-800 shrink-0">
 
-        <a href="{{ route('dashboard') }}" class="flex items-center gap-2 text-white font-bold text-lg no-underline">
-            <i class="bi bi-wallet2 text-green-400"></i>
-            Money<span class="text-indigo-400">Tracker</span>
-        </a>
+        <x-app-logo size="md" :dark="true" />
 
         {{-- Mobile Close --}}
         <button id="sidebarClose"

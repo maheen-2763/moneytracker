@@ -5,6 +5,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- SEO Meta Tags --}}
+    <meta name="description"
+        content="MoneyTracker — Track expenses, set budgets, and get alerts. A production-grade personal finance app built with Laravel 11.">
+    <meta name="keywords" content="money tracker, expense tracker, budget, personal finance, Laravel">
+    <meta name="author" content="Mohammed Maheen Afzal">
+    <meta name="robots" content="index, follow">
+
+    {{-- Open Graph (for social sharing) --}}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MoneyTracker — Your finances, finally under control.">
+    <meta property="og:description" content="Track expenses, set budgets, get alerts — all in one beautiful dashboard.">
+    <meta property="og:url" content="{{ url()->current() }}">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MoneyTracker">
+    <meta name="twitter:description" content="Track expenses, set budgets, get alerts.">
+
+    {{-- Favicon --}}
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+
+    {{-- Theme color (mobile browser bar) --}}
+    <meta name="theme-color" content="#6366f1">
 
     <title>@yield('title', config('app.name', 'Laravel'))</title>
 
@@ -93,8 +117,8 @@
 
     <script>
         /* ─────────────────────────────────────
-                                                                                                       Sidebar
-                                                                                                    ───────────────────────────────────── */
+                                                                                                                   Sidebar
+                                                                                                                ───────────────────────────────────── */
 
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebarOverlay');

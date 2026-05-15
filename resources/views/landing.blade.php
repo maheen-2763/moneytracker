@@ -4,6 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {{-- SEO Meta Tags --}}
+    <meta name="description"
+        content="MoneyTracker — Track expenses, set budgets, and get alerts. A production-grade personal finance app built with Laravel 11.">
+    <meta name="keywords" content="money tracker, expense tracker, budget, personal finance, Laravel">
+    <meta name="author" content="Mohammed Maheen Afzal">
+    <meta name="robots" content="index, follow">
+
+    {{-- Open Graph (for social sharing) --}}
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MoneyTracker — Your finances, finally under control.">
+    <meta property="og:description" content="Track expenses, set budgets, get alerts — all in one beautiful dashboard.">
+    <meta property="og:url" content="{{ url()->current() }}">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MoneyTracker">
+    <meta name="twitter:description" content="Track expenses, set budgets, get alerts.">
+
+    {{-- Favicon --}}
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'><x-app-logo/></text></svg>">
+
+    {{-- Theme color (mobile browser bar) --}}
+    <meta name="theme-color" content="#6366f1">
     <title>MoneyTracker — Your finances, finally under control.</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link
@@ -108,17 +132,7 @@
                 flex items-center justify-between
                 transition-all duration-300">
 
-        <a href="/" class="flex items-center gap-2 no-underline">
-            <div
-                class="w-8 h-8 rounded-xl
-                        bg-gradient-to-br from-indigo-500 to-violet-500
-                        flex items-center justify-center text-base">
-                💰
-            </div>
-            <span class="font-extrabold text-white tracking-tight">
-                Money<span class="text-indigo-400">Tracker</span>
-            </span>
-        </a>
+        <x-app-logo size="md" :dark="true" />
 
         <ul class="hidden md:flex items-center gap-8 list-none">
             @foreach (['features' => 'Features', 'stack' => 'Stack', 'api' => 'API', 'tests' => 'Tests'] as $id => $label)
@@ -355,9 +369,9 @@
                     <div class="w-2 h-2 rounded-full bg-green-500"></div>
                     <span class="text-slate-700 text-[10px] ml-1">ExpenseController.php</span>
                 </div>
-                <div><span class="text-indigo-400">public function</span> <span class="text-blue-300">store</span><span
-                        class="text-slate-200">(StoreExpenseRequest </span><span
-                        class="text-yellow-400">$request</span><span class="text-slate-200">)</span></div>
+                <div><span class="text-indigo-400">public function</span> <span
+                        class="text-blue-300">store</span><span class="text-slate-200">(StoreExpenseRequest
+                    </span><span class="text-yellow-400">$request</span><span class="text-slate-200">)</span></div>
                 <div><span class="text-slate-200">{</span></div>
                 <div class="pl-6"><span class="text-slate-600">// Validated, authorized, service layer</span></div>
                 <div class="pl-6"><span class="text-yellow-400">$expense</span> <span class="text-slate-200">=
