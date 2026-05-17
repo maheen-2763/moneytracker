@@ -3,88 +3,67 @@
 @section('content')
     <div class="email-title">Welcome, {{ $user->name }}! 👋</div>
     <div class="email-subtitle">
-        Your MoneyTracker account is ready. Here's what you can
-        do to get started:
+        Your MoneyTracker account is ready. Start taking control
+        of your finances today — it's free!
     </div>
 
     <div class="alert-box success">
         <span class="alert-icon">✅</span>
         <div class="alert-text">
             <strong>Account Created Successfully</strong>
-            You're all set! Start tracking your expenses today.
+            You're all set! Your account is ready to use.
         </div>
     </div>
 
-    {{-- Getting started steps --}}
+    {{-- Getting Started Steps --}}
     <div style="margin: 1.5rem 0;">
 
-        <div style="display:flex; gap:.75rem; margin-bottom:1rem;
-                align-items:flex-start;">
-            <div
-                style="width:28px; height:28px; background:#eef2ff;
-                    border-radius:50%; display:flex; align-items:center;
-                    justify-content:center; font-weight:800;
-                    color:#6366f1; font-size:.82rem; flex-shrink:0;">
-                1
-            </div>
+        <div class="step">
+            <div class="step-num">1</div>
             <div>
-                <div
-                    style="font-weight:700; font-size:.875rem;
-                        color:#0f172a; margin-bottom:.15rem;">
-                    Add your first expense
-                </div>
-                <div style="font-size:.78rem; color:#64748b;">
-                    Track where your money goes by category
-                </div>
+                <div class="step-title">Add your first expense</div>
+                <div class="step-desc">Track where your money goes by category — food, travel, health and more.</div>
             </div>
         </div>
 
-        <div style="display:flex; gap:.75rem; margin-bottom:1rem;
-                align-items:flex-start;">
-            <div
-                style="width:28px; height:28px; background:#eef2ff;
-                    border-radius:50%; display:flex; align-items:center;
-                    justify-content:center; font-weight:800;
-                    color:#6366f1; font-size:.82rem; flex-shrink:0;">
-                2
-            </div>
+        <div class="step">
+            <div class="step-num">2</div>
             <div>
-                <div
-                    style="font-weight:700; font-size:.875rem;
-                        color:#0f172a; margin-bottom:.15rem;">
-                    Set monthly budgets
-                </div>
-                <div style="font-size:.78rem; color:#64748b;">
-                    Get alerts before you overspend
-                </div>
+                <div class="step-title">Set monthly budgets</div>
+                <div class="step-desc">Get alerts before you overspend so you always stay on track.</div>
             </div>
         </div>
 
-        <div style="display:flex; gap:.75rem; align-items:flex-start;">
-            <div
-                style="width:28px; height:28px; background:#eef2ff;
-                    border-radius:50%; display:flex; align-items:center;
-                    justify-content:center; font-weight:800;
-                    color:#6366f1; font-size:.82rem; flex-shrink:0;">
-                3
-            </div>
+        <div class="step">
+            <div class="step-num">3</div>
             <div>
-                <div
-                    style="font-weight:700; font-size:.875rem;
-                        color:#0f172a; margin-bottom:.15rem;">
-                    Enable Two-Factor Auth
-                </div>
-                <div style="font-size:.78rem; color:#64748b;">
-                    Keep your financial data secure
-                </div>
+                <div class="step-title">Enable Two-Factor Auth</div>
+                <div class="step-desc">Keep your financial data secure with Google Authenticator.</div>
             </div>
         </div>
+
+        <div class="step">
+            <div class="step-num">4</div>
+            <div>
+                <div class="step-title">Export your reports</div>
+                <div class="step-desc">Download your expenses as PDF or Excel anytime.</div>
+            </div>
+        </div>
+
     </div>
 
     <hr class="divider">
-    <div style="text-align:center;">
+
+    {{-- CTA --}}
+    <div style="text-align: center;">
         <a href="{{ url('/dashboard') }}" class="email-btn">
             Go to Dashboard →
+        </a>
+    </div>
+
+    <div style="text-align: center; margin-top: 16px;">
+        <a href="{{ url('/profile/security') }}" class="email-btn-secondary">
+            🔒 Enable 2FA
         </a>
     </div>
 @endsection

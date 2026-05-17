@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Mail\BudgetExceededMail;
 use App\Models\Budget;
 use Illuminate\Notifications\Notification;
 
@@ -11,7 +12,7 @@ class BudgetExceeded extends Notification
 
     public function via($notifiable): array
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     public function toDatabase($notifiable): array
@@ -25,5 +26,14 @@ class BudgetExceeded extends Notification
                 . '₹' . number_format($this->spent, 0)
                 . ' spent of ₹' . number_format((float) $this->budget->amount, 0) . ' limit.',
         ];
+    }
+
+    public function toMail($notifiable): BudgetExceededMail
+    {
+        return (new BudgetExceededMail(
+            $notifiable,
+            $this->budget,
+            $this->spent
+        ))->to($notifiable->email);
     }
 }

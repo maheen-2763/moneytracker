@@ -51,8 +51,9 @@ class ExpenseController extends Controller
 
         $this->checkBudget($data['category']);
 
+        sleep(1); // Simulate processing delay for better UX with toast notifications
         Mail::to($request->user()->email)
-            ->send(new ExpenseReceiptMail($request->user(), $expense));
+            ->queue(new ExpenseReceiptMail($request->user(), $expense));
 
         return redirect()->route('expenses.index')
             ->with('toast_success', 'Expense added successfully!');
@@ -134,7 +135,7 @@ class ExpenseController extends Controller
                 $user->notify(new BudgetExceeded($budget, $spent));
 
                 Mail::to($user->email)
-                    ->send(new BudgetExceededMail($user, $budget, $spent));
+                    ->queue(new BudgetExceededMail($user, $budget, $spent));
             }
         }
     }

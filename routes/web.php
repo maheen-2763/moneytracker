@@ -43,6 +43,10 @@ Route::middleware(['auth', 'verified', 'throttle:60,1'])->group(function () {
     Route::put('/profile',              [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password',     [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::delete('/profile/avatar',    [ProfileController::class, 'removeAvatar'])->name('profile.avatar.remove');
+    Route::get('/about', function () {
+        return view('about');
+    })->name('about');
+
 
     // Export routes
     Route::get('/expenses/export/excel', [ExportController::class, 'excel'])->name('expenses.export.excel');
@@ -73,11 +77,11 @@ Route::middleware(['auth', 'verified', 'throttle:60,1'])->group(function () {
     })->name('logout');
 });
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
 
-
+Route::get('/preview-email', function () {
+    $user = Auth::user();
+    return view('preview-email');
+});
 
 
 

@@ -21,7 +21,7 @@ class WeeklyReportMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '📊 Your Weekly MoneyTracker Report — '
+            subject: 'Your Weekly MoneyTracker Report — '
                 . now()->startOfWeek()->format('d M')
                 . ' to '
                 . now()->endOfWeek()->format('d M Y'),
@@ -32,6 +32,10 @@ class WeeklyReportMail extends Mailable
     {
         return new Content(
             view: 'emails.weekly-report',
+            with: [
+                'user'   => $this->user,
+                'data'   => $this->data,
+            ],
         );
     }
 }

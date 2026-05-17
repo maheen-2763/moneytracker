@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoneyTracker API Docs</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
@@ -598,7 +599,7 @@
                     <span class="endpoint-path">/api/v1/register</span>
                     <span class="endpoint-desc">Create a new account</span>
                     <span class="endpoint-auth public">Public</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <h3>Request Body</h3>
@@ -674,7 +675,7 @@
                     <span class="endpoint-path">/api/v1/login</span>
                     <span class="endpoint-desc">Get authentication token</span>
                     <span class="endpoint-auth public">Public</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <h3>Request Body</h3>
@@ -735,7 +736,7 @@
                     <span class="endpoint-path">/api/v1/logout</span>
                     <span class="endpoint-desc">Revoke current token</span>
                     <span class="endpoint-auth">🔒 Auth Required</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <h3>Example Request</h3>
@@ -762,7 +763,7 @@
                     <span class="endpoint-path">/api/v1/me</span>
                     <span class="endpoint-desc">Get authenticated user</span>
                     <span class="endpoint-auth">🔒 Auth Required</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <h3>Response <span style="color:#4ade80; font-size:.75rem;">200 OK</span></h3>
@@ -795,7 +796,7 @@
                     <span class="endpoint-path">/api/v1/expenses</span>
                     <span class="endpoint-desc">Paginated list with filters</span>
                     <span class="endpoint-auth">🔒 Auth Required</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <h3>Query Parameters</h3>
@@ -872,7 +873,7 @@
                     <span class="endpoint-path">/api/v1/expenses</span>
                     <span class="endpoint-desc">Add a new expense</span>
                     <span class="endpoint-auth">🔒 Auth Required</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <h3>Request Body</h3>
@@ -945,6 +946,40 @@
                 </div>
             </div>
         </section>
+        <section class="docs-section" id="expenses-show">
+            <h2>🔍 Show Expense</h2>
+            <div class="endpoint-card">
+                <div class="endpoint-header" onclick="toggle(this)">
+                    <span class="endpoint-method method-GET">GET</span>
+                    <span class="endpoint-path">/api/v1/expenses/{id}</span>
+                    <span class="endpoint-desc">Get a single expense</span>
+                    <span class="endpoint-auth">🔒 Auth Required</span>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
+                </div>
+                <div class="endpoint-body">
+                    <h3>Example Request</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        curl {{ url('/api/v1/expenses/42') }} \
+                        -H "Authorization: Bearer YOUR_TOKEN"
+                    </div>
+                    <h3>Response <span style="color:#4ade80; font-size:.75rem;">200 OK</span></h3>
+                    <div class="code-block">
+                        {
+                        <span class="key">"data"</span>: {
+                        <span class="key">"id"</span>: <span class="num">42</span>,
+                        <span class="key">"title"</span>: <span class="str">"Team Lunch"</span>,
+                        <span class="key">"amount"</span>: <span class="num">45.50</span>,
+                        <span class="key">"category"</span>: <span class="str">"food"</span>,
+                        <span class="key">"expense_date"</span>: <span class="str">"2026-05-06"</span>,
+                        <span class="key">"description"</span>: <span class="str">"Office team lunch"</span>,
+                        <span class="key">"created_at"</span>: <span class="str">"2026-05-06 10:30:00"</span>
+                        }
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="docs-section" id="expenses-update">
             <h2>✏️ Update Expense</h2>
@@ -954,7 +989,7 @@
                     <span class="endpoint-path">/api/v1/expenses/{id}</span>
                     <span class="endpoint-desc">Update an expense</span>
                     <span class="endpoint-auth">🔒 Auth Required</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <div class="docs-alert warning">
@@ -985,7 +1020,7 @@
                     <span class="endpoint-path">/api/v1/expenses/{id}</span>
                     <span class="endpoint-desc">Soft delete an expense</span>
                     <span class="endpoint-auth">🔒 Auth Required</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <h3>Example Request</h3>
@@ -1015,7 +1050,7 @@
                     <span class="endpoint-path">/api/v1/budgets</span>
                     <span class="endpoint-desc">Get all budgets with progress</span>
                     <span class="endpoint-auth">🔒 Auth Required</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <h3>Response <span style="color:#4ade80; font-size:.75rem;">200 OK</span></h3>
@@ -1046,7 +1081,7 @@
                     <span class="endpoint-path">/api/v1/budgets</span>
                     <span class="endpoint-desc">Set monthly budget limit</span>
                     <span class="endpoint-auth">🔒 Auth Required</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <div class="docs-alert info">
@@ -1081,6 +1116,59 @@
                 </div>
             </div>
         </section>
+        <section class="docs-section" id="budgets-update">
+            <h2>✏️ Update Budget</h2>
+            <div class="endpoint-card">
+                <div class="endpoint-header" onclick="toggle(this)">
+                    <span class="endpoint-method method-PUT">PUT</span>
+                    <span class="endpoint-path">/api/v1/budgets/{id}</span>
+                    <span class="endpoint-desc">Update budget limit</span>
+                    <span class="endpoint-auth">🔒 Auth Required</span>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
+                </div>
+                <div class="endpoint-body">
+                    <h3>Example Request</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        curl -X PUT {{ url('/api/v1/budgets/1') }} \
+                        -H "Authorization: Bearer YOUR_TOKEN" \
+                        -H "Content-Type: application/json" \
+                        -d '{ <span class="key">"amount"</span>: <span class="num">8000</span> }'
+                    </div>
+                    <h3>Response <span style="color:#4ade80; font-size:.75rem;">200 OK</span></h3>
+                    <div class="code-block">
+                        { <span class="key">"message"</span>: <span class="str">"Budget updated
+                            successfully."</span> }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="docs-section" id="budgets-delete">
+            <h2>🗑️ Delete Budget</h2>
+            <div class="endpoint-card">
+                <div class="endpoint-header" onclick="toggle(this)">
+                    <span class="endpoint-method method-DELETE">DELETE</span>
+                    <span class="endpoint-path">/api/v1/budgets/{id}</span>
+                    <span class="endpoint-desc">Remove a budget limit</span>
+                    <span class="endpoint-auth">🔒 Auth Required</span>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
+                </div>
+                <div class="endpoint-body">
+                    <h3>Example Request</h3>
+                    <div class="code-block">
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                        curl -X DELETE {{ url('/api/v1/budgets/1') }} \
+                        -H "Authorization: Bearer YOUR_TOKEN"
+                    </div>
+                    <h3>Response <span style="color:#4ade80; font-size:.75rem;">200 OK</span></h3>
+                    <div class="code-block">
+                        { <span class="key">"message"</span>: <span class="str">"Budget deleted
+                            successfully."</span> }
+                    </div>
+                </div>
+            </div>
+        </section>
 
         {{-- Dashboard --}}
         <section class="docs-section" id="dashboard">
@@ -1091,7 +1179,7 @@
                     <span class="endpoint-path">/api/v1/dashboard</span>
                     <span class="endpoint-desc">Financial summary & stats</span>
                     <span class="endpoint-auth">🔒 Auth Required</span>
-                    <i class="bi bi-chevron-down ms-2" style="color:#64748b; font-size:.75rem;"></i>
+                    <i class="bi bi-chevron-down ml-2" style="color:#64748b; font-size:.75rem;"></i>
                 </div>
                 <div class="endpoint-body">
                     <h3>Response <span style="color:#4ade80; font-size:.75rem;">200 OK</span></h3>

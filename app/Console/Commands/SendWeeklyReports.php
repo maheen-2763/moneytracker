@@ -60,7 +60,7 @@ class SendWeeklyReports extends Command
             ];
 
             Mail::to($user->email)
-                ->send(new WeeklyReportMail($user, $data));
+                ->queue(new WeeklyReportMail($user, $data));
 
             $this->info("✅ Report sent to {$user->email}");
         }

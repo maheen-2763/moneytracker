@@ -31,6 +31,11 @@ class BudgetExceededMail extends Mailable
     {
         return new Content(
             view: 'emails.budget-exceeded',
+            with: [
+                'user'   => $this->user,
+                'budget' => $this->budget,
+                'spent'  => $this->spent,
+            ],
         );
     }
 }

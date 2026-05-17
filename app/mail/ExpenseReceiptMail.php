@@ -30,6 +30,10 @@ class ExpenseReceiptMail extends Mailable
     {
         return new Content(
             view: 'emails.expense-receipt',
+            with: [
+                'user'    => $this->user,
+                'expense' => $this->expense,
+            ],
         );
     }
 }
