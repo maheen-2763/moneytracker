@@ -20,7 +20,8 @@
                         bg-gradient-to-br from-indigo-500 to-violet-500
                         flex items-center justify-center
                         text-4xl shadow-xl ring-4 ring-white dark:ring-gray-900 mb-4">
-                    📈
+
+                    <i class="bi bi-graph-up-arrow text-white"></i>
                 </div>
                 <h1 class="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
                     MoneyTracker
