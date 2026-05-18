@@ -19,33 +19,31 @@
 
 ### 📊 Dashboard
 
-![Dashboard](public/screenshots/Dashboard - Light Mode.png)
+![Dashboard](public/screenshots/Dashboard.png)
 
 ### 💸 Expenses
 
-![Expenses](public/screenshots/Expenses - Light Mode.png) | ![Expenses](public/screenshots/Expenses - Dark Mode.png)
+![Expenses](public/screenshots/Expenses.png)
 
 ### 🏷️ Budgets
 
-![Budgets](public/screenshots/Budgets - Light Mode.png) | ![Budgets](public/screenshots/Budgets - Dark Mode.png)
+![Budgets](public/screenshots/Budgets.png)
 
 ### 📈 Reports
 
-![Reports](public/screenshots/Reports - Light Mode.png) | ![Reports](public/screenshots/Reports - Dark Mode.png)
+![Reports](public/screenshots/Reports.png)
 
 ### 🛡️ Admin Panel
 
-![Admin](public/screenshots/Admin - Light Mode.png)
+![Admin](public/screenshots/Admin.png)
 
 ### 🌐 API Docs
 
-![API Docs](public/screenshots/API-Docs.png)
+![API Docs](public/screenshots/Api-docs.png)
 
 ### 🌙 Dark Mode
 
-## ![Dark Mode](public/screenshots/dark-mode.png)
-
-## ![Dark Mode](public/screenshots/Expenses - Dark Mode.png)
+## ![Dark Mode](public/screenshots/Dashboard-Dark-mode.png)
 
 ## ✨ Features
 
