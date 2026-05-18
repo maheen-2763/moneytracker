@@ -43,7 +43,7 @@
 
 ### 🌙 Dark Mode
 
-## ![Dark Mode](public/screenshots/Dashboard-Dark-mode.png)
+## ![Dark Mode](public/screenshots/Dashboard-DarkMode.png)
 
 ## ✨ Features
 
