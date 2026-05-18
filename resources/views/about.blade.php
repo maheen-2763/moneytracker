@@ -1,307 +1,216 @@
-{{-- resources/views/about.blade.php --}}
-
 @extends('layouts.app')
-@section('title', 'About App')
+@section('title', 'About')
 
 @section('content')
 
-    <div class="max-w-6xl mx-auto space-y-6">
+    <div class="max-w-4xl mx-auto space-y-4">
 
-        {{-- ── HERO ── --}}
+        {{-- ── Hero ── --}}
         <div
-            class="relative overflow-hidden rounded-2xl
-               bg-gradient-to-br from-indigo-400 via-violet-500 to-purple-600
-               p-8 sm:p-12 text-white shadow-xl">
+            class="rounded-2xl border border-gray-200 dark:border-gray-800
+                bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
-            {{-- Background blobs --}}
-            <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
-                <div class="absolute -top-16 -right-16 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-                <div class="absolute -bottom-16 -left-16 w-72 h-72 bg-white rounded-full blur-3xl"></div>
-            </div>
+            {{-- Banner --}}
+            <div class="h-32 bg-gradient-to-r from-indigo-600 to-violet-600"></div>
 
-            <div class="relative z-10">
-                <x-app-logo size="md" :dark="true" />
-
-                <p class="mt-4 text-indigo-100 max-w-2xl leading-relaxed text-base sm:text-lg">
-                    A modern personal finance management platform designed to help
-                    users track expenses, monitor budgets, analyze spending,
-                    and build smarter financial habits.
+            {{-- Profile --}}
+            <div class="px-8 pb-8 -mt-12">
+                <div
+                    class="w-24 h-24 rounded-2xl
+                        bg-gradient-to-br from-indigo-500 to-violet-500
+                        flex items-center justify-center
+                        text-4xl shadow-xl ring-4 ring-white dark:ring-gray-900 mb-4">
+                    📈
+                </div>
+                <h1 class="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+                    MoneyTracker
+                </h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    Personal Finance Management · Built with Laravel 11
                 </p>
 
-                <div class="mt-8 flex flex-wrap gap-3">
-                    @foreach (['Laravel', 'Tailwind CSS', 'MySQL', 'Dark Mode'] as $tag)
+                <div class="flex flex-wrap gap-2 mt-4">
+                    @foreach (['Laravel 11', 'PHP 8.2', 'MySQL', 'Tailwind CSS', 'PestPHP', 'Sanctum'] as $tech)
                         <span
-                            class="px-4 py-1.5 rounded-lg bg-white/15 backdrop-blur-sm
-                                   border border-white/20 text-sm font-medium">
-                            {{ $tag }}
+                            class="inline-flex items-center px-3 py-1 rounded-full
+                                 text-xs font-semibold
+                                 bg-indigo-50 dark:bg-indigo-900/20
+                                 text-indigo-600 dark:text-indigo-400
+                                 border border-indigo-200 dark:border-indigo-900/40">
+                            {{ $tech }}
                         </span>
                     @endforeach
                 </div>
             </div>
         </div>
 
-        {{-- ── PURPOSE + APP INFO ── --}}
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-            {{-- Purpose --}}
-            <div
-                class="lg:col-span-2 rounded-2xl border border-gray-200 dark:border-gray-800
-                    bg-white dark:bg-gray-900 shadow-sm p-8">
-
-                <div class="flex items-center gap-4 mb-6">
-                    <div
-                        class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-500/20
-                               flex items-center justify-center text-2xl flex-shrink-0">
-                        📌
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 dark:text-white">
-                            Purpose
-                        </h2>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                            Why this app exists
-                        </p>
-                    </div>
-                </div>
-
-                <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
-                    Expense Tracker was built to simplify financial management with
-                    an elegant and intuitive interface. Users can manage daily expenses,
-                    monitor income, control budgets, and understand spending patterns
-                    through beautiful dashboards and reports.
-                </p>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-                    <div
-                        class="rounded-xl border border-gray-200 dark:border-gray-800
-                               bg-gray-50 dark:bg-gray-950 p-5">
-                        <div class="text-3xl mb-3">📊</div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white text-sm">
-                            Analytics
-                        </h3>
-                        <p class="mt-1.5 text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Visualize financial habits using modern charts and reports.
-                        </p>
-                    </div>
-
-                    <div
-                        class="rounded-xl border border-gray-200 dark:border-gray-800
-                               bg-gray-50 dark:bg-gray-950 p-5">
-                        <div class="text-3xl mb-3">💰</div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white text-sm">
-                            Budget Control
-                        </h3>
-                        <p class="mt-1.5 text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Set monthly spending limits and stay financially disciplined.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-
-            {{-- App Info --}}
-            <div
-                class="rounded-2xl border border-gray-200 dark:border-gray-800
-                    bg-white dark:bg-gray-900 shadow-sm p-8">
-
-                <div class="flex items-center gap-4 mb-6">
-                    <div
-                        class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-500/20
-                               flex items-center justify-center text-2xl flex-shrink-0">
-                        🚀
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 dark:text-white">
-                            App Info
-                        </h2>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">
-                            Current release
-                        </p>
-                    </div>
-                </div>
-
-                <div class="divide-y divide-gray-100 dark:divide-gray-800 space-y-4">
-                    @foreach ([['label' => 'Version', 'value' => 'v1.0.0'], ['label' => 'Release', 'value' => 'Stable Build'], ['label' => 'UI Theme', 'value' => 'Modern Glass UI'], ['label' => 'Framework', 'value' => 'Laravel 11'], ['label' => 'CSS', 'value' => 'Tailwind CSS v3']] as $info)
-                        <div class="pt-4 first:pt-0">
-                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-widest font-semibold">
-                                {{ $info['label'] }}
-                            </p>
-                            <p class="mt-1 text-sm font-semibold text-gray-900 dark:text-white">
-                                {{ $info['value'] }}
-                            </p>
-                        </div>
-                    @endforeach
-                </div>
-
-            </div>
-
-        </div>
-
-        {{-- ── FEATURES ── --}}
+        {{-- ── About the App ── --}}
         <div
             class="rounded-2xl border border-gray-200 dark:border-gray-800
-                bg-white dark:bg-gray-900 shadow-sm p-8">
+                bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
 
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+            <div
+                class="flex items-center gap-2 px-6 py-4
+                    border-b border-gray-200 dark:border-gray-800">
+                <i class="bi bi-info-circle text-indigo-500"></i>
+                <h2 class="text-sm font-bold text-gray-900 dark:text-white">
+                    About the App
+                </h2>
+            </div>
+
+            <div class="p-8 space-y-5">
+                <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    MoneyTracker is a production-grade personal finance application
+                    built as a portfolio project to demonstrate full-stack Laravel
+                    development skills. It allows users to track expenses, set monthly
+                    budgets, receive alerts, and export detailed reports.
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    The application follows clean architecture principles with a
+                    service layer, policy-based authorization, form request validation,
+                    and a fully tested codebase with 57 PestPHP tests.
+                </p>
+            </div>
+        </div>
+
+        {{-- ── Features ── --}}
+        <div
+            class="rounded-2xl border border-gray-200 dark:border-gray-800
+                bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
+
+            <div
+                class="flex items-center gap-2 px-6 py-4
+                    border-b border-gray-200 dark:border-gray-800">
+                <i class="bi bi-stars text-indigo-500"></i>
+                <h2 class="text-sm font-bold text-gray-900 dark:text-white">
                     Features
                 </h2>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                    Everything included in the platform
-                </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                @php
-                    $features = [
-                        [
-                            'icon' => '💸',
-                            'title' => 'Expense Tracking',
-                            'desc' => 'Track daily expenses instantly with categories and notes.',
-                            'color' => 'bg-red-100 dark:bg-red-900/20',
-                        ],
-                        [
-                            'icon' => '📈',
-                            'title' => 'Analytics Dashboard',
-                            'desc' => 'Beautiful charts for spending patterns and trends.',
-                            'color' => 'bg-indigo-100 dark:bg-indigo-900/20',
-                        ],
-                        [
-                            'icon' => '🌙',
-                            'title' => 'Dark Mode',
-                            'desc' => 'Elegant dark theme that\'s easy on the eyes.',
-                            'color' => 'bg-slate-100 dark:bg-slate-800',
-                        ],
-                        [
-                            'icon' => '🏷️',
-                            'title' => 'Budget Limits',
-                            'desc' => 'Set and monitor monthly category budgets.',
-                            'color' => 'bg-amber-100 dark:bg-amber-900/20',
-                        ],
-                        [
-                            'icon' => '📱',
-                            'title' => 'Responsive Design',
-                            'desc' => 'Fully optimized for mobile, tablet, and desktop.',
-                            'color' => 'bg-sky-100 dark:bg-sky-900/20',
-                        ],
-                        [
-                            'icon' => '⚡',
-                            'title' => 'Fast Performance',
-                            'desc' => 'Optimized for a smooth, snappy user experience.',
-                            'color' => 'bg-emerald-100 dark:bg-emerald-900/20',
-                        ],
-                    ];
-                @endphp
-
-                @foreach ($features as $feature)
-                    <div
-                        class="rounded-xl border border-gray-200 dark:border-gray-800
-                               bg-gray-50 dark:bg-gray-950 p-5
-                               hover:-translate-y-1 hover:shadow-lg transition duration-200">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-px bg-gray-100 dark:bg-gray-800">
+                @foreach ([['bi-receipt', 'Expense Tracking', 'Full CRUD with soft delete, categories and receipt uploads'], ['bi-piggy-bank', 'Budget Limits', 'Monthly limits per category with progress bars and alerts'], ['bi-bell', 'Smart Alerts', 'Bell notifications and email alerts when budgets are exceeded'], ['bi-bar-chart-line', 'Reports & Export', 'Filter expenses and export to PDF or Excel in one click'], ['bi-shield-lock', '2FA Security', 'Google Authenticator support for account protection'], ['bi-grid-1x2', 'Admin Panel', 'Separate admin guard with full user management'], ['bi-code-slash', 'REST API', 'Sanctum-authenticated API with interactive documentation'], ['bi-envelope', 'Email Notifications', 'Welcome, expense receipt, budget alerts and weekly reports']] as [$icon, $title, $desc])
+                    <div class="flex items-start gap-4 p-6
+                            bg-white dark:bg-gray-900">
                         <div
-                            class="w-12 h-12 rounded-xl {{ $feature['color'] }}
-                                   flex items-center justify-center text-2xl mb-4">
-                            {{ $feature['icon'] }}
+                            class="w-9 h-9 rounded-xl shrink-0
+                                bg-indigo-50 dark:bg-indigo-900/20
+                                flex items-center justify-center">
+                            <i class="bi {{ $icon }} text-indigo-500"></i>
                         </div>
-                        <h3 class="font-semibold text-gray-900 dark:text-white text-sm">
-                            {{ $feature['title'] }}
-                        </h3>
-                        <p class="mt-1.5 text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
-                            {{ $feature['desc'] }}
-                        </p>
-                    </div>
-                @endforeach
-
-            </div>
-        </div>
-
-        {{-- ── DEVELOPER ── --}}
-        <div
-            class="rounded-2xl border border-gray-200 dark:border-gray-800
-                bg-white dark:bg-gray-900 shadow-sm p-8">
-
-            <div class="flex flex-col sm:flex-row sm:items-center gap-6">
-
-                <div
-                    class="w-20 h-20 rounded-2xl flex-shrink-0
-                           bg-gradient-to-br from-indigo-400 to-violet-500
-                           text-white flex items-center justify-center
-                           text-3xl font-black shadow-lg">
-                    M
-                </div>
-
-                <div class="flex-1">
-                    <h2 class="text-xl font-bold text-gray-900 dark:text-white">
-                        Developer
-                    </h2>
-                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl">
-                        Crafted with passion using Laravel and Tailwind CSS
-                        to create a clean, modern, and scalable finance platform.
-                    </p>
-
-                    <div class="mt-5 flex flex-wrap gap-3">
-                        <a href="https://github.com/maheen-2763/moneytracker" target="_blank" rel="noopener noreferrer"
-                            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
-                                  bg-gray-900 dark:bg-white text-white dark:text-gray-900
-                                  text-sm font-semibold hover:opacity-90 transition">
-                            <i class="bi bi-github"></i> GitHub
-                        </a>
-                        <a href="#"
-                            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
-                                  border border-gray-300 dark:border-gray-700
-                                  text-gray-700 dark:text-gray-300
-                                  text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
-                            <i class="bi bi-envelope"></i> Contact
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        {{-- ── CHANGELOG ── --}}
-        <div
-            class="rounded-2xl border border-gray-200 dark:border-gray-800
-                bg-white dark:bg-gray-900 shadow-sm p-8">
-
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">
-                Changelog
-            </h2>
-
-            <div class="space-y-6">
-                @foreach ([
-            [
-                'version' => 'v1.0.0',
-                'tag' => 'Latest',
-                'color' => 'bg-emerald-500',
-                'badge' => 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300',
-                'desc' => 'Initial stable release with expenses, budgets, dashboard analytics, 2FA security, dark mode, and responsive UI.',
-            ],
-        ] as $entry)
-                    <div class="flex gap-5">
-                        <div class="flex flex-col items-center">
-                            <div
-                                class="w-3.5 h-3.5 mt-1 rounded-full {{ $entry['color'] }} flex-shrink-0 ring-4 ring-indigo-100 dark:ring-indigo-900/30">
-                            </div>
-                            <div class="w-px flex-1 bg-gray-200 dark:bg-gray-800 mt-2"></div>
-                        </div>
-                        <div class="pb-6">
-                            <div class="flex items-center gap-3 flex-wrap">
-                                <h3 class="font-bold text-gray-900 dark:text-white">
-                                    {{ $entry['version'] }}
-                                </h3>
-                                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $entry['badge'] }}">
-                                    {{ $entry['tag'] }}
-                                </span>
-                            </div>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                                {{ $entry['desc'] }}
+                        <div>
+                            <p class="text-sm font-semibold text-gray-900 dark:text-white">
+                                {{ $title }}
+                            </p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 leading-relaxed">
+                                {{ $desc }}
                             </p>
                         </div>
                     </div>
                 @endforeach
             </div>
+        </div>
 
+        {{-- ── Tech Stack ── --}}
+        <div
+            class="rounded-2xl border border-gray-200 dark:border-gray-800
+                bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
+
+            <div
+                class="flex items-center gap-2 px-6 py-4
+                    border-b border-gray-200 dark:border-gray-800">
+                <i class="bi bi-cpu text-indigo-500"></i>
+                <h2 class="text-sm font-bold text-gray-900 dark:text-white">
+                    Tech Stack
+                </h2>
+            </div>
+
+            <div class="divide-y divide-gray-100 dark:divide-gray-800">
+                @foreach ([['Backend', 'Laravel 11, PHP 8.2, MySQL'], ['Frontend', 'Tailwind CSS, Bootstrap Icons, Chart.js, Vanilla JS'], ['Auth', 'Laravel Breeze, Sanctum, 2FA (TOTP)'], ['Testing', 'PestPHP — 57 tests, 117 assertions'], ['Email', 'Mailtrap (dev), Custom Blade templates, Queue'], ['Export', 'DomPDF (PDF), Laravel Excel (XLSX)'], ['Dev Tools', 'Laravel Herd, Vite, Git']] as [$label, $value])
+                    <div class="flex items-center justify-between px-6 py-4">
+                        <p
+                            class="text-xs font-bold uppercase tracking-widest
+                               text-gray-400 dark:text-gray-500">
+                            {{ $label }}
+                        </p>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white text-right">
+                            {{ $value }}
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- ── Stats ── --}}
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            @foreach ([['57', 'Tests Passing', 'text-green-500'], ['117', 'Assertions', 'text-indigo-500'], ['15+', 'Features', 'text-violet-500'], ['4', 'Email Types', 'text-amber-500']] as [$num, $label, $color])
+                <div
+                    class="rounded-2xl border border-gray-200 dark:border-gray-800
+                        bg-white dark:bg-gray-900 shadow-sm p-8 text-center
+                        hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+                    <p class="text-3xl font-extrabold {{ $color }}">
+                        {{ $num }}
+                    </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">
+                        {{ $label }}
+                    </p>
+                </div>
+            @endforeach
+        </div>
+
+        {{-- ── Developer ── --}}
+        <div
+            class="rounded-2xl border border-gray-200 dark:border-gray-800
+                bg-white dark:bg-gray-900 shadow-sm overflow-hidden">
+
+            <div
+                class="flex items-center gap-2 px-6 py-4
+                    border-b border-gray-200 dark:border-gray-800">
+                <i class="bi bi-person-badge text-indigo-500"></i>
+                <h2 class="text-sm font-bold text-gray-900 dark:text-white">
+                    Developer
+                </h2>
+            </div>
+
+            <div class="p-6 flex items-center gap-6 flex-wrap">
+                <div
+                    class="w-16 h-16 rounded-2xl
+                        bg-gradient-to-br from-indigo-500 to-violet-500
+                        flex items-center justify-center
+                        text-2xl font-extrabold text-white shrink-0">
+                    M
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-base font-bold text-gray-900 dark:text-white">
+                        Mohammed Maheen Afzal
+                    </h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
+                        Junior Full-Stack Laravel Developer
+                    </p>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <a href="https://github.com/maheen-2763/moneytracker" target="_blank"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg
+                              text-xs font-semibold
+                              bg-gray-900 dark:bg-gray-800
+                              text-white hover:bg-gray-700 transition">
+                            <i class="bi bi-github"></i>
+                            GitHub Repo
+                        </a>
+                        <a href="{{ route('api.docs') }}"
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg
+                              text-xs font-semibold
+                              bg-indigo-500 hover:bg-indigo-600
+                              text-white transition">
+                            <i class="bi bi-code-slash"></i>
+                            API Docs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ── Version ── --}}
+        <div class="text-center text-xs text-gray-400 dark:text-gray-600 pb-4">
+            MoneyTracker v1.0.0 · Built with ❤️ using Laravel 11 · MIT License
         </div>
 
     </div>

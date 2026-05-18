@@ -48,6 +48,8 @@ Route::middleware(['auth', 'verified', 'throttle:60,1'])->group(function () {
     })->name('about');
 
 
+
+
     // Export routes
     Route::get('/expenses/export/excel', [ExportController::class, 'excel'])->name('expenses.export.excel');
     Route::get('/expenses/export/pdf',   [ExportController::class, 'pdf'])->name('expenses.export.pdf');

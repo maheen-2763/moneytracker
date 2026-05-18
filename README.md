@@ -1,117 +1,220 @@
-<div align="center">
-
 # 💰 MoneyTracker
 
-**A full-featured personal finance web application**
+> A production-grade personal finance management application built with Laravel 11.
 
-[![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=flat&logo=php)](https://php.net)
-[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=flat&logo=laravel)](https://laravel.com)
-[![Tests](https://img.shields.io/badge/Tests-57%20passing-22c55e?style=flat)](https://pestphp.com)
-[![License](https://img.shields.io/badge/License-MIT-6366f1?style=flat)](LICENSE)
-
-[Live Demo](#) · [API Docs](#) · [Report Bug](#)
-
-</div>
+![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=flat&logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=flat&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-00758F?style=flat&logo=mysql&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8?style=flat&logo=tailwindcss&logoColor=white)
+![Tests](https://img.shields.io/badge/Tests-57%20Passing-22c55e?style=flat&logo=pestphp&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-6366f1?style=flat)
 
 ---
 
 ## 📸 Screenshots
 
-| Dashboard                          | Expenses                       | Admin                    |
-| ---------------------------------- | ------------------------------ | ------------------------ |
-| ![Dashboard](images/dashboard.png) | ![Expenses](docs/expenses.png) | ![Admin](docs/admin.png) |
+### 🏠 Landing Page
 
----
+![Landing](public/screenshots/Landing.png)
+
+### 📊 Dashboard
+
+![Dashboard](public/screenshots/Dashboard - Light Mode.png)
+
+### 💸 Expenses
+
+![Expenses](public/screenshots/Expenses - Light Mode.png) | ![Expenses](public/screenshots/Expenses - Dark Mode.png)
+
+### 🏷️ Budgets
+
+![Budgets](public/screenshots/Budgets - Light Mode.png) | ![Budgets](public/screenshots/Budgets - Dark Mode.png)
+
+### 📈 Reports
+
+![Reports](public/screenshots/Reports - Light Mode.png) | ![Reports](public/screenshots/Reports - Dark Mode.png)
+
+### 🛡️ Admin Panel
+
+![Admin](public/screenshots/Admin - Light Mode.png)
+
+### 🌐 API Docs
+
+![API Docs](public/screenshots/API-Docs.png)
+
+### 🌙 Dark Mode
+
+## ![Dark Mode](public/screenshots/dark-mode.png)
+
+## ![Dark Mode](public/screenshots/Expenses - Dark Mode.png)
 
 ## ✨ Features
 
-- 🔐 **Authentication** — Register, login, logout with Laravel Breeze
-- 💸 **Expense CRUD** — Full create, read, update, soft-delete
-- 📊 **Dashboard** — Charts, summary cards, category breakdown
-- 📈 **Reports** — Filter by date/category, export PDF & Excel
-- 🏷️ **Budget Limits** — Set monthly limits with progress bars
-- 🔔 **Notifications** — Bell icon alerts when budget exceeded
-- 👤 **User Profile** — Avatar upload, edit info, change password
-- 🔒 **2FA Security** — Google Authenticator support
-- 📧 **Email Notifications** — Welcome, budget alert, weekly report
-- 🌙 **Dark Mode** — Persists via localStorage
-- 📱 **Mobile Responsive** — Slide-in sidebar, card views
-- 🛡️ **Admin Panel** — Separate admin with full management
-- 🌐 **REST API** — Sanctum token auth with full docs
-- 🧪 **Tests** — 57 tests, 117 assertions with PestPHP
+### 💸 Expense Management
+
+- Full CRUD with soft delete
+- Categories: Food, Travel, Health, Office, Other
+- Receipt file uploads (JPG, PNG, PDF)
+- Advanced filtering by date and category
+
+### 🏷️ Budget Limits
+
+- Set monthly spending limits per category
+- Visual progress bars with color indicators
+- Real-time alerts when limits are approached or exceeded
+
+### 🔔 Smart Notifications
+
+- In-app bell notifications with unread count
+- Email alerts for budget exceeded events
+- Welcome email on registration
+- Expense receipt emails
+- Weekly spending summary reports
+
+### 📊 Reports & Export
+
+- Filter expenses by date range and category
+- Summary stats (total, highest, average)
+- Export to **PDF** and **Excel**
+
+### 🔒 Security
+
+- Laravel Breeze authentication
+- Two-Factor Authentication (Google Authenticator / TOTP)
+- Policy-based authorization
+- Laravel Sanctum API tokens
+
+### 🛡️ Admin Panel
+
+- Separate admin guard
+- User management (view, ban, delete)
+- All expenses overview with filters
+- Platform-wide statistics and charts
+
+### 🌐 REST API
+
+- Sanctum token authentication
+- Full CRUD for expenses and budgets
+- Dashboard summary endpoint
+- Interactive API documentation at `/api/docs`
+
+### 🧪 Testing
+
+- **57 tests** · **117 assertions**
+- PestPHP test suite
+- Feature and unit tests
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer    | Technology                               |
-| -------- | ---------------------------------------- |
-| Backend  | PHP 8.2, Laravel 11                      |
-| Frontend | Bootstrap 5, Chart.js, Plus Jakarta Sans |
-| Database | MySQL (production), SQLite (testing)     |
-| Auth     | Laravel Breeze + Sanctum                 |
-| 2FA      | pragmarx/google2fa-laravel               |
-| PDF      | barryvdh/laravel-dompdf                  |
-| Excel    | maatwebsite/laravel-excel                |
-| Testing  | PestPHP — 57 tests                       |
-| Mail     | SMTP (Mailtrap/Gmail)                    |
+| Layer     | Technology                                |
+| --------- | ----------------------------------------- |
+| Backend   | Laravel 11, PHP 8.2                       |
+| Database  | MySQL 8.0                                 |
+| Frontend  | Tailwind CSS, Bootstrap Icons, Vanilla JS |
+| Charts    | Chart.js                                  |
+| Auth      | Laravel Breeze, Sanctum, TOTP (2FA)       |
+| Email     | Custom Blade templates, Queue, Mailtrap   |
+| Export    | DomPDF (PDF), Laravel Excel (XLSX)        |
+| Testing   | PestPHP                                   |
+| Dev Tools | Laravel Herd, Vite                        |
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
-### Requirements
+### Prerequisites
 
 - PHP 8.2+
 - Composer
-- Node.js & NPM
-- MySQL
+- MySQL 8.0+
+- Node.js 18+
+- Laravel Herd or XAMPP (local dev)
 
 ### Installation
 
+**1 — Clone the repository:**
+
 ```bash
-# 1. Clone
 git clone https://github.com/maheen-2763/moneytracker.git
 cd moneytracker
+```
 
-# 2. Install dependencies
+**2 — Install dependencies:**
+
+```bash
 composer install
 npm install
+```
 
-# 3. Environment
+**3 — Set up environment:**
+
+```bash
 cp .env.example .env
 php artisan key:generate
+```
 
-# 4. Configure .env
-# Set DB_DATABASE, DB_USERNAME, DB_PASSWORD
-# Set MAIL_* credentials
+**4 — Configure `.env`:**
 
-# 5. Database
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=moneytracker
+DB_USERNAME=root
+DB_PASSWORD=
+
+MAIL_MAILER=smtp
+MAIL_HOST=sandbox.smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=your_mailtrap_username
+MAIL_PASSWORD=your_mailtrap_password
+
+QUEUE_CONNECTION=database
+```
+
+**5 — Run migrations and seeders:**
+
+```bash
 php artisan migrate --seed
+```
 
-# 6. Storage
-php artisan storage:link
+**6 — Build assets:**
 
-# 7. Build assets
-npm run build
+```bash
+npm run dev
+```
 
-# 8. Serve
+**7 — Start the server:**
+
+```bash
 php artisan serve
 ```
 
-Visit `http://moneytracker.test`
+**8 — Run queue worker (for emails):**
+
+```bash
+php artisan queue:work
+```
+
+Visit `http://127.0.0.1:8000` 🎉
 
 ---
 
-## 👑 Admin Access
+## 👤 Default Credentials
 
-```bash
-# Create admin account
-php artisan db:seed --class=AdminSeeder
+**Admin Panel** (`/admin/login`):
 
-# Login at: /admin/login
-# Email:    admin@moneytracker.com
-# Password: admin123
+```
+Email:    admin@moneytracker.com
+Password: admin123
+```
+
+**Test User** (after seeding):
+
+```
+Email:    user@moneytracker.com
+Password: password
 ```
 
 ---
@@ -119,37 +222,88 @@ php artisan db:seed --class=AdminSeeder
 ## 🧪 Running Tests
 
 ```bash
-# All tests
 php artisan test
+```
 
-# Specific suite
-php artisan test --filter=BudgetTest
+Or with coverage:
 
-# With coverage
+```bash
 php artisan test --coverage
 ```
 
+Expected output:
+
 ```
-Tests:    57 passed (117 assertions)
-Duration: 5.68s
+Tests:    57 passed
+Assertions: 117
+Duration: ~5.68s
 ```
 
 ---
 
-## 🌐 API
+## 📧 Email Notifications
 
-Base URL: `/api/v1`
+| Email           | Trigger                       |
+| --------------- | ----------------------------- |
+| Welcome         | On registration               |
+| Expense Receipt | After adding an expense       |
+| Budget Exceeded | When monthly limit is crossed |
+| Weekly Summary  | Every Monday via scheduler    |
+| Password Reset  | On forgot password request    |
 
-| Method | Endpoint     | Description    |
-| ------ | ------------ | -------------- |
-| POST   | `/login`     | Get auth token |
-| POST   | `/register`  | Create account |
-| GET    | `/expenses`  | List expenses  |
-| POST   | `/expenses`  | Create expense |
-| GET    | `/budgets`   | List budgets   |
-| GET    | `/dashboard` | Summary stats  |
+**Run the scheduler locally:**
 
-Full docs at `/api/docs`
+```bash
+php artisan schedule:run
+```
+
+**Or run weekly report manually:**
+
+```bash
+php artisan reports:weekly
+```
+
+---
+
+## 🌐 API Documentation
+
+Interactive API docs are available at:
+
+```
+http://127.0.0.1:8000/api/docs
+```
+
+**Quick Start:**
+
+```bash
+# Login to get token
+curl -X POST http://127.0.0.1:8000/api/v1/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"password"}'
+
+# Use token in requests
+curl http://127.0.0.1:8000/api/v1/expenses \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+**Available Endpoints:**
+
+| Method | Endpoint                | Description       |
+| ------ | ----------------------- | ----------------- |
+| POST   | `/api/v1/register`      | Create account    |
+| POST   | `/api/v1/login`         | Get auth token    |
+| POST   | `/api/v1/logout`        | Revoke token      |
+| GET    | `/api/v1/me`            | Current user      |
+| GET    | `/api/v1/expenses`      | List expenses     |
+| POST   | `/api/v1/expenses`      | Create expense    |
+| GET    | `/api/v1/expenses/{id}` | Show expense      |
+| PUT    | `/api/v1/expenses/{id}` | Update expense    |
+| DELETE | `/api/v1/expenses/{id}` | Delete expense    |
+| GET    | `/api/v1/budgets`       | List budgets      |
+| POST   | `/api/v1/budgets`       | Create budget     |
+| PUT    | `/api/v1/budgets/{id}`  | Update budget     |
+| DELETE | `/api/v1/budgets/{id}`  | Delete budget     |
+| GET    | `/api/v1/dashboard`     | Dashboard summary |
 
 ---
 
@@ -157,40 +311,59 @@ Full docs at `/api/docs`
 
 ```
 app/
+├── Console/Commands/      # SendWeeklyReports scheduler
 ├── Http/
-│   ├── Controllers/
-│   │   ├── Api/          ← REST API controllers
-│   │   ├── Admin/        ← Admin panel controllers
-│   │   └── ...           ← Web controllers
-│   ├── Middleware/
-│   │   ├── AdminMiddleware.php
-│   │   └── RequiresTwoFactor.php
-│   └── Requests/         ← Form validation
-├── Models/               ← Eloquent models
-├── Mail/                 ← Email classes
-├── Notifications/        ← DB notifications
-└── Services/             ← Business logic
+│   ├── Controllers/       # All controllers
+│   ├── Middleware/        # RequiresTwoFactor, etc.
+│   └── Requests/          # Form request validation
+├── Mail/                  # Mailable classes
+├── Models/                # Eloquent models
+├── Notifications/         # BudgetExceeded notification
+├── Policies/              # Authorization policies
+└── Services/              # ExpenseService (service layer)
 
 resources/views/
-├── admin/                ← Admin panel views
-├── api/                  ← API documentation
-├── auth/                 ← Login, register, 2FA
-├── components/           ← Blade components
-├── emails/               ← Email templates
-└── ...                   ← Feature views
+├── admin/                 # Admin panel views
+├── auth/                  # Auth pages
+├── budgets/               # Budget views
+├── components/            # Reusable components
+├── emails/                # Email templates
+├── expenses/              # Expense views
+├── notifications/         # Notification views
+├── profile/               # Profile & security
+└── reports/               # Reports & export
 ```
 
 ---
 
-## 👨‍💻 Author
+## 🔐 Security Features
 
-**Mohammed Maheen Afzal**
-
-[![GitHub](https://img.shields.io/badge/GitHub-yourusername-181717?style=flat&logo=github)](https://github.com/maheen-2763)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-yourprofile-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/yourprofile)
+- ✅ CSRF protection on all forms
+- ✅ Policy-based authorization (users can only access own data)
+- ✅ Two-Factor Authentication (TOTP)
+- ✅ Sanctum API token authentication
+- ✅ Password hashing with bcrypt
+- ✅ Separate admin guard
+- ✅ Rate limiting on API routes
 
 ---
 
 ## 📄 License
 
-MIT License — free to use for learning and portfolio purposes.
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+## 👨‍💻 Developer
+
+**Mohammed Maheen Afzal**
+Junior Full-Stack Laravel Developer
+
+- 🐙 GitHub: [@maheen-2763](https://github.com/maheen-2763)
+- 📦 Repo: [moneytracker](https://github.com/maheen-2763/moneytracker)
+
+---
+
+<div align="center">
+Built with ❤️ using Laravel 11 · MoneyTracker v1.0.0
+</div>
