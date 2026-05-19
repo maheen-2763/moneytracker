@@ -1,19 +1,7 @@
 #!/bin/bash
-
 set -e
 
 echo "🚀 Starting MoneyTracker..."
-
-# Cache config
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
-# Run migrations
-php artisan migrate --force
-
-# Create storage link
-php artisan storage:link
 
 # Create log directories
 mkdir -p /var/log/nginx
@@ -25,7 +13,18 @@ mkdir -p /var/log/supervisor
 chown -R www-data:www-data /var/www/storage
 chown -R www-data:www-data /var/www/bootstrap/cache
 
+# Cache Laravel config
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# Run migrations
+php artisan migrate --force
+
+# Create storage link
+php artisan storage:link || true
+
 echo "✅ MoneyTracker is ready!"
 
-# Start supervisor (manages nginx + php-fpm + queue)
+# Start supervisor
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
