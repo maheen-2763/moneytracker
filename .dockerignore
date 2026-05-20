@@ -2,5 +2,13 @@ node_modules
 vendor
 .env
 .git
+.gitignore
+Dockerfile
+docker-compose.yml
+
 storage/logs/*
 storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+
+tests
