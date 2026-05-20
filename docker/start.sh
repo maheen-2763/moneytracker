@@ -1,6 +1,7 @@
 #!/bin/bash
 
 php artisan migrate --force
+php artisan storage:link || true
 
 php-fpm -D
 
