@@ -12,7 +12,6 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     nginx \
-    supervisor \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
@@ -88,7 +87,7 @@ RUN chown -R www-data:www-data /var/www \
 # Nginx + Supervisor Config
 # =========================
 COPY docker/nginx.conf /etc/nginx/sites-enabled/default
-COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 
 # =========================
 # Startup Script
