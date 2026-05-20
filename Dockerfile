@@ -56,10 +56,11 @@ COPY composer.json composer.lock ./
 # =========================
 RUN composer install \
     --no-dev \
-    --optimize-autoloader \
-    --no-interaction \
     --prefer-dist \
-    --ignore-platform-reqs
+    --no-interaction \
+    --optimize-autoloader \
+    --ignore-platform-reqs \
+    --no-scripts
 
 # =========================
 # Copy Application Files
@@ -69,6 +70,7 @@ COPY . .
 # =========================
 # Laravel Optimizations
 # =========================
+RUN php artisan package:discover --ansi || true
 RUN php artisan config:cache || true
 RUN php artisan route:cache || true
 RUN php artisan view:cache || true
