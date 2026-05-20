@@ -1,34 +1,96 @@
-# Use official PHP image with FPM
+# =========================
+# PHP + FPM Base Image
+# =========================
 FROM php:8.4-fpm
 
-# Install system dependencies
+# =========================
+# Install System Packages
+# =========================
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip libpng-dev libonig-dev libxml2-dev \
-    libpq-dev nginx supervisor \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+    git \
+    curl \
+    zip \
+    unzip \
+    nginx \
+    supervisor \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libpq-dev \
+    libzip-dev \
+    && docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd \
+    zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
+# =========================
 # Install Composer
+# =========================
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# =========================
+# Set Working Directory
+# =========================
 WORKDIR /var/www
 
-# Copy project files
+# =========================
+# Copy Composer Files First
+# (Better Docker Caching)
+# =========================
+COPY composer.json composer.lock ./
+
+# =========================
+# Install Dependencies
+# =========================
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction \
+    --prefer-dist
+
+# =========================
+# Copy Application Files
+# =========================
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --optimize-autoloader --no-dev
+# =========================
+# Laravel Optimizations
+# =========================
+RUN php artisan config:cache || true
+RUN php artisan route:cache || true
+RUN php artisan view:cache || true
 
-# Set permissions
+# =========================
+# Permissions
+# =========================
 RUN chown -R www-data:www-data /var/www \
-    && chmod -R 755 /var/www/storage
+    && chmod -R 775 storage bootstrap/cache
 
-# Copy config files
+# =========================
+# Nginx + Supervisor Config
+# =========================
 COPY docker/nginx.conf /etc/nginx/sites-enabled/default
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# =========================
+# Startup Script
+# =========================
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
+# =========================
+# Expose Port
+# =========================
 EXPOSE 8080
 
+# =========================
+# Start Services
+# =========================
 CMD ["/start.sh"]
