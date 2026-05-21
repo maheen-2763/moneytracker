@@ -76,6 +76,7 @@ COPY . .
 RUN npm install
 # Install Node Dependencies
 RUN npm run build
+RUN ls -la public/build/assets
 # =========================
 # Laravel Optimizations
 # =========================

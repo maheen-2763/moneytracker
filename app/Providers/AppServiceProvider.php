@@ -8,6 +8,7 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use App\Models\User;
 use App\Mail\PasswordResetMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,5 +37,9 @@ class AppServiceProvider extends ServiceProvider
             return (new PasswordResetMail($user, $resetUrl))
                 ->to($user->email);
         });
+
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
