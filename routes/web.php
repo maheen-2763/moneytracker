@@ -71,7 +71,7 @@ Route::middleware(['auth', 'verified', 'throttle:60,1'])->group(function () {
 
     // After logout, clear 2FA session
     Route::post('/logout', function () {
-        session()->forget('2fa_verified');
+        request()->session()->forget('2fa_verified');
         Auth::logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
@@ -84,6 +84,7 @@ Route::get('/preview-email', function () {
     $user = Auth::user();
     return view('preview-email');
 });
+
 
 
 
